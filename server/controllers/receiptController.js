@@ -1,6 +1,7 @@
 const Receipt = require('../models/receipt');
 const { body, validationResult } = require('express-validator');
 
+/*
 exports.index = function (req, res) {
   let authCheck = req.session.isAuth;
   res.render('index', {
@@ -10,41 +11,11 @@ exports.index = function (req, res) {
     authorID: req.session.authUserID,
   });
 };
+*/
 
-exports.receipt_list = function (req, res, next) {
-  if (req.session.isAuth) {
-    Receipt.find({ author: req.session.authUserID })
-      .sort([[req.query.sortBy, 'ascending']])
-      .exec(function (err, list_receipt) {
-        if (err) {
-          return next(err);
-        } else {
-          res.render('receipt_list', {
-            title: 'Expenses',
-            receipt_list: list_receipt,
-            authorID: req.session.authUserID,
-            authUser: req.session.authUser,
-            authCheck: req.session.isAuth,
-          });
-        }
-      });
-  } else {
-    Receipt.find({ author: '62a21b717001a8755da33cf7' })
-      .sort([[req.query.sortBy, 'descending']])
-      .exec(function (err, list_receipt) {
-        if (err) {
-          return next(err);
-        } else {
-          res.render('receipt_list', {
-            title: 'Expenses',
-            receipt_list: list_receipt,
-            authorID: '62a21b717001a8755da33cf7',
-            authUser: 'Sample',
-            authCheck: req.session.isAuth,
-          });
-        }
-      });
-  }
+exports.receipt_list = async function (req, res, next) {
+  const receiptList = await Receipt.find({}).sort({});
+  res.send('yo');
 };
 
 exports.receipt_create_get = function (req, res, next) {

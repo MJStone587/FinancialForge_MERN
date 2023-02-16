@@ -1,110 +1,42 @@
 const Income = require('../models/income');
 const { body, validationResult } = require('express-validator');
 
-exports.income_list = function (req, res) {
-  if (req.session.isAuth) {
-    Income.find({ author: req.session.authUserID })
-      .sort([['title', 'descending']])
-      .exec(function (err, results) {
-        if (err) {
-          return next(err);
-        } else {
-          res.render('income_list', {
-            title: 'Income',
-            results: results,
-            authorID: req.session.authUserID,
-            authUser: req.session.authUser,
-            authCheck: req.session.isAuth,
-          });
-        }
-      });
-  } else {
-    Income.find({ author: '62a21b717001a8755da33cf7' })
-      .sort([['title', 'descending']])
-      .exec(function (err, results) {
-        if (err) {
-          return next(err);
-        } else {
-          res.render('income_list', {
-            title: 'Income',
-            results: results,
-            authorID: '62a21b717001a8755da33cf7',
-            authUser: 'Sample',
-            authCheck: req.session.isAuth,
-          });
-        }
-      });
+exports.get_all_income = async function (req, res) {
+  try {
+    let incomeData = await Income.find({}).sort({ date: -1 });
+    res.status(200).json(incomeData);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
 };
 
-exports.income_create_get = function (req, res) {
-  if (req.session.isAuth) {
-    res.render('income_form', {
-      title: 'Income Form',
-      authCheck: req.session.isAuth,
-      authorID: req.session.authUserID,
-      authUser: req.session.authUser,
-    });
-  } else {
-    res.redirect('/catalog/user/login');
+//get a single income
+
+exports.get_income = async (req, res) => {
+  const { id } = req.params;
+  const income = await Income.findById(id);
+  if (!income) {
+    return res.status(404).json({ error: 'No income found' });
   }
+  res.status(200).json(income);
 };
 
-// Handle Income create on POST.
-exports.income_create_post = [
-  // Validate and sanitize the name field.
-  body('name', 'Name Required').trim().isLength({ min: 1 }).escape(),
-
-  // Process request after validation and sanitization.
-  (req, res, next) => {
-    // Extract the validation errors from a request.
-    const errors = validationResult(req);
-
-    // Create a receipt object with escaped and trimmed data.
-    let income = new Income({
-      name: req.body.name,
-      description: req.body.description,
-      from: req.body.from,
-      date: req.body.date,
-      author: req.body.author,
-      amount: req.body.amount,
+// Create new income .
+exports.income_create_post = async (req, res) => {
+  const { name, description, from, date, amount } = req.body;
+  try {
+    const income = await Income.create({
+      name,
+      description,
+      from,
+      date,
+      amount,
     });
-
-    if (!errors.isEmpty()) {
-      // There are errors. Render the form again with sanitized values/error messages.
-      res.render('income_form', {
-        title: 'New Income Form',
-        income: income,
-        errors: errors.array(),
-      });
-      return;
-    } else {
-      // Data from form is valid.
-      // Check if Receipt with same name already exists.
-      Income.findOne({ description: req.body.name }).exec(function (
-        err,
-        found_income
-      ) {
-        if (err) {
-          return next(err);
-        }
-
-        if (found_income) {
-          // Receipt exists, redirect to its detail page.
-          res.redirect(found_income.url);
-        } else {
-          income.save(function (err) {
-            if (err) {
-              return next(err);
-            }
-            // Receipt saved. Redirect to genre detail page.
-            res.redirect(income.url);
-          });
-        }
-      });
-    }
-  },
-];
+    res.status(200).json(income);
+  } catch (err) {
+    res.status(404).json({ msg: err.message });
+  }
+};
 
 exports.income_detail = function (req, res) {
   if (req.session.isAuth) {

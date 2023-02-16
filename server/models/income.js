@@ -12,7 +12,7 @@ let IncomeSchema = new Schema({
     required: true,
   },
   date: { type: Date, required: true },
-  author: { type: Schema.Types.ObjectId, ref: 'User' },
+  //author: { type: Schema.Types.ObjectId, ref: 'User' },
   amount: { type: Number, required: true },
 });
 
