@@ -3,16 +3,15 @@ const { body, validationResult } = require('express-validator');
 
 exports.get_all_income = async function (req, res) {
   try {
-    let incomeData = await Income.find({}).sort({ date: -1 });
+    const incomeData = await Income.find({}).sort({ date: -1 });
     res.status(200).json(incomeData);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(404).json({ msg: 'Error MotherFucka! Do you speak it!?' });
   }
 };
 
 //get a single income
-
-exports.get_income = async (req, res) => {
+exports.get_single_income = async (req, res) => {
   const { id } = req.params;
   const income = await Income.findById(id);
   if (!income) {
@@ -35,36 +34,6 @@ exports.income_create_post = async (req, res) => {
     res.status(200).json(income);
   } catch (err) {
     res.status(404).json({ msg: err.message });
-  }
-};
-
-exports.income_detail = function (req, res) {
-  if (req.session.isAuth) {
-    Income.findById(req.params.id, function (err, results) {
-      if (err) {
-        return next(err);
-      } else {
-        res.render('income_detail', {
-          title: 'Income Details',
-          results: results,
-          authCheck: req.session.isAuth,
-          authorID: req.session.authUserID,
-          authUser: req.session.authUser,
-        });
-      }
-    });
-  } else {
-    Income.findById(req.params.id, function (err, results) {
-      if (err) {
-        return next(err);
-      } else {
-        res.render('income_detail', {
-          title: 'Income Details',
-          results: results,
-          authCheck: req.session.isAuth,
-        });
-      }
-    });
   }
 };
 // Display Author delete form on GET.

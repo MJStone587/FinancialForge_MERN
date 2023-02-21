@@ -13,9 +13,9 @@ exports.index = function (req, res) {
 };
 */
 
-exports.receipt_list = async function (req, res, next) {
-  const receiptList = await Receipt.find({}).sort({});
-  res.send('yo');
+exports.expense_list = async function (req, res) {
+  const expenseList = await Receipt.find({}).sort({ date: -1 });
+  res.status(200).json(expenseList);
 };
 
 exports.receipt_create_get = function (req, res, next) {

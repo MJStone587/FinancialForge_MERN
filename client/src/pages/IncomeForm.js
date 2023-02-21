@@ -7,6 +7,7 @@ const Incomeform = () => {
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
   const [err, setErr] = useState(null);
+  const [success, setSuccess] = useState('');
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -19,19 +20,20 @@ const Incomeform = () => {
     const json = await response.json();
     if (!response.ok) {
       setErr(json.error);
-    }
-    if (response.ok) {
+      setSuccess('');
+    } else if (response.ok) {
       setName('');
       setDescription('');
       setAmount('');
       setDate('');
       setErr(null);
-      console.log('new income added', json);
+      setSuccess('Success: New income has been added!');
+      console.log(json);
     }
   };
 
   return (
-    <div>
+    <div className="income_form_container">
       <h1>Income Create</h1>
       <form className="income_form" onSubmit={submitHandler}>
         <label>Name:</label>
@@ -77,11 +79,8 @@ const Incomeform = () => {
           value={date}
         />
         <button>Add Income</button>
-        {err && (
-          <div className="error">
-            <p>{err}</p>
-          </div>
-        )}
+        {err && <p>{err}</p>}
+        {success && <p>{success}</p>}
       </form>
     </div>
   );

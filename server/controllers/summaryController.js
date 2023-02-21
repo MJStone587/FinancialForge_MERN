@@ -1,10 +1,10 @@
 const Income = require('../models/income');
 const Receipt = require('../models/receipt');
 
-exports.summary_receipt = async function (req, res) {
+exports.summary_expense = async function (req, res) {
   try {
-    const receiptData = await Receipt.find({ author: req.session.authUserID });
-    res.status(200).json(receiptData);
+    const expenseData = await Receipt.find({ author: req.session.authUserID });
+    res.status(200).json(expenseData);
   } catch (err) {
     res.status(400).json({ msg: err });
   }
