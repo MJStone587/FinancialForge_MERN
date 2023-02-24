@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 
-function Receipt() {
+const Receipt = () => {
   const { data, dispatch } = useDataContext();
 
   useEffect(() => {
@@ -43,6 +43,6 @@ function Receipt() {
       </table>
     </div>
   );
-}
+};
 
 export default Receipt;

@@ -60,42 +60,94 @@ section {
 .income_container {
   display: flex;
   flex-flow: column nowrap;
-  background-color: var(--charcoal-bg-);
-  height: 93vh;
+  align-items: center;
+  width: 100%;
 }
-.income_container h1 {
-  color: white;
+.income_list {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%;
 }
-.income_table {
-  color: white;
-  border: 1px solid white;
-  padding: 10px;
-}
-.income_table th {
-  text-align: left;
-  text-decoration: underline;
-}
-.income_thead {
-  font-size: calc(20px + (24 - 20) * ((100vw - 300px) / (1920 - 300)));
-}
-#income_th_name {
-  width: calc(400px + (600 - 400) * ((100vw - 300px) / (1920 - 300)));
-}
-.income_body_tr {
-  font-size: calc(16px + (20 - 16) * ((100vw - 300px) / (1920 - 300)));
-}
-.income_body_tr td {
-  padding: 3px 0px;
-}
-.income_name_td {
-  width: calc(400px + (600 - 400) * ((100vw - 300px) / (1920 - 300)));
-}
-.income_from_td {
-  width: calc(100px + (250 - 100) * ((100vw - 300px) / (1920 - 300)));
-}
-.income_date_td {
-  width: calc(400px + (600 - 400) * ((100vw - 300px) / (1920 - 300)));
+.income_list button {
+  width: 50%;
 }
 #income_add_income {
   color: var(--nav-hover-color-);
+}
+.income_card {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: white;
+  border: 2px solid black;
+  width: 50%;
+  align-items: center;
+  margin: 10px 10px;
+  box-shadow: 3px 3px 10px black;
+  padding: 5px;
+}
+
+.income_description {
+  font-style: italic;
+  align-self: center;
+  margin-bottom: 10px;
+}
+.income_title {
+  align-self: center;
+  font-size: calc(18px + (25 - 18) * ((100vw - 300px) / (1920 - 300)));
+}
+.income_del {
+  align-self: flex-end;
+  background-color: rgb(207, 207, 207);
+  padding: 3px;
+  border-radius: 5px;
+}
+.income_del:hover {
+  cursor: pointer;
+  color: red;
+}
+.income_update {
+  align-self: flex-start;
+  cursor: pointer;
+  background-color: rgb(207, 207, 207);
+  padding: 3px;
+  border-radius: 5px;
+}
+.income_update:hover {
+  color: rgb(255, 251, 11);
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  flex-flow: column nowrap;
+  z-index: 5; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  justify-content: center;
+  align-items: center;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+/* Modal Content/Box */
+.modal_content {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+/* The Close Button */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

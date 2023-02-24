@@ -16,8 +16,11 @@ let IncomeSchema = new Schema({
   amount: { type: Number, required: true },
 });
 
-IncomeSchema.virtual('url').get(function () {
-  return '/catalog/income/' + this._id;
+IncomeSchema.set('toObject', { virtuals: true });
+IncomeSchema.set('toJSON', { virtuals: true });
+
+IncomeSchema.virtual('date_adjusted').get(function () {
+  return this.date.toLocaleDateString('en-CA');
 });
 
 IncomeSchema.virtual('date_formatted').get(function () {

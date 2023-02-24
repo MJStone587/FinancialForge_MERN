@@ -32,9 +32,8 @@ let ReceiptSchema = new Schema({
   total: { type: Number },
 });
 
-ReceiptSchema.virtual('url').get(function () {
-  return '/catalog/receipt/' + this._id;
-});
+ReceiptSchema.set('toObject', { virtuals: true });
+ReceiptSchema.set('toJSON', { virtuals: true });
 
 ReceiptSchema.virtual('date_formatted').get(function () {
   return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);

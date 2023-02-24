@@ -1,5 +1,5 @@
 const Income = require('../models/income');
-const { body, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 exports.get_all_income = async function (req, res) {
   try {
@@ -32,8 +32,8 @@ exports.income_create_post = async (req, res) => {
       amount,
     });
     res.status(200).json(income);
-  } catch (err) {
-    res.status(404).json({ msg: err.message });
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
 };
 // Display Author delete form on GET.
@@ -54,13 +54,17 @@ exports.income_delete_get = function (req, res, next) {
   }
 };
 
-exports.income_delete_post = function (req, res) {
-  Income.findByIdAndRemove(req.body.incomeid, function deleteIncome(err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect('/catalog/incomes');
-  });
+exports.income_delete_post = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'This income does not exist' });
+  }
+  const income = await Income.findByIdAndDelete({ _id: id });
+
+  if (!income) {
+    return res.status(404).json({ error: 'No income found' });
+  }
+  res.status(200).json(income);
 };
 
 exports.income_update_get = function (req, res, next) {

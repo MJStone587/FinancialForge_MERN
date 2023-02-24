@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import IncomeDetails from '../components/IncomeDetails';
 
 function Income() {
   const { data, dispatch } = useDataContext();
+  const [incDisp, setIncDisp] = useState(5);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     const fetchIncome = async () => {
@@ -17,42 +19,65 @@ function Income() {
 
     fetchIncome();
   }, []);
-  /*
-  const handleDelete = async () => {
-    const response = await fetch('/catalog/income/' + income._id, {
-      method: 'DELETE',
-    });
-    const json = await response.json();
+
+  // COME BACK TO SHOW MORE AND LESS, MAKE BETTER OONGA BOONGA
+  const showMore = () => {
+    if (incDisp !== data.length) {
+      setIncDisp(incDisp + 3);
+    }
   };
-*/
+  const showLess = () => {
+    if (incDisp > 3) {
+      setIncDisp(incDisp - 3);
+    }
+  };
+
+  //toggle modal state
+  const modalOn = () => {
+    setModal(true);
+  };
+  const modalOff = (e) => {
+    setModal(false);
+  };
 
   return (
     <section className="income_container">
-      <h1>Income Page</h1>
-      <table className="income_table">
-        <thead className="income_thead">
-          <tr className="income_row_head">
-            <th id="income_th_name">Name</th>
-            <th id="income_th_from">From</th>
-            <th id="income_th_date">Date</th>
-            <th id="income_th_amount">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            data.map((data) => (
-              <tr className="income_body_tr" key={data._id}>
-                <td className="income_name_td">{data.name}</td>
-                <td className="income_from_td">{data.from}</td>
-                <td className="income_date_td">{data.date}</td>
-                <td className="income_amt_td">${data.amount}</td>
-              </tr>
+      <div className="income_header">
+        <h1>Income</h1>
+        <p>Add, update, delete, and review your income.</p>
+      </div>
+
+      <div className="income_list">
+        {data &&
+          data
+            .slice(0, incDisp)
+            .map((income) => (
+              <IncomeDetails
+                modalOn={modalOn}
+                key={income._id}
+                name={income.name}
+                id={income._id}
+                date={income.date_formatted}
+                description={income.description}
+                amount={income.amount}
+              />
             ))}
-        </tbody>
-      </table>
-      <Link to="/income/create">
-        <h2 id="income_add_income">Add Income</h2>
-      </Link>
+        <button onClick={showMore}>Show More</button>
+        <button onClick={showLess}>Show Less</button>
+      </div>
+
+      <div
+        className="modal"
+        style={modal ? { display: 'flex' } : { display: 'none' }}
+      >
+        <div className="modal_content">
+          <span onClick={modalOff} className="close">
+            X
+          </span>
+          <p>Put Data of Clicked Income / Receipt here</p>
+          <p>FK U REACT, BE MORE INTUITIVE</p>
+        </div>
+      </div>
     </section>
   );
 }

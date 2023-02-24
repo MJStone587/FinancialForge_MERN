@@ -8,6 +8,8 @@ export const dataReducer = (state, action) => {
       return { data: action.payload };
     case 'CREATE_DATA':
       return { data: [action.payload, ...state.data] };
+    case 'DELETE_DATA':
+      return { data: state.data.filter((d) => d._id !== action.payload._id) };
     default:
       return state;
   }

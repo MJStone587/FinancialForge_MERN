@@ -13,6 +13,8 @@ router.get('/income', income_controller.get_all_income);
 router.get('/income/:id', income_controller.get_single_income);
 //Post new income
 router.post('/income/create', income_controller.income_create_post);
+//Delete Income
+router.delete('/income/:id', income_controller.income_delete_post);
 //Get All Receipts
 router.get('/receipt', expense_controller.expense_list);
 module.exports = router;

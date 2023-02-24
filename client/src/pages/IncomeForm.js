@@ -33,56 +33,53 @@ const Incomeform = () => {
   };
 
   return (
-    <div className="income_form_container">
-      <h1>Income Create</h1>
-      <form className="income_form" onSubmit={submitHandler}>
-        <label>Name:</label>
-        <input
-          id="income_name"
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
-        <label>Description:</label>
-        <input
-          id="income_description"
-          type="text"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-        />
-        <label htmlFor="income_from">From:</label>
-        <select
-          name="income_from"
-          id="income_from"
-          onChange={(e) => setFrom(e.target.value)}
-          value={from}
-        >
-          <option value="" defaultValue></option>
-          <option value="Job">Job</option>
-          <option value="Gift">Gift</option>
-          <option value="Investment">Investment</option>
-          <option value="Savings">Savings</option>
-          <option value="Other">Other</option>
-        </select>
-        <label>Amount: $</label>
-        <input
-          id="income_description"
-          type="number"
-          onChange={(e) => setAmount(e.target.value)}
-          value={amount}
-        />
-        <label>Date:</label>
-        <input
-          id="income_date"
-          type="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
-        />
-        <button>Add Income</button>
-        {err && <p>{err}</p>}
-        {success && <p>{success}</p>}
-      </form>
-    </div>
+    <form className="income_form" onSubmit={submitHandler}>
+      <label>Name:</label>
+      <input
+        id="income_name"
+        type="text"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+      />
+      <label>Description:</label>
+      <input
+        id="income_description"
+        type="text"
+        onChange={(e) => setDescription(e.target.value)}
+        value={description}
+      />
+      <label htmlFor="income_from">From:</label>
+      <select
+        name="income_from"
+        id="income_from"
+        onChange={(e) => setFrom(e.target.value)}
+        value={from}
+      >
+        <option value="" defaultValue></option>
+        <option value="Job">Job</option>
+        <option value="Gift">Gift</option>
+        <option value="Investment">Investment</option>
+        <option value="Savings">Savings</option>
+        <option value="Other">Other</option>
+      </select>
+      <label>Amount: $</label>
+      <input
+        id="income_description"
+        type="number"
+        onChange={(e) => setAmount(e.target.value)}
+        value={amount}
+      />
+      <label>Date:</label>
+      <input
+        id="income_date"
+        type="date"
+        onChange={(e) => setDate(e.target.value)}
+        value={date}
+      />
+      <button>Add Income</button>
+      {err && <p>{err}</p>}
+      {success && <p>{success}</p>}
+    </form>
   );
 };
 
