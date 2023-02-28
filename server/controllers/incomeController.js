@@ -23,6 +23,28 @@ exports.get_single_income = async (req, res) => {
 // Create new income .
 exports.income_create_post = async (req, res) => {
   const { name, description, from, date, amount } = req.body;
+  let emptyFields = [];
+  if (!name) {
+    emptyFields.push('name');
+  }
+  if (!description) {
+    emptyFields.push('description');
+  }
+  if (!from) {
+    emptyFields.push('from');
+  }
+  if (!date) {
+    emptyFields.push('date');
+  }
+  if (!amount) {
+    emptyFields.push('amount');
+  }
+  if (emptyFields.length > 0) {
+    res.status(400).json({
+      error: 'Please fill in all fields! ',
+      emptyFields,
+    });
+  }
   try {
     const income = await Income.create({
       name,
@@ -37,22 +59,7 @@ exports.income_create_post = async (req, res) => {
   }
 };
 // Display Author delete form on GET.
-exports.income_delete_get = function (req, res, next) {
-  if (req.session.isAuth) {
-    Income.findById(req.params.id, function (err, results) {
-      if (err) {
-        return next(err);
-      } else {
-        res.render('income_delete', {
-          title: 'Income Deletion',
-          results: results,
-        });
-      }
-    });
-  } else {
-    res.redirect('/catalog/user/login');
-  }
-};
+exports.income_delete_get = function (req, res, next) {};
 
 exports.income_delete_post = async (req, res) => {
   const { id } = req.params;

@@ -5,7 +5,7 @@ import Navbar from './components/Navbar.js';
 import Income from './pages/Income.js';
 import Summary from './pages/Summary.js';
 import IncomeForm from './pages/IncomeForm.js';
-import IncomeDetails from './components/IncomeDetails.js';
+import SingleIncome from './pages/SingleIncome.js';
 import Receipt from './pages/Expense.js';
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
           <Route path="/summary" element={<Summary />} />
           <Route path="/receipt" element={<Receipt />} />
           <Route path="/income/create" element={<IncomeForm />} />
-          <Route path="/catalog/income/:id" element={<IncomeDetails />} />
+          <Route path="/income/:id" element={<SingleIncome />} />
         </Routes>
       </BrowserRouter>
     </main>

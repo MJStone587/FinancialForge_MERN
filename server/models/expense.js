@@ -3,7 +3,7 @@ const { DateTime } = require('luxon');
 
 const Schema = mongoose.Schema;
 
-let ReceiptSchema = new Schema({
+let ExpenseSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   paymentType: {
@@ -32,19 +32,19 @@ let ReceiptSchema = new Schema({
   total: { type: Number },
 });
 
-ReceiptSchema.set('toObject', { virtuals: true });
-ReceiptSchema.set('toJSON', { virtuals: true });
+ExpenseSchema.set('toObject', { virtuals: true });
+ExpenseSchema.set('toJSON', { virtuals: true });
 
-ReceiptSchema.virtual('date_formatted').get(function () {
+ExpenseSchema.virtual('date_formatted').get(function () {
   return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
 });
 
-ReceiptSchema.virtual('date_adjusted').get(function () {
+ExpenseSchema.virtual('date_adjusted').get(function () {
   return this.date.toLocaleDateString('en-CA');
 });
 
-ReceiptSchema.virtual('date_month').get(function () {
+ExpenseSchema.virtual('date_month').get(function () {
   return DateTime.fromJSDate(this.date).monthLong;
 });
 
-module.exports = mongoose.model('Receipt', ReceiptSchema);
+module.exports = mongoose.model('Expense', ExpenseSchema);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 import IncomeDetails from '../components/IncomeDetails';
+import { Link } from 'react-router-dom';
 
 function Income() {
   const { data, dispatch } = useDataContext();
@@ -45,6 +46,7 @@ function Income() {
       <div className="income_header">
         <h1>Income</h1>
         <p>Add, update, delete, and review your income.</p>
+        <Link to="/income/create">+New Income</Link>
       </div>
 
       <div className="income_list">
@@ -74,8 +76,7 @@ function Income() {
           <span onClick={modalOff} className="close">
             X
           </span>
-          <p>Put Data of Clicked Income / Receipt here</p>
-          <p>FK U REACT, BE MORE INTUITIVE</p>
+          <p>Fill this with relevant data</p>
         </div>
       </div>
     </section>

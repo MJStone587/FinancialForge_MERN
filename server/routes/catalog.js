@@ -16,5 +16,5 @@ router.post('/income/create', income_controller.income_create_post);
 //Delete Income
 router.delete('/income/:id', income_controller.income_delete_post);
 //Get All Receipts
-router.get('/receipt', expense_controller.expense_list);
+router.get('/expense', expense_controller.expense_list);
 module.exports = router;

@@ -1,5 +1,5 @@
 const Income = require('../models/income');
-const Receipt = require('../models/receipt');
+const Receipt = require('../models/expense');
 
 exports.summary_expense = async function (req, res) {
   try {

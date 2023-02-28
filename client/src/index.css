@@ -57,6 +57,12 @@ section {
   row-gap: 10px;
   width: 20vw;
 }
+input.error {
+  border: 2px solid red;
+}
+select.error {
+  border: 2px solid red;
+}
 .income_container {
   display: flex;
   flex-flow: column nowrap;
