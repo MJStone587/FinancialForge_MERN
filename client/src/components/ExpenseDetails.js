@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 
-const IncomeDetails = (income) => {
+const ExpenseDetails = (expense) => {
   const { dispatch } = useDataContext();
   const [modal, setModal] = useState(false);
 
   const handleDel = async () => {
-    const response = await fetch('/catalog/income/' + income.id, {
+    const response = await fetch('/catalog/expense/' + expense.id, {
       method: 'DELETE',
     });
     const json = await response.json();
@@ -16,7 +16,7 @@ const IncomeDetails = (income) => {
   };
 
   const handleUpdate = async () => {
-    const response = await fetch('/catalog/income/' + income.id, {
+    const response = await fetch('/catalog/expense/' + expense.id, {
       method: 'UPDATE',
     });
     const json = await response.json();
@@ -35,17 +35,17 @@ const IncomeDetails = (income) => {
   };
 
   return (
-    <section className="income_card">
+    <div className="expense_card">
       <span onClick={handleDel} className="material-symbols-outlined">
         Delete
       </span>
-      <h2 className="income_title" onClick={modalOn}>
-        {income.name}
+      <h2 className="expense_title" onClick={modalOn}>
+        {expense.name}
       </h2>
-      <p className="income_amt">
-        <strong>Total:</strong>${income.amount}
+      <p className="expense_total">
+        <strong>Total:</strong>${expense.total}
       </p>
-      <span className="material-symbols-outlined" id="income_edit">
+      <span className="material-symbols-outlined" id="expense_edit">
         Edit
       </span>
       <article
@@ -56,26 +56,26 @@ const IncomeDetails = (income) => {
         <div className="modal_content">
           <div className="modal_content_header">
             <span className="close">X</span>
-            <h2>{income.name}</h2>
+            <h2>{expense.name}</h2>
           </div>
           <div className="modal_content_body">
-            <p className="income_description">{income.description}</p>
+            <p className="expense_description">{expense.description}</p>
             <p>
               <strong>Date Received:</strong>
-              {income.date}
+              {expense.date}
             </p>
             <p>
               <strong>Category</strong>
-              {income.from}
+              {expense.category}
             </p>
             <p>
-              <strong>Total: </strong>${income.amount}
+              <strong>Total: </strong>${expense.total}
             </p>
           </div>
         </div>
       </article>
-    </section>
+    </div>
   );
 };
 
-export default IncomeDetails;
+export default ExpenseDetails;

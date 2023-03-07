@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const catalogRouter = require('./routes/catalog');
-const indexRouter = require('./routes/index');
 //const cors = require('cors');
 
 require('dotenv').config();
@@ -26,5 +25,4 @@ mongoose
     console.log(error);
   });
 
-app.use('/', indexRouter);
 app.use('/catalog', catalogRouter);

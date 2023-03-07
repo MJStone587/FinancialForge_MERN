@@ -4,9 +4,7 @@ import Home from './pages/Home.js';
 import Navbar from './components/Navbar.js';
 import Income from './pages/Income.js';
 import Summary from './pages/Summary.js';
-import IncomeForm from './pages/IncomeForm.js';
-import SingleIncome from './pages/SingleIncome.js';
-import Receipt from './pages/Expense.js';
+import Expense from './pages/Expense.js';
 
 function App() {
   return (
@@ -18,9 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/income" element={<Income />} />
           <Route path="/summary" element={<Summary />} />
-          <Route path="/receipt" element={<Receipt />} />
-          <Route path="/income/create" element={<IncomeForm />} />
-          <Route path="/income/:id" element={<SingleIncome />} />
+          <Route path="/expense" element={<Expense />} />
         </Routes>
       </BrowserRouter>
     </main>

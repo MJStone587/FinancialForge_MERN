@@ -9,10 +9,12 @@ let ExpenseSchema = new Schema({
   paymentType: {
     type: String,
     required: true,
+    enum: ['Credit', 'Cash', 'Debit', 'Check', 'Gift Card', 'Other'],
   },
   ccName: {
     type: String,
     required: false,
+    enum: ['None', 'Discover', 'Amex', 'Visa', 'Mastercard'],
   },
   category: {
     type: String,
@@ -25,6 +27,7 @@ let ExpenseSchema = new Schema({
       'Clothing',
       'Pet',
       'Self-Care',
+      'Other',
     ],
   },
   author: { type: Schema.Types.ObjectId, ref: 'User' },

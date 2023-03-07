@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useDataContext } from '../hooks/useDataContext';
 
 const Incomeform = () => {
+  const { dispatch } = useDataContext();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [from, setFrom] = useState('');
@@ -16,6 +18,7 @@ const Incomeform = () => {
     const response = await fetch('/catalog/income/create', {
       method: 'POST',
       body: JSON.stringify(income),
+      headers: { 'Content-Type': 'application/json' },
     });
     const json = await response.json();
     if (!response.ok) {
@@ -30,12 +33,12 @@ const Incomeform = () => {
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New income has been added!');
-      console.log(json);
+      dispatch({ type: 'CREATE_DATA', payload: json });
     }
   };
 
   return (
-    <div className="income_form_container">
+    <section className="income_form_container">
       <form className="income_form" onSubmit={submitHandler}>
         <label>Name:</label>
         <input
@@ -66,7 +69,7 @@ const Incomeform = () => {
           <option value="Savings">Savings</option>
           <option value="Other">Other</option>
         </select>
-        <label>Amount: $</label>
+        <label>Amount: </label>
         <input
           id="income_description"
           type="number"
@@ -86,7 +89,7 @@ const Incomeform = () => {
         {error && <p>{error}</p>}
         {success && <p>{success}</p>}
       </form>
-    </div>
+    </section>
   );
 };
 
