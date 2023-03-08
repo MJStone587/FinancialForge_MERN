@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 import IncomeDetails from '../components/IncomeDetails';
-import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
 
 function Income() {
   const { data, dispatch } = useDataContext();
   const [incDisp, setIncDisp] = useState(5);
+  const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [from, setFrom] = useState('');
@@ -53,6 +54,29 @@ function Income() {
     fetchIncome();
   }, []);
 
+  const updateHandler = async () => {
+    const income = { name, description, from, amount, date };
+    const response = await fetch('/catalog/income/' + incID, {
+      method: 'POST',
+      body: JSON.stringify(income),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const json = await response.json();
+    if (!response.ok) {
+      setError(json.error);
+      setSuccess('');
+      setEmptyFields(json.emptyFields);
+    } else if (response.ok) {
+      setName('');
+      setDescription('');
+      setAmount('');
+      setDate('');
+      setError(null);
+      setEmptyFields([]);
+      setSuccess('Success: Income has been updated!');
+      dispatch({ type: 'UPDATE_DATA', payload: json });
+    }
+  };
   // COME BACK TO SHOW MORE AND LESS, MAKE BETTER OONGA BOONGA
   const showMore = () => {
     if (incDisp !== data.length) {
@@ -82,10 +106,17 @@ function Income() {
                   key={income._id}
                   name={income.name}
                   id={income._id}
-                  date={income.date_formatted}
+                  date={income.date}
+                  dateF={income.date_form}
                   from={income.from}
                   description={income.description}
                   amount={income.amount}
+                  setIncID={setIncID}
+                  setName={setName}
+                  setAmount={setAmount}
+                  setDescription={setDescription}
+                  setFrom={setFrom}
+                  setDate={setDate}
                 />
               ))}
           <button onClick={showMore}>Show More</button>
@@ -96,7 +127,7 @@ function Income() {
         <div className="income_form_header">
           <h2>+ Add New Income</h2>
         </div>
-        <form className="income_form" onSubmit={submitHandler}>
+        <form className="income_form">
           <label>Name:</label>
           <input
             type="text"
@@ -135,14 +166,14 @@ function Income() {
             className={emptyFields.includes('amount') ? 'error' : ''}
           />
           <label>Date:</label>
-          <input
+          <DatePicker
             id="income_date"
-            type="date"
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(date) => setDate(date)}
             value={date}
             className={emptyFields.includes('date') ? 'error' : ''}
           />
-          <button>Add Income</button>
+          <button onClick={submitHandler}>Add NEW Income</button>
+          <button onClick={updateHandler}>Update Income</button>
           {error && <p>{error}</p>}
           {success && <p>{success}</p>}
         </form>

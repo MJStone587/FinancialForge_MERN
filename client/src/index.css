@@ -3,9 +3,10 @@
   box-sizing: border-box;
   --charcoal-bg-: #30353d;
   --ltBlue-color-: #6ee2ff;
-  --dkBlue-color-: #2e606d;
-  --gold-color: #f5c500;
-  --gray-bg-: #e5e5e5;
+  --dkBlue-color-: #14213d;
+  --white-color-: #ffffff;
+  --gold-color: #fca311;
+  --gray-color-: #e5e5e5;
 }
 .App {
   display: flex;
@@ -81,7 +82,7 @@ select.error {
 .expense_container {
   display: flex;
   flex-flow: row nowrap;
-  background-color: var(--gray-bg-);
+  background-color: var(--gray-color-);
   width: 100%;
   overflow: auto;
 }
@@ -127,7 +128,7 @@ select.error {
 .expense_card {
   display: flex;
   flex-flow: column nowrap;
-  background-color: white;
+  background-color: var(--white-color-);
   border: 2px solid black;
   width: 60%;
   align-items: center;

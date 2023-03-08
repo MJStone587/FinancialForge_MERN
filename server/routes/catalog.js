@@ -15,6 +15,8 @@ router.get('/income/:id', income_controller.get_single_income);
 router.post('/income/create', income_controller.income_create_post);
 //Delete Income
 router.delete('/income/:id', income_controller.income_delete);
+//Post request to update income
+router.post('/income/:id', income_controller.income_update);
 //Get All Expenses
 router.get('/expense', expense_controller.expense_list);
 //Create new expense

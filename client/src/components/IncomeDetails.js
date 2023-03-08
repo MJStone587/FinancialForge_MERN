@@ -15,16 +15,15 @@ const IncomeDetails = (income) => {
     }
   };
 
-  const handleUpdate = async () => {
-    const response = await fetch('/catalog/income/' + income.id, {
-      method: 'UPDATE',
-    });
-    const json = await response.json();
-    if (response.ok) {
-      dispatch({ type: 'DELETE_DATA', payload: json });
-    }
+  const handleUpdateClick = () => {
+    income.setAmount(income.amount);
+    income.setName(income.name);
+    income.setDescription(income.description);
+    income.setFrom(income.from);
+    income.setDate(income.dateF);
+    console.log(income.dateF);
+    income.setIncID(income.id);
   };
-
   const modalOn = () => {
     setModal(true);
   };
@@ -45,7 +44,11 @@ const IncomeDetails = (income) => {
       <p className="income_amt">
         <strong>Total:</strong>${income.amount}
       </p>
-      <span className="material-symbols-outlined" id="income_edit">
+      <span
+        className="material-symbols-outlined"
+        id="income_edit"
+        onClick={handleUpdateClick}
+      >
         Edit
       </span>
       <article
@@ -62,7 +65,7 @@ const IncomeDetails = (income) => {
             <p className="income_description">{income.description}</p>
             <p>
               <strong>Date Received:</strong>
-              {income.date}
+              {income.dateF}
             </p>
             <p>
               <strong>Category</strong>

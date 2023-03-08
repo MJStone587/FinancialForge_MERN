@@ -27,6 +27,10 @@ IncomeSchema.virtual('date_formatted').get(function () {
   return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
 });
 
+IncomeSchema.virtual('date_form').get(function () {
+  return DateTime.fromJSDate(this.date).toISODate();
+});
+
 IncomeSchema.virtual('date_month').get(function () {
   return DateTime.fromJSDate(this.date).monthLong;
 });
