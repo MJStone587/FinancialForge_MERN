@@ -16,12 +16,11 @@ const IncomeDetails = (income) => {
   };
 
   const handleUpdateClick = () => {
-    income.setAmount(income.amount);
+    income.setTotal(income.total);
     income.setName(income.name);
     income.setDescription(income.description);
     income.setFrom(income.from);
     income.setDate(income.dateF);
-    console.log(income.dateF);
     income.setIncID(income.id);
   };
   const modalOn = () => {
@@ -42,7 +41,7 @@ const IncomeDetails = (income) => {
         {income.name}
       </h2>
       <p className="income_amt">
-        <strong>Total:</strong>${income.amount}
+        <strong>Total:</strong>${income.total}
       </p>
       <span
         className="material-symbols-outlined"
@@ -72,7 +71,7 @@ const IncomeDetails = (income) => {
               {income.from}
             </p>
             <p>
-              <strong>Total: </strong>${income.amount}
+              <strong>Total: </strong>${income.total}
             </p>
           </div>
         </div>

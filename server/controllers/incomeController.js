@@ -22,7 +22,7 @@ exports.get_single_income = async (req, res) => {
 
 // Create new income .
 exports.income_create_post = async (req, res) => {
-  const { name, description, from, date, amount } = req.body;
+  const { name, description, from, date, total } = req.body;
   let emptyFields = [];
 
   if (!name) {
@@ -37,13 +37,21 @@ exports.income_create_post = async (req, res) => {
   if (!date) {
     emptyFields.push('date');
   }
-  if (!amount) {
-    emptyFields.push('amount');
+  if (!total) {
+    emptyFields.push('total');
   }
 
   if (emptyFields.length > 0) {
     return res.status(400).json({
       error: 'Please fill in all fields! ',
+      emptyFields,
+    });
+  }
+  const incomeDuplicate = await Income.findOne({ name: name });
+
+  if (incomeDuplicate) {
+    return res.status(400).json({
+      error: 'Duplicate data found, please create new Income with new name',
       emptyFields,
     });
   }
@@ -54,7 +62,7 @@ exports.income_create_post = async (req, res) => {
       description,
       from,
       date,
-      amount,
+      total,
     });
     res.status(200).json(income);
   } catch (error) {
@@ -79,31 +87,7 @@ exports.income_delete = async (req, res) => {
 
 exports.income_update = async (req, res) => {
   const { id } = req.params;
-  const { name, description, from, date, amount } = req.body;
-  let emptyFields = [];
-
-  if (!name) {
-    emptyFields.push('name');
-  }
-  if (!description) {
-    emptyFields.push('description');
-  }
-  if (!from) {
-    emptyFields.push('from');
-  }
-  if (!date) {
-    emptyFields.push('date');
-  }
-  if (!amount) {
-    emptyFields.push('amount');
-  }
-
-  if (emptyFields.length > 0) {
-    return res.status(400).json({
-      error: 'Please fill in all fields! ',
-      emptyFields,
-    });
-  }
+  const { name, description, from, date, total } = req.body;
 
   try {
     const income = await Income.findByIdAndUpdate(id, {
@@ -111,7 +95,7 @@ exports.income_update = async (req, res) => {
       description,
       from,
       date,
-      amount,
+      total,
     });
     res.status(200).json(income);
   } catch (error) {

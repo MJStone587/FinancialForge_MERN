@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const ExpenseDetails = (expense) => {
   const { dispatch } = useDataContext();
@@ -16,13 +17,13 @@ const ExpenseDetails = (expense) => {
   };
 
   const handleUpdate = async () => {
-    const response = await fetch('/catalog/expense/' + expense.id, {
-      method: 'UPDATE',
-    });
-    const json = await response.json();
-    if (response.ok) {
-      dispatch({ type: 'DELETE_DATA', payload: json });
-    }
+    expense.setName(expense.name);
+    expense.setCategory(expense.category);
+    expense.setDate(expense.date);
+    expense.setDescription(expense.description);
+    expense.setPaymentType(expense.paymentType);
+    expense.setTotal(expense.total);
+    expense.setExpID(expense.id);
   };
 
   const modalOn = () => {
@@ -45,7 +46,11 @@ const ExpenseDetails = (expense) => {
       <p className="expense_total">
         <strong>Total:</strong>${expense.total}
       </p>
-      <span className="material-symbols-outlined" id="expense_edit">
+      <span
+        className="material-symbols-outlined"
+        id="expense_edit"
+        onClick={handleUpdate}
+      >
         Edit
       </span>
       <article
@@ -62,11 +67,15 @@ const ExpenseDetails = (expense) => {
             <p className="expense_description">{expense.description}</p>
             <p>
               <strong>Date Received:</strong>
-              {expense.date}
+              {expense.dateF}
             </p>
             <p>
               <strong>Category</strong>
               {expense.category}
+            </p>
+            <p>
+              <strong>Payment Type: </strong>
+              {expense.paymentType}
             </p>
             <p>
               <strong>Total: </strong>${expense.total}

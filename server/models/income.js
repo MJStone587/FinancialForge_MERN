@@ -13,7 +13,7 @@ let IncomeSchema = new Schema({
   },
   date: { type: Date, required: true },
   //author: { type: Schema.Types.ObjectId, ref: 'User' },
-  amount: { type: Number, required: true },
+  total: { type: Number, required: true },
 });
 
 IncomeSchema.set('toObject', { virtuals: true });

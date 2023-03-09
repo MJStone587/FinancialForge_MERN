@@ -11,11 +11,6 @@ let ExpenseSchema = new Schema({
     required: true,
     enum: ['Credit', 'Cash', 'Debit', 'Check', 'Gift Card', 'Other'],
   },
-  ccName: {
-    type: String,
-    required: false,
-    enum: ['None', 'Discover', 'Amex', 'Visa', 'Mastercard'],
-  },
   category: {
     type: String,
     enum: [
@@ -38,8 +33,14 @@ let ExpenseSchema = new Schema({
 ExpenseSchema.set('toObject', { virtuals: true });
 ExpenseSchema.set('toJSON', { virtuals: true });
 
-ExpenseSchema.virtual('date_formatted').get(function () {
+ExpenseSchema.virtual('date_form_med').get(function () {
   return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
+});
+
+ExpenseSchema.virtual('date_form_long').get(function () {
+  return DateTime.fromJSDate(this.date).toLocaleString(
+    DateTime.DATETIME_HUGE_WITH_SECONDS
+  );
 });
 
 ExpenseSchema.virtual('date_adjusted').get(function () {

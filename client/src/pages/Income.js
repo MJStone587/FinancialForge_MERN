@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 import IncomeDetails from '../components/IncomeDetails';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function Income() {
   const { data, dispatch } = useDataContext();
@@ -10,7 +11,7 @@ function Income() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [from, setFrom] = useState('');
-  const [amount, setAmount] = useState('');
+  const [total, setTotal] = useState('');
   const [date, setDate] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
@@ -18,7 +19,7 @@ function Income() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const income = { name, description, from, amount, date };
+    const income = { name, description, from, total, date };
     const response = await fetch('/catalog/income/create', {
       method: 'POST',
       body: JSON.stringify(income),
@@ -32,7 +33,7 @@ function Income() {
     } else if (response.ok) {
       setName('');
       setDescription('');
-      setAmount('');
+      setTotal('');
       setDate('');
       setError(null);
       setEmptyFields([]);
@@ -55,7 +56,8 @@ function Income() {
   }, []);
 
   const updateHandler = async () => {
-    const income = { name, description, from, amount, date };
+    const income = { name, description, from, total, date };
+
     const response = await fetch('/catalog/income/' + incID, {
       method: 'POST',
       body: JSON.stringify(income),
@@ -65,14 +67,12 @@ function Income() {
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
-      setEmptyFields(json.emptyFields);
     } else if (response.ok) {
       setName('');
       setDescription('');
-      setAmount('');
+      setTotal('');
       setDate('');
       setError(null);
-      setEmptyFields([]);
       setSuccess('Success: Income has been updated!');
       dispatch({ type: 'UPDATE_DATA', payload: json });
     }
@@ -110,10 +110,10 @@ function Income() {
                   dateF={income.date_form}
                   from={income.from}
                   description={income.description}
-                  amount={income.amount}
+                  total={income.total}
                   setIncID={setIncID}
                   setName={setName}
-                  setAmount={setAmount}
+                  setTotal={setTotal}
                   setDescription={setDescription}
                   setFrom={setFrom}
                   setDate={setDate}
@@ -157,17 +157,16 @@ function Income() {
             <option value="Savings">Savings</option>
             <option value="Other">Other</option>
           </select>
-          <label>Amount: </label>
+          <label>Total: </label>
           <input
             id="income_description"
             type="number"
-            onChange={(e) => setAmount(e.target.value)}
-            value={amount}
-            className={emptyFields.includes('amount') ? 'error' : ''}
+            onChange={(e) => setTotal(e.target.value)}
+            value={total}
+            className={emptyFields.includes('total') ? 'error' : ''}
           />
           <label>Date:</label>
           <DatePicker
-            id="income_date"
             onChange={(date) => setDate(date)}
             value={date}
             className={emptyFields.includes('date') ? 'error' : ''}

@@ -2,34 +2,35 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 import ExpenseDetails from '../components/ExpenseDetails';
+import DatePicker from 'react-datepicker';
 
 const Receipt = () => {
   const { data, dispatch } = useDataContext();
+  const [expID, setExpID] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [paymentType, setPaymentType] = useState('');
   const [total, setTotal] = useState('');
-  const [ccName, setCCName] = useState('None');
   const [category, setCategory] = useState('');
   const [date, setDate] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
 
+  //Form Submit Handler
   const submitHandler = async (e) => {
     e.preventDefault();
-    const income = {
+    const expense = {
       name,
       description,
       paymentType,
-      ccName,
       date,
       total,
       category,
     };
     const response = await fetch('/catalog/expense/create', {
       method: 'POST',
-      body: JSON.stringify(income),
+      body: JSON.stringify(expense),
       headers: { 'Content-Type': 'application/json' },
     });
     const json = await response.json();
@@ -42,16 +43,16 @@ const Receipt = () => {
       setDescription('');
       setTotal('');
       setDate('');
-      setCCName('');
       setCategory('');
       setPaymentType('');
       setError(null);
       setEmptyFields([]);
-      setSuccess('Success: New income has been added!');
+      setSuccess('Success: New expense has been added!');
       dispatch({ type: 'CREATE_DATA', payload: json });
     }
   };
 
+  //RETRIEVE ALL DATA
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('/catalog/expense');
@@ -65,6 +66,42 @@ const Receipt = () => {
     fetchData();
   }, []);
 
+  //FORM UPDATE HANDLER
+  const updateHandler = async () => {
+    const expense = {
+      name,
+      description,
+      paymentType,
+      date,
+      total,
+      category,
+    };
+
+    const response = await fetch('/catalog/expense/' + expID, {
+      method: 'POST',
+      body: JSON.stringify(expense),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      setError(json.error);
+      setSuccess('');
+    } else {
+      setName('');
+      setDescription('');
+      setTotal('');
+      setDate('');
+      setCategory('');
+      setPaymentType('');
+      setError(null);
+      setEmptyFields([]);
+      setSuccess('Success: Expense has been updated!');
+      dispatch({ type: 'UPDATE_DATA', payload: json });
+    }
+  };
+
   return (
     <div className="expense_container">
       <section className="expense_display">
@@ -77,10 +114,19 @@ const Receipt = () => {
               key={data._id}
               id={data._id}
               name={data.name}
+              description={data.description}
               category={data.category}
-              date={data.date_formatted}
+              date={data.date}
+              dateF={data.date_form_med}
+              paymentType={data.paymentType}
               total={data.total}
-              ccName={data.ccName}
+              setName={setName}
+              setCategory={setCategory}
+              setDate={setDate}
+              setDescription={setDescription}
+              setPaymentType={setPaymentType}
+              setTotal={setTotal}
+              setExpID={setExpID}
             />
           ))}
       </section>
@@ -88,7 +134,7 @@ const Receipt = () => {
         <div className="expense_form_header">
           <h2>+ Create New Expense</h2>
         </div>
-        <form className="expense_form" onSubmit={submitHandler}>
+        <form className="expense_form">
           <label>Name:</label>
           <input
             type="text"
@@ -138,20 +184,6 @@ const Receipt = () => {
             <option value="Check">Check</option>
             <option value="Other">Other</option>
           </select>
-          <label htmlFor="expense_ccName">Credit Card (If Applicable):</label>
-          <select
-            name="expense_ccName"
-            id="expense_ccName"
-            onChange={(e) => setCCName(e.target.value)}
-            value={ccName}
-            className="ccName"
-          >
-            <option value="" defaultValue></option>
-            <option value="Discover">Discover</option>
-            <option value="Visa">Visa</option>
-            <option value="Mastercard">Mastercard</option>
-            <option value="Amex">Amex</option>
-          </select>
           <label>Amount: </label>
           <input
             id="expense_description"
@@ -161,14 +193,13 @@ const Receipt = () => {
             className={emptyFields.includes('total') ? 'error' : ''}
           />
           <label>Date:</label>
-          <input
-            id="expense_date"
-            type="date"
-            onChange={(e) => setDate(e.target.value)}
+          <DatePicker
+            onChange={(date) => setDate(date)}
             value={date}
             className={emptyFields.includes('date') ? 'error' : ''}
           />
-          <button>Add Income</button>
+          <button onClick={submitHandler}>Add New Expense</button>
+          <button onClick={updateHandler}>Update Existing Expense</button>
           {error && <p>{error}</p>}
           {success && <p>{success}</p>}
         </form>
