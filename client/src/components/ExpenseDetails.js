@@ -36,19 +36,19 @@ const ExpenseDetails = (expense) => {
   };
 
   return (
-    <div className="expense_card">
+    <div className="expense-card">
       <span onClick={handleDel} className="material-symbols-outlined">
         Delete
       </span>
-      <h2 className="expense_title" onClick={modalOn}>
+      <h2 className="expense-title" onClick={modalOn}>
         {expense.name}
       </h2>
-      <p className="expense_total">
+      <p className="expense-total">
         <strong>Total:</strong>${expense.total}
       </p>
       <span
         className="material-symbols-outlined"
-        id="expense_edit"
+        id="expense-edit"
         onClick={handleUpdate}
       >
         Edit
@@ -58,13 +58,13 @@ const ExpenseDetails = (expense) => {
         onClick={modalOff}
         style={modal ? { display: 'flex' } : { display: 'none' }}
       >
-        <div className="modal_content">
-          <div className="modal_content_header">
+        <div className="modal-content">
+          <div className="modal-content-header">
             <span className="close">X</span>
             <h2>{expense.name}</h2>
           </div>
-          <div className="modal_content_body">
-            <p className="expense_description">{expense.description}</p>
+          <div className="modal-content-body">
+            <p className="expense-description">{expense.description}</p>
             <p>
               <strong>Date Received:</strong>
               {expense.dateF}

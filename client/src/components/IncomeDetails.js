@@ -19,7 +19,8 @@ const IncomeDetails = (income) => {
     income.setTotal(income.total);
     income.setName(income.name);
     income.setDescription(income.description);
-    income.setFrom(income.from);
+    income.setCategory(income.category);
+    income.setDateCreated(income.dateCreated);
     income.setDate(income.dateF);
     income.setIncID(income.id);
   };
@@ -33,19 +34,19 @@ const IncomeDetails = (income) => {
   };
 
   return (
-    <section className="income_card">
+    <section className="income-card">
       <span onClick={handleDel} className="material-symbols-outlined">
         Delete
       </span>
-      <h2 className="income_title" onClick={modalOn}>
+      <h2 className="income-title" onClick={modalOn}>
         {income.name}
       </h2>
-      <p className="income_amt">
+      <p className="income-amt">
         <strong>Total:</strong>${income.total}
       </p>
       <span
         className="material-symbols-outlined"
-        id="income_edit"
+        id="income-edit"
         onClick={handleUpdateClick}
       >
         Edit
@@ -55,23 +56,27 @@ const IncomeDetails = (income) => {
         onClick={modalOff}
         style={modal ? { display: 'flex' } : { display: 'none' }}
       >
-        <div className="modal_content">
-          <div className="modal_content_header">
+        <div className="modal-content">
+          <div className="modal-content-header">
             <span className="close">X</span>
             <h2>{income.name}</h2>
           </div>
-          <div className="modal_content_body">
-            <p className="income_description">{income.description}</p>
+          <div className="modal-content-body">
+            <p className="income-description">{income.description}</p>
             <p>
               <strong>Date Received:</strong>
               {income.dateF}
             </p>
             <p>
               <strong>Category</strong>
-              {income.from}
+              {income.category}
             </p>
             <p>
               <strong>Total: </strong>${income.total}
+            </p>
+            <p>
+              <strong>Date Created:</strong>
+              {income.dateCreatedF}
             </p>
           </div>
         </div>

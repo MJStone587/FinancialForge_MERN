@@ -5,13 +5,13 @@ import forgeIcon from '../images/forge-ltblue.png';
 
 function Navbar() {
   return (
-    <section className="navbar_container">
-      <div className="navbar_image_container">
+    <section className="navbar-container">
+      <div className="navbar-image-container">
         <Link to="/">
-          <img src={forgeIcon} alt="Forge Icon" id="navbar_image"></img>
+          <img src={forgeIcon} alt="Forge Icon" id="navbar-image"></img>
         </Link>
       </div>
-      <nav className="navbar_links">
+      <nav className="navbar-links">
         <Link to="/">
           <h2>Home</h2>
         </Link>

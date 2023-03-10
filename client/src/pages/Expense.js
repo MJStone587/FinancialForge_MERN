@@ -103,9 +103,9 @@ const Receipt = () => {
   };
 
   return (
-    <div className="expense_container">
-      <section className="expense_display">
-        <div className="expense_display_header">
+    <div className="expense-container">
+      <section className="expense-display">
+        <div className="expense-display-header">
           <h2>Expenses</h2>
         </div>
         {data &&
@@ -130,11 +130,11 @@ const Receipt = () => {
             />
           ))}
       </section>
-      <aside className="expense_form_container">
-        <div className="expense_form_header">
+      <aside className="expense-form-container">
+        <div className="expense-form-header">
           <h2>+ Create New Expense</h2>
         </div>
-        <form className="expense_form">
+        <form className="expense-form">
           <label>Name:</label>
           <input
             type="text"
@@ -149,10 +149,9 @@ const Receipt = () => {
             value={description}
             className={emptyFields.includes('description') ? 'error' : ''}
           />
-          <label htmlFor="expense_category">Category:</label>
+          <label htmlFor="expense-category">Category:</label>
           <select
-            name="expense_category"
-            id="expense_category"
+            id="expense-category"
             onChange={(e) => setCategory(e.target.value)}
             value={category}
             className={emptyFields.includes('category') ? 'error' : ''}
@@ -168,10 +167,9 @@ const Receipt = () => {
             <option value="Self-Care">Self-Care</option>
             <option value="Other">Other</option>
           </select>
-          <label htmlFor="expense_type">Payment Type:</label>
+          <label htmlFor="expense-type">Payment Type:</label>
           <select
-            name="expense_type"
-            id="expense_type"
+            id="expense-type"
             onChange={(e) => setPaymentType(e.target.value)}
             value={paymentType}
             className={emptyFields.includes('paymentType') ? 'error' : ''}
@@ -186,7 +184,7 @@ const Receipt = () => {
           </select>
           <label>Amount: </label>
           <input
-            id="expense_description"
+            id="expense-description"
             type="number"
             onChange={(e) => setTotal(e.target.value)}
             value={total}

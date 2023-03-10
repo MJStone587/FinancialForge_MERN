@@ -9,17 +9,28 @@ function Income() {
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
+  const [dateCreated, setDateCreated] = useState('');
   const [description, setDescription] = useState('');
-  const [from, setFrom] = useState('');
+  const [category, setCategory] = useState('');
   const [total, setTotal] = useState('');
-  const [date, setDate] = useState('');
+  const [dateReceived, setDate] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
+  const [isMoreCompleted, setIsMoreCompleted] = useState(false);
+  const [isLessCompleted, setIsLessCompleted] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const income = { name, description, from, total, date };
+    setDateCreated(Date.now());
+    const income = {
+      name,
+      description,
+      category,
+      total,
+      dateReceived,
+      dateCreated,
+    };
     const response = await fetch('/catalog/income/create', {
       method: 'POST',
       body: JSON.stringify(income),
@@ -35,6 +46,7 @@ function Income() {
       setDescription('');
       setTotal('');
       setDate('');
+      setDateCreated('');
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New income has been added!');
@@ -56,7 +68,14 @@ function Income() {
   }, []);
 
   const updateHandler = async () => {
-    const income = { name, description, from, total, date };
+    const income = {
+      name,
+      description,
+      category,
+      total,
+      dateReceived,
+      dateCreated,
+    };
 
     const response = await fetch('/catalog/income/' + incID, {
       method: 'POST',
@@ -72,32 +91,40 @@ function Income() {
       setDescription('');
       setTotal('');
       setDate('');
+      setDateCreated('');
       setError(null);
       setSuccess('Success: Income has been updated!');
       dispatch({ type: 'UPDATE_DATA', payload: json });
     }
   };
   // COME BACK TO SHOW MORE AND LESS, MAKE BETTER OONGA BOONGA
-  const showMore = () => {
-    if (incDisp !== data.length) {
-      setIncDisp(incDisp + 3);
+  const loadMore = () => {
+    setIncDisp(incDisp + 3);
+    if (incDisp >= data.length) {
+      setIsMoreCompleted(true);
+    }
+    if (incDisp <= data.length) {
+      setIsMoreCompleted(false);
     }
   };
-  const showLess = () => {
-    if (incDisp > 3) {
-      setIncDisp(incDisp - 3);
+  const loadLess = () => {
+    setIncDisp(incDisp - 3);
+    if (incDisp <= 5) {
+      setIsLessCompleted(true);
+    }
+    if (incDisp > 8) {
+      setIsLessCompleted(false);
     }
   };
-
   return (
-    <div className="income_container">
-      <section className="income_display">
-        <div className="income_header">
+    <div className="income-container">
+      <section className="income-display">
+        <div className="income-header">
           <h1>Income</h1>
           <p>Add, update, delete, and review your income.</p>
         </div>
 
-        <div className="income_list">
+        <div className="income-list">
           {data &&
             data
               .slice(0, incDisp)
@@ -106,28 +133,65 @@ function Income() {
                   key={income._id}
                   name={income.name}
                   id={income._id}
-                  date={income.date}
-                  dateF={income.date_form}
-                  from={income.from}
+                  date={income.dateReceived}
+                  dateF={income.date_rec_formatted}
+                  category={income.category}
                   description={income.description}
+                  dateCreated={income.dateCreated}
+                  dateCreatedF={income.date_cre_formatted}
                   total={income.total}
                   setIncID={setIncID}
                   setName={setName}
                   setTotal={setTotal}
                   setDescription={setDescription}
-                  setFrom={setFrom}
+                  setCategory={setCategory}
                   setDate={setDate}
+                  setDateCreated={setDateCreated}
                 />
               ))}
-          <button onClick={showMore}>Show More</button>
-          <button onClick={showLess}>Show Less</button>
+        </div>
+        <div className="btn-container">
+          {isMoreCompleted ? (
+            <button
+              onClick={loadMore}
+              type="button"
+              className="btn btn-loadmore disabled"
+            >
+              That's It
+            </button>
+          ) : (
+            <button
+              onClick={loadMore}
+              type="button"
+              className="btn btn-loadmore"
+            >
+              Load More
+            </button>
+          )}
+          {isLessCompleted ? (
+            <button
+              onClick={loadLess}
+              type="button"
+              className="btn btn-loadless disabled"
+            >
+              That's It
+            </button>
+          ) : (
+            <button
+              onClick={loadLess}
+              type="button"
+              className="btn btn-loadless"
+            >
+              Load Less
+            </button>
+          )}
         </div>
       </section>
-      <aside className="income_form_container">
-        <div className="income_form_header">
+      <aside className="income-form-container">
+        <div className="income-form-header">
           <h2>+ Add New Income</h2>
         </div>
-        <form className="income_form">
+        <form className="income-form">
           <label>Name:</label>
           <input
             type="text"
@@ -142,13 +206,13 @@ function Income() {
             value={description}
             className={emptyFields.includes('description') ? 'error' : ''}
           />
-          <label htmlFor="income_from">From:</label>
+          <label htmlFor="income-category">Category:</label>
           <select
-            name="income_from"
-            id="income_from"
-            onChange={(e) => setFrom(e.target.value)}
-            value={from}
-            className={emptyFields.includes('from') ? 'error' : ''}
+            name="income-category"
+            id="income-category"
+            onChange={(e) => setCategory(e.target.value)}
+            value={category}
+            className={emptyFields.includes('category') ? 'error' : ''}
           >
             <option value="" defaultValue></option>
             <option value="Job">Job</option>
@@ -159,7 +223,7 @@ function Income() {
           </select>
           <label>Total: </label>
           <input
-            id="income_description"
+            id="income-description"
             type="number"
             onChange={(e) => setTotal(e.target.value)}
             value={total}
@@ -168,8 +232,9 @@ function Income() {
           <label>Date:</label>
           <DatePicker
             onChange={(date) => setDate(date)}
-            value={date}
-            className={emptyFields.includes('date') ? 'error' : ''}
+            value={dateReceived}
+            selected={dateReceived}
+            className={emptyFields.includes('date') ? 'error' : 'date'}
           />
           <button onClick={submitHandler}>Add NEW Income</button>
           <button onClick={updateHandler}>Update Income</button>
