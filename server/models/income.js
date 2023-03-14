@@ -20,8 +20,12 @@ let IncomeSchema = new Schema({
 IncomeSchema.set('toObject', { virtuals: true });
 IncomeSchema.set('toJSON', { virtuals: true });
 
-IncomeSchema.virtual('date_rec_formatted').get(function () {
+IncomeSchema.virtual('date_rec_med').get(function () {
   return this.dateReceived.toLocaleDateString(DateTime.DATE_MED);
+});
+
+IncomeSchema.virtual('date_rec_short').get(function () {
+  return this.dateReceived.toLocaleDateString(DateTime.DATE_SHORT);
 });
 
 IncomeSchema.virtual('date_rec_month').get(function () {

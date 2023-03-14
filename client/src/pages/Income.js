@@ -99,22 +99,22 @@ function Income() {
   };
   // COME BACK TO SHOW MORE AND LESS, MAKE BETTER OONGA BOONGA
   const loadMore = () => {
-    setIncDisp(incDisp + 3);
     if (incDisp >= data.length) {
       setIsMoreCompleted(true);
     }
     if (incDisp <= data.length) {
       setIsMoreCompleted(false);
     }
+    setIncDisp(incDisp + 3);
   };
   const loadLess = () => {
-    setIncDisp(incDisp - 3);
     if (incDisp <= 5) {
       setIsLessCompleted(true);
     }
-    if (incDisp > 8) {
+    if (incDisp >= 8) {
       setIsLessCompleted(false);
     }
+    setIncDisp(incDisp - 3);
   };
   return (
     <div className="income-container">
@@ -133,8 +133,8 @@ function Income() {
                   key={income._id}
                   name={income.name}
                   id={income._id}
-                  date={income.dateReceived}
-                  dateF={income.date_rec_formatted}
+                  dateReceived={income.dateReceived}
+                  dateF={income.date_rec_month}
                   category={income.category}
                   description={income.description}
                   dateCreated={income.dateCreated}

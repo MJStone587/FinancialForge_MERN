@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import { parseISO } from 'date-fns';
 
 const IncomeDetails = (income) => {
   const { dispatch } = useDataContext();
@@ -15,13 +16,14 @@ const IncomeDetails = (income) => {
     }
   };
 
+  //Overnight income required parseISO to properly set date
+  // but expense doesn't?? both using same format
   const handleUpdateClick = () => {
     income.setTotal(income.total);
     income.setName(income.name);
     income.setDescription(income.description);
     income.setCategory(income.category);
-    income.setDateCreated(income.dateCreated);
-    income.setDate(income.dateF);
+    income.setDate(parseISO(income.dateReceived));
     income.setIncID(income.id);
   };
   const modalOn = () => {

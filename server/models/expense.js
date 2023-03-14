@@ -34,7 +34,7 @@ ExpenseSchema.set('toObject', { virtuals: true });
 ExpenseSchema.set('toJSON', { virtuals: true });
 
 ExpenseSchema.virtual('date_form_med').get(function () {
-  return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_MED);
+  return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_SHORT);
 });
 
 ExpenseSchema.virtual('date_form_long').get(function () {
