@@ -61,7 +61,7 @@ const IncomeDetails = (income) => {
         <div className="modal-content">
           <div className="modal-content-header">
             <span className="close">X</span>
-            <h2>{income.name}</h2>
+            <h2 className="modal-title">{income.name}</h2>
           </div>
           <div className="modal-content-body">
             <p className="income-description">{income.description}</p>
