@@ -12,7 +12,7 @@ const Receipt = () => {
   const [paymentType, setPaymentType] = useState('');
   const [total, setTotal] = useState('');
   const [category, setCategory] = useState('');
-  const [date, setDate] = useState('');
+  const [dateReceived, setDateReceived] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
@@ -24,7 +24,7 @@ const Receipt = () => {
       name,
       description,
       paymentType,
-      date,
+      dateReceived,
       total,
       category,
     };
@@ -42,7 +42,7 @@ const Receipt = () => {
       setName('');
       setDescription('');
       setTotal('');
-      setDate('');
+      setDateReceived('');
       setCategory('');
       setPaymentType('');
       setError(null);
@@ -72,7 +72,7 @@ const Receipt = () => {
       name,
       description,
       paymentType,
-      date,
+      dateReceived,
       total,
       category,
     };
@@ -92,7 +92,7 @@ const Receipt = () => {
       setName('');
       setDescription('');
       setTotal('');
-      setDate('');
+      setDateReceived('');
       setCategory('');
       setPaymentType('');
       setError(null);
@@ -104,104 +104,108 @@ const Receipt = () => {
 
   return (
     <div className="expense-container">
+      <div className="expense-header">
+        <h1>Expenses</h1>
+        <p>Add, update, delete, and review your income.</p>
+      </div>
       <section className="expense-display">
-        <div className="expense-display-header">
-          <h2>Expenses</h2>
+        <div className="expense-list">
+          {data &&
+            data.map((data) => (
+              <ExpenseDetails
+                key={data._id}
+                id={data._id}
+                name={data.name}
+                description={data.description}
+                category={data.category}
+                dateReceived={data.dateReceived}
+                dateReceivedF={data.date_form_med}
+                paymentType={data.paymentType}
+                total={data.total}
+                setName={setName}
+                setCategory={setCategory}
+                setDateReceived={setDateReceived}
+                setDescription={setDescription}
+                setPaymentType={setPaymentType}
+                setTotal={setTotal}
+                setExpID={setExpID}
+              />
+            ))}
         </div>
-        {data &&
-          data.map((data) => (
-            <ExpenseDetails
-              key={data._id}
-              id={data._id}
-              name={data.name}
-              description={data.description}
-              category={data.category}
-              date={data.date}
-              dateF={data.date_form_med}
-              paymentType={data.paymentType}
-              total={data.total}
-              setName={setName}
-              setCategory={setCategory}
-              setDate={setDate}
-              setDescription={setDescription}
-              setPaymentType={setPaymentType}
-              setTotal={setTotal}
-              setExpID={setExpID}
+        <aside className="expense-form-container">
+          <div className="expense-form-header">
+            <h2>+ Create New Expense</h2>
+          </div>
+          <form className="expense-form">
+            <label>Name:</label>
+            <input
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              className={emptyFields.includes('name') ? 'error' : ''}
             />
-          ))}
+            <label>Description:</label>
+            <input
+              type="text"
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
+              className={emptyFields.includes('description') ? 'error' : ''}
+            />
+            <label htmlFor="expense-category">Category:</label>
+            <select
+              id="expense-category"
+              onChange={(e) => setCategory(e.target.value)}
+              value={category}
+              className={emptyFields.includes('category') ? 'error' : ''}
+            >
+              <option value="" defaultValue></option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Food">Food</option>
+              <option value="House">House</option>
+              <option value="Car">Car</option>
+              <option value="Work">Work</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Pet">Pet</option>
+              <option value="Self-Care">Self-Care</option>
+              <option value="Other">Other</option>
+            </select>
+            <label htmlFor="expense-type">Payment Type:</label>
+            <select
+              id="expense-type"
+              onChange={(e) => setPaymentType(e.target.value)}
+              value={paymentType}
+              className={emptyFields.includes('paymentType') ? 'error' : ''}
+            >
+              <option value="" defaultValue></option>
+              <option value="Debit">Debit</option>
+              <option value="Credit">Credit</option>
+              <option value="Cash">Cash</option>
+              <option value="Gift Card">Gift Card</option>
+              <option value="Check">Check</option>
+              <option value="Other">Other</option>
+            </select>
+            <label>Total: </label>
+            <input
+              id="expense-description"
+              type="number"
+              onChange={(e) => setTotal(e.target.value)}
+              value={total}
+              className={emptyFields.includes('total') ? 'error' : ''}
+            />
+            <label>Date:</label>
+            <DatePicker
+              onChange={(dateReceived) => setDateReceived(dateReceived)}
+              value={dateReceived}
+              selected={dateReceived}
+              className={emptyFields.includes('dateReceived') ? 'error' : ''}
+            />
+            <button onClick={submitHandler}>Add New Expense</button>
+            <button onClick={updateHandler}>Update Existing Expense</button>
+            {error && <p>{error}</p>}
+            {success && <p>{success}</p>}
+          </form>
+        </aside>
       </section>
-      <aside className="expense-form-container">
-        <div className="expense-form-header">
-          <h2>+ Create New Expense</h2>
-        </div>
-        <form className="expense-form">
-          <label>Name:</label>
-          <input
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            className={emptyFields.includes('name') ? 'error' : ''}
-          />
-          <label>Description:</label>
-          <input
-            type="text"
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
-            className={emptyFields.includes('description') ? 'error' : ''}
-          />
-          <label htmlFor="expense-category">Category:</label>
-          <select
-            id="expense-category"
-            onChange={(e) => setCategory(e.target.value)}
-            value={category}
-            className={emptyFields.includes('category') ? 'error' : ''}
-          >
-            <option value="" defaultValue></option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Food">Food</option>
-            <option value="House">House</option>
-            <option value="Car">Car</option>
-            <option value="Work">Work</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Pet">Pet</option>
-            <option value="Self-Care">Self-Care</option>
-            <option value="Other">Other</option>
-          </select>
-          <label htmlFor="expense-type">Payment Type:</label>
-          <select
-            id="expense-type"
-            onChange={(e) => setPaymentType(e.target.value)}
-            value={paymentType}
-            className={emptyFields.includes('paymentType') ? 'error' : ''}
-          >
-            <option value="" defaultValue></option>
-            <option value="Debit">Debit</option>
-            <option value="Credit">Credit</option>
-            <option value="Cash">Cash</option>
-            <option value="Gift Card">Gift Card</option>
-            <option value="Check">Check</option>
-            <option value="Other">Other</option>
-          </select>
-          <label>Amount: </label>
-          <input
-            id="expense-description"
-            type="number"
-            onChange={(e) => setTotal(e.target.value)}
-            value={total}
-            className={emptyFields.includes('total') ? 'error' : ''}
-          />
-          <label>Date:</label>
-          <DatePicker
-            onChange={(date) => setDate(date)}
-            value={date}
-            className={emptyFields.includes('date') ? 'error' : ''}
-          />
-          <button onClick={submitHandler}>Add New Expense</button>
-          <button onClick={updateHandler}>Update Existing Expense</button>
-          {error && <p>{error}</p>}
-          {success && <p>{success}</p>}
-        </form>
-      </aside>
     </div>
   );
 };

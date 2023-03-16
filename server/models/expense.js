@@ -26,7 +26,7 @@ let ExpenseSchema = new Schema({
     ],
   },
   author: { type: Schema.Types.ObjectId, ref: 'User' },
-  date: { type: Date, required: true },
+  dateReceived: { type: Date, required: true },
   total: { type: Number },
 });
 
@@ -34,7 +34,7 @@ ExpenseSchema.set('toObject', { virtuals: true });
 ExpenseSchema.set('toJSON', { virtuals: true });
 
 ExpenseSchema.virtual('date_form_med').get(function () {
-  return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATE_SHORT);
+  return this.dateReceived.toLocaleDateString(DateTime.DATE_MED);
 });
 
 ExpenseSchema.virtual('date_form_long').get(function () {

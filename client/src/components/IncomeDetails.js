@@ -36,7 +36,7 @@ const IncomeDetails = (income) => {
   };
 
   return (
-    <section className="income-card">
+    <div className="income-card">
       <span onClick={handleDel} className="material-symbols-outlined">
         Delete
       </span>
@@ -83,7 +83,7 @@ const IncomeDetails = (income) => {
           </div>
         </div>
       </article>
-    </section>
+    </div>
   );
 };
 

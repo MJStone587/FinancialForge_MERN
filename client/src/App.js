@@ -1,16 +1,32 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import './index.css';
 import Home from './pages/Home.js';
-import Navbar from './components/Navbar.js';
 import Income from './pages/Income.js';
 import Summary from './pages/Summary.js';
 import Expense from './pages/Expense.js';
+import Header from './components/Header';
+import Navbar from './components/Navbar';
 
 function App() {
+  const [showNav, setShowNav] = useState(false);
+
+  const toggleNav = () => {
+    setShowNav(!showNav);
+  };
+
   return (
-    <main className="App">
+    <main
+      className="App"
+      onClick={(e) =>
+        e.target.tagName !== 'NAV' && e.target.tagName !== 'SPAN'
+          ? setShowNav(false)
+          : ''
+      }
+    >
       <BrowserRouter>
-        <Navbar />
+        <Header toggleNav={toggleNav} />
+        {showNav && <Navbar />}
         <div className="pages"></div>
         <Routes>
           <Route path="/" element={<Home />} />

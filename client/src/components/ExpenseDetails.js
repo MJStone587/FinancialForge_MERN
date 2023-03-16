@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
-import 'react-datepicker/dist/react-datepicker.css';
 
 const ExpenseDetails = (expense) => {
   const { dispatch } = useDataContext();
@@ -19,7 +18,7 @@ const ExpenseDetails = (expense) => {
   const handleUpdate = async () => {
     expense.setName(expense.name);
     expense.setCategory(expense.category);
-    expense.setDate(expense.dateF);
+    expense.setDateReceived(expense.dateReceivedF);
     expense.setDescription(expense.description);
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);
@@ -67,7 +66,7 @@ const ExpenseDetails = (expense) => {
             <p className="expense-description">{expense.description}</p>
             <p>
               <strong>Date Received:</strong>
-              {expense.dateF}
+              {expense.dateReceivedF}
             </p>
             <p>
               <strong>Category</strong>

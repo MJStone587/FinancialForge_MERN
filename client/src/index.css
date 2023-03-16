@@ -8,35 +8,35 @@
   --gold-color: #fca311;
   --gray-color-: #e5e5e5;
 }
-.App {
-  display: flex;
-  flex-flow: column nowrap;
-}
-.navbar-container {
+
+.header-container {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
   height: 13vh;
   width: 100%;
+  padding: 0px 50px;
   background-color: var(--charcoal-bg-);
 }
-.navbar-container h2 {
+.header-container h2 {
   color: white;
   font-size: calc(16px + (20 - 16) * ((100vw - 300px) / (1920 - 300)));
 }
-.navbar-container h2:hover {
+.header-container h2:hover {
   color: var(--ltBlue-color-);
 }
-.navbar-left {
+.header-left {
   display: flex;
-  margin: 0px 200px 0px 100px;
   align-items: center;
+  flex: 2;
+  justify-content: flex-start;
 }
-#navbar-image {
+#header-image {
   height: calc(25px + (70 - 25) * ((100vw - 300px) / (1920 - 300)));
   width: calc(25px + (70 - 25) * ((100vw - 300px) / (1920 - 300)));
 }
-.navbar-right {
-  margin: 0px 50px 25px 0px;
+.header-right {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -44,8 +44,30 @@
   flex: 2;
   order: 2;
 }
+.navbar-container {
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(100px + (150 - 100) * ((100vw - 300px) / (1920 - 300)));
+  margin-top: calc(80px + (110 - 80) * ((100vw - 300px) / (1920 - 300)));
+  background-color: var(--charcoal-bg-);
+}
 .navbar-links {
-  display: none;
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 50px;
+  padding: 20px;
+}
+.navbar-links a {
+  color: var(--white-color-);
+  text-decoration: none;
+  font-size: calc(12px + (16 - 12) * ((100vw - 300px) / (1920 - 300)));
+}
+.navbar-links a:hover {
+  color: var(--ltBlue-color-);
+  text-decoration: none;
+  cursor: pointer;
 }
 .home {
   display: flex;
@@ -98,14 +120,16 @@ select.error {
   margin: 0px 30px;
   overflow: auto;
 }
-.income-header {
+.income-header,
+.expense-header {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
   margin: 20px 0px;
 }
-.income-header h1 {
+.income-header h1,
+.expense-header h1 {
   font-size: calc(20px + (32 - 20) * ((100vw - 300px) / (1920 - 300)));
 }
 #income-create-new {
@@ -114,7 +138,8 @@ select.error {
 #income-create-new:hover {
   color: var();
 }
-.income-list {
+.income-list,
+.expense-list {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -191,7 +216,7 @@ select.error {
   display: none;
   position: fixed;
   flex-flow: column nowrap;
-  z-index: 5;
+  z-index: 10;
   left: 0;
   top: 0;
   width: 100%;
