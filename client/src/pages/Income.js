@@ -9,7 +9,6 @@ function Income() {
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
-  const [dateCreated, setDateCreated] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [total, setTotal] = useState('');
@@ -34,14 +33,12 @@ function Income() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setDateCreated(Date.now());
     const income = {
       name,
       description,
       category,
       total,
       dateReceived,
-      dateCreated,
     };
     const response = await fetch('/catalog/income/create', {
       method: 'POST',
@@ -58,7 +55,6 @@ function Income() {
       setDescription('');
       setTotal('');
       setDate('');
-      setDateCreated('');
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New income has been added!');
@@ -73,7 +69,6 @@ function Income() {
       category,
       total,
       dateReceived,
-      dateCreated,
     };
 
     const response = await fetch('/catalog/income/' + incID, {
@@ -90,7 +85,6 @@ function Income() {
       setDescription('');
       setTotal('');
       setDate('');
-      setDateCreated('');
       setError(null);
       setSuccess('Success: Income has been updated!');
       dispatch({ type: 'UPDATE_DATA', payload: json });
@@ -146,11 +140,11 @@ function Income() {
                   name={income.name}
                   id={income._id}
                   dateReceived={income.dateReceived}
-                  dateF={income.date_rec_month}
+                  dateReceivedF={income.date_received_med}
                   category={income.category}
                   description={income.description}
                   dateCreated={income.dateCreated}
-                  dateCreatedF={income.date_cre_formatted}
+                  dateCreatedF={income.date_created_med}
                   total={income.total}
                   setIncID={setIncID}
                   setName={setName}
@@ -158,7 +152,6 @@ function Income() {
                   setDescription={setDescription}
                   setCategory={setCategory}
                   setDate={setDate}
-                  setDateCreated={setDateCreated}
                 />
               ))}
           {isMoreCompleted ? (

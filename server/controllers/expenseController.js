@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 
 exports.expense_list = async function (req, res) {
   try {
-    const expenseList = await Expense.find({}).sort();
+    const expenseList = await Expense.find({}).sort({ name: 1 });
     res.status(200).json(expenseList);
   } catch (error) {
-    res.status(400).json({ error: 'No data found' });
+    res.status(400).json({ error: error.message });
+    console.log(error.message);
   }
 };
 
@@ -36,7 +37,7 @@ exports.expense_create = async function (req, res) {
   if (emptyFields.length > 0) {
     return res
       .status(400)
-      .json({ error: 'Please fill in all required fields' });
+      .json({ error: 'Please fill in all required fields', emptyFields });
   }
 
   try {

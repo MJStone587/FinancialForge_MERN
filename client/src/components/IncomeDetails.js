@@ -66,19 +66,15 @@ const IncomeDetails = (income) => {
           <div className="modal-content-body">
             <p className="income-description">{income.description}</p>
             <p>
-              <strong>Date Received:</strong>
-              {income.dateF}
+              <strong>Date Received: </strong>
+              {income.dateReceivedF}
             </p>
             <p>
-              <strong>Category</strong>
+              <strong>Category: </strong>
               {income.category}
             </p>
             <p>
               <strong>Total: </strong>${income.total}
-            </p>
-            <p>
-              <strong>Date Created:</strong>
-              {income.dateCreatedF}
             </p>
           </div>
         </div>

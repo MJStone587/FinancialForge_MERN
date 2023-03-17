@@ -18,7 +18,7 @@ const ExpenseDetails = (expense) => {
   const handleUpdate = async () => {
     expense.setName(expense.name);
     expense.setCategory(expense.category);
-    expense.setDateReceived(expense.dateReceivedF);
+    expense.setDateReceived(expense.dateReceived);
     expense.setDescription(expense.description);
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);

@@ -119,7 +119,7 @@ const Receipt = () => {
                 description={data.description}
                 category={data.category}
                 dateReceived={data.dateReceived}
-                dateReceivedF={data.date_form_med}
+                dateReceivedF={data.date_received_med}
                 paymentType={data.paymentType}
                 total={data.total}
                 setName={setName}
@@ -194,7 +194,7 @@ const Receipt = () => {
             />
             <label>Date:</label>
             <DatePicker
-              onChange={(dateReceived) => setDateReceived(dateReceived)}
+              onChange={(date) => setDateReceived(date)}
               value={dateReceived}
               selected={dateReceived}
               className={emptyFields.includes('dateReceived') ? 'error' : ''}

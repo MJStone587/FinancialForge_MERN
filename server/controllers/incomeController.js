@@ -6,7 +6,7 @@ exports.get_all_income = async function (req, res) {
     const incomeData = await Income.find({}).sort({ dateCreated: -1 });
     res.status(200).json(incomeData);
   } catch (error) {
-    res.status(400).json('Error');
+    res.status(400).json({ error: 'Something is broken wtf is this' });
   }
 };
 
