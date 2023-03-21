@@ -4,7 +4,6 @@ const router = express.Router();
 
 const expense_controller = require('../controllers/expenseController');
 const income_controller = require('../controllers/incomeController');
-const summary_controller = require('../controllers/summaryController');
 const user_controller = require('../controllers/userController');
 
 //Get all income data

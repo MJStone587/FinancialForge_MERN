@@ -8,8 +8,11 @@ const Receipt = () => {
   const { data, dispatch } = useDataContext();
   const [expID, setExpID] = useState('');
   const [name, setName] = useState('');
+  const [expDisp, setExpDisp] = useState(5);
   const [description, setDescription] = useState('');
   const [paymentType, setPaymentType] = useState('');
+  const [isMoreCompleted, setIsMoreCompleted] = useState(false);
+  const [isLessCompleted, setIsLessCompleted] = useState(false);
   const [total, setTotal] = useState('');
   const [category, setCategory] = useState('');
   const [dateReceived, setDateReceived] = useState('');
@@ -102,6 +105,41 @@ const Receipt = () => {
     }
   };
 
+  useEffect(() => {
+    if (data && expDisp >= data.length) {
+      setIsMoreCompleted(true);
+    } else if (expDisp < data) {
+      setIsMoreCompleted(false);
+    }
+    if (data && expDisp <= 5) {
+      setIsLessCompleted(true);
+    } else if (expDisp >= 8) {
+      setIsLessCompleted(false);
+    }
+    if (data && expDisp <= 5) {
+      setIsLessCompleted(true);
+    } else if (data && expDisp >= 8) {
+      setIsLessCompleted(false);
+    }
+    if (data && expDisp >= data) {
+      setIsMoreCompleted(true);
+    } else if (data && expDisp < data) {
+      setIsMoreCompleted(false);
+    }
+  }, [data]);
+
+  const loadMore = () => {
+    if (expDisp < data.length && expDisp >= 5) {
+      setExpDisp(expDisp + 3);
+    }
+  };
+
+  const loadLess = () => {
+    if (expDisp >= 8) {
+      setExpDisp(expDisp - 3);
+    }
+  };
+
   return (
     <div className="expense-container">
       <div className="expense-header">
@@ -111,26 +149,62 @@ const Receipt = () => {
       <section className="expense-display">
         <div className="expense-list">
           {data &&
-            data.map((data) => (
-              <ExpenseDetails
-                key={data._id}
-                id={data._id}
-                name={data.name}
-                description={data.description}
-                category={data.category}
-                dateReceived={data.dateReceived}
-                dateReceivedF={data.date_received_med}
-                paymentType={data.paymentType}
-                total={data.total}
-                setName={setName}
-                setCategory={setCategory}
-                setDateReceived={setDateReceived}
-                setDescription={setDescription}
-                setPaymentType={setPaymentType}
-                setTotal={setTotal}
-                setExpID={setExpID}
-              />
-            ))}
+            data
+              .slice(0, expDisp)
+              .map((data) => (
+                <ExpenseDetails
+                  key={data._id}
+                  id={data._id}
+                  name={data.name}
+                  description={data.description}
+                  category={data.category}
+                  dateReceived={data.dateReceived}
+                  dateReceivedF={data.date_received_med}
+                  paymentType={data.paymentType}
+                  total={data.total}
+                  setName={setName}
+                  setCategory={setCategory}
+                  setDateReceived={setDateReceived}
+                  setDescription={setDescription}
+                  setPaymentType={setPaymentType}
+                  setTotal={setTotal}
+                  setExpID={setExpID}
+                />
+              ))}
+          {isMoreCompleted ? (
+            <button
+              onClick={loadMore}
+              type="button"
+              className="btn btn-loadmore disabled"
+            >
+              That's It
+            </button>
+          ) : (
+            <button
+              onClick={loadMore}
+              type="button"
+              className="btn btn-loadmore"
+            >
+              Load More
+            </button>
+          )}
+          {isLessCompleted ? (
+            <button
+              onClick={loadLess}
+              type="button"
+              className="btn btn-loadless disabled"
+            >
+              That's It
+            </button>
+          ) : (
+            <button
+              onClick={loadLess}
+              type="button"
+              className="btn btn-loadless"
+            >
+              Load Less
+            </button>
+          )}
         </div>
         <aside className="expense-form-container">
           <div className="expense-form-header">

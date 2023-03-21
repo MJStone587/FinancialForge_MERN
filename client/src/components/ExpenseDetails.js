@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import { parseISO } from 'date-fns';
 
 const ExpenseDetails = (expense) => {
   const { dispatch } = useDataContext();
@@ -18,7 +19,7 @@ const ExpenseDetails = (expense) => {
   const handleUpdate = async () => {
     expense.setName(expense.name);
     expense.setCategory(expense.category);
-    expense.setDateReceived(expense.dateReceived);
+    expense.setDateReceived(parseISO(expense.dateReceived));
     expense.setDescription(expense.description);
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);
@@ -65,11 +66,11 @@ const ExpenseDetails = (expense) => {
           <div className="modal-content-body">
             <p className="expense-description">{expense.description}</p>
             <p>
-              <strong>Date Received:</strong>
+              <strong>Date Received: </strong>
               {expense.dateReceivedF}
             </p>
             <p>
-              <strong>Category</strong>
+              <strong>Category: </strong>
               {expense.category}
             </p>
             <p>

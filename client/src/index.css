@@ -147,7 +147,8 @@ select.error {
   margin: 5px;
   padding: 10px 0px;
 }
-.income-list button {
+.income-list button,
+.expense-list button {
   width: 50%;
 }
 #income-create-new {
@@ -272,4 +273,30 @@ select.error {
 }
 .btn-loadMore {
   background-color: var(--ltBlue-color-);
+}
+.summary-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+}
+table {
+  border: 1px solid black;
+  width: 600px;
+  text-align: left;
+}
+th {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+td {
+  border-right: 1px solid black;
+}
+.summary-container td:nth-last-child(1) {
+  border-right: none;
+}
+.summary-container caption {
+  font-weight: bold;
+  font-size: calc(18px + (24 - 18) * ((100vw - 300px) / (1920 - 300)));
 }

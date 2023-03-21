@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 exports.expense_list = async function (req, res) {
   try {
-    const expenseList = await Expense.find({}).sort({ name: 1 });
+    const expenseList = await Expense.find({}).sort({ dateCreated: -1 });
     res.status(200).json(expenseList);
   } catch (error) {
     res.status(400).json({ error: error.message });
