@@ -27,6 +27,7 @@ function Summary() {
     };
     fetchData();
   }, []);
+
   useEffect(() => {
     var incGrandTotal = 0;
     var expGrandTotal = 0;
@@ -38,10 +39,11 @@ function Summary() {
     //this is preferably since it's possible I will use the number again
     setExpGrandTotal(+expGrandTotal.toFixed(2));
   }, [income, expense]);
+
   return (
     <section className="summary-container">
       <h1>Summary</h1>
-      <h3>Review all financial records</h3>
+      <p>Review all financial records</p>
       <div className="income-table-container">
         <table className="income-table">
           <caption>Income</caption>
@@ -58,7 +60,7 @@ function Summary() {
                 <tr key={inc._id}>
                   <td>{inc.name}</td>
                   <td>{inc.category}</td>
-                  <td>{inc.total}</td>
+                  <td>${inc.total}</td>
                 </tr>
               ))}
           </tbody>
@@ -83,7 +85,7 @@ function Summary() {
                   <td>{exp.name}</td>
                   <td>{exp.paymentType}</td>
                   <td>{exp.category}</td>
-                  <td>{exp.total}</td>
+                  <td>${exp.total}</td>
                 </tr>
               ))}
           </tbody>

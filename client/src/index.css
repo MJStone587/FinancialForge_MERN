@@ -19,13 +19,6 @@
   padding: 0px 50px;
   background-color: var(--charcoal-bg-);
 }
-.header-container h2 {
-  color: white;
-  font-size: calc(16px + (20 - 16) * ((100vw - 300px) / (1920 - 300)));
-}
-.header-container h2:hover {
-  color: var(--ltBlue-color-);
-}
 .header-left {
   display: flex;
   align-items: center;
@@ -33,8 +26,8 @@
   justify-content: flex-start;
 }
 #header-image {
-  height: calc(25px + (70 - 25) * ((100vw - 300px) / (1920 - 300)));
-  width: calc(25px + (70 - 25) * ((100vw - 300px) / (1920 - 300)));
+  height: calc(35px + (70 - 35) * ((100vw - 300px) / (1920 - 300)));
+  width: calc(35px + (70 - 35) * ((100vw - 300px) / (1920 - 300)));
 }
 .header-right {
   display: flex;
@@ -43,6 +36,13 @@
   justify-content: flex-end;
   flex: 2;
   order: 2;
+}
+#hamburger {
+  color: var(--ltBlue-color-);
+  font-size: calc(28px + (40 - 28) * ((100vw - 300px) / (1920 - 300)));
+}
+#hamburger:hover {
+  color: white;
 }
 .navbar-container {
   z-index: 5;
@@ -74,8 +74,15 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  width: 100%;
   min-height: 80vh;
+  padding: 0px 150px;
+}
+.home h1 {
+  font-size: calc(18px + (24 - 18) * ((100vw - 300px) / (1920 - 300)));
+  text-decoration: underline;
+}
+.home p {
+  font-size: calc(16px + (18 - 16) * ((100vw - 300px) / (1920 - 300)));
 }
 .home-nav {
   display: flex;
@@ -87,6 +94,8 @@
   flex-flow: column nowrap;
   flex-basis: 30%;
   align-items: center;
+  margin: 5px;
+  padding: 10px 0px;
 }
 .income-form,
 .expense-form {
@@ -94,6 +103,7 @@
   flex-flow: column nowrap;
   row-gap: 10px;
   width: 15vw;
+  padding: 10px 0px;
 }
 input.error {
   border: 2px solid red;
@@ -195,13 +205,6 @@ select.error {
   cursor: pointer;
   color: red;
 }
-#hamburger {
-  color: var(--ltBlue-color-);
-  font-size: calc(20px + (40 - 20) * ((100vw - 300px) / (1920 - 300)));
-}
-#hamburger:hover {
-  color: white;
-}
 #income-edit,
 #expense-edit {
   align-self: flex-start;
@@ -279,7 +282,15 @@ select.error {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  max-width: 100%;
   row-gap: 10px;
+  padding: 10px;
+}
+.income-table-container {
+  overflow: auto;
+}
+.expense-table-container {
+  overflow: auto;
 }
 table {
   border: 1px solid black;
@@ -298,5 +309,45 @@ td {
 }
 .summary-container caption {
   font-weight: bold;
-  font-size: calc(18px + (24 - 18) * ((100vw - 300px) / (1920 - 300)));
+  font-size: calc(19px + (24 - 19) * ((100vw - 300px) / (1920 - 300)));
+}
+@media screen and (max-width: 414px) {
+  .home {
+    padding: 0px 10px;
+  }
+  .header-container {
+    padding: 0px 25px;
+  }
+  table {
+    width: 300px;
+  }
+  .income-display,
+  .expense-display {
+    flex-flow: column nowrap;
+  }
+  .income-list,
+  .expense-list {
+    order: 2;
+    margin: 15px 0px;
+    width: 100%;
+  }
+  .income-form-container,
+  .expense-form-container {
+    order: 1;
+    width: 100%;
+  }
+  .income-form,
+  .expense-form {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 10px;
+    width: 35vw;
+  }
+  .income-card,
+  .expense-card {
+    width: 85%;
+  }
+  .modal-content {
+    width: 80%;
+  }
 }

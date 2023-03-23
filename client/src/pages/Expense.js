@@ -9,6 +9,7 @@ const Receipt = () => {
   const [expID, setExpID] = useState('');
   const [name, setName] = useState('');
   const [expDisp, setExpDisp] = useState(5);
+  const [dataLength, setDataLength] = useState();
   const [description, setDescription] = useState('');
   const [paymentType, setPaymentType] = useState('');
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
@@ -21,8 +22,7 @@ const Receipt = () => {
   const [emptyFields, setEmptyFields] = useState([]);
 
   //Form Submit Handler
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  const submitHandler = async () => {
     const expense = {
       name,
       description,
@@ -106,25 +106,23 @@ const Receipt = () => {
   };
 
   useEffect(() => {
-    if (data && expDisp >= data.length) {
-      setIsMoreCompleted(true);
-    } else if (expDisp < data) {
-      setIsMoreCompleted(false);
+    if (dataLength) {
+      if (expDisp <= 5) {
+        setIsLessCompleted(true);
+      } else if (expDisp >= 8) {
+        setIsLessCompleted(false);
+      }
+      if (expDisp >= dataLength) {
+        setIsMoreCompleted(true);
+      } else if (expDisp < dataLength) {
+        setIsMoreCompleted(false);
+      }
     }
-    if (data && expDisp <= 5) {
-      setIsLessCompleted(true);
-    } else if (expDisp >= 8) {
-      setIsLessCompleted(false);
-    }
-    if (data && expDisp <= 5) {
-      setIsLessCompleted(true);
-    } else if (data && expDisp >= 8) {
-      setIsLessCompleted(false);
-    }
-    if (data && expDisp >= data) {
-      setIsMoreCompleted(true);
-    } else if (data && expDisp < data) {
-      setIsMoreCompleted(false);
+  }, [dataLength, expDisp]);
+
+  useEffect(() => {
+    if (data) {
+      setDataLength(data.length);
     }
   }, [data]);
 
@@ -148,6 +146,7 @@ const Receipt = () => {
       </div>
       <section className="expense-display">
         <div className="expense-list">
+          <h2>Expense Receipts</h2>
           {data &&
             data
               .slice(0, expDisp)

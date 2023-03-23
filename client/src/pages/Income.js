@@ -10,6 +10,7 @@ function Income() {
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [dataLength, setDataLength] = useState();
   const [category, setCategory] = useState('');
   const [total, setTotal] = useState('');
   const [dateReceived, setDate] = useState('');
@@ -90,47 +91,48 @@ function Income() {
       dispatch({ type: 'UPDATE_DATA', payload: json });
     }
   };
-  // COME BACK TO SHOW MORE AND LESS, MAKE BETTER OONGA BOONGA
+
+  useEffect(() => {
+    if (dataLength) {
+      if (incDisp <= 5) {
+        setIsLessCompleted(true);
+      } else if (incDisp >= 8) {
+        setIsLessCompleted(false);
+      }
+      if (incDisp >= dataLength) {
+        setIsMoreCompleted(true);
+      } else if (incDisp < dataLength) {
+        setIsMoreCompleted(false);
+      }
+    }
+  }, [dataLength, incDisp]);
+
+  useEffect(() => {
+    if (data) {
+      setDataLength(data.length);
+    }
+  }, [data]);
+
   const loadMore = () => {
     if (incDisp < data.length && incDisp >= 5) {
       setIncDisp(incDisp + 3);
     }
-    if (incDisp >= data.length) {
-      setIsMoreCompleted(true);
-    } else if (incDisp < data.length) {
-      setIsMoreCompleted(false);
-    }
-    if (incDisp <= 5) {
-      setIsLessCompleted(true);
-    } else if (incDisp >= 8) {
-      setIsLessCompleted(false);
-    }
   };
-
   const loadLess = () => {
     if (incDisp >= 8) {
       setIncDisp(incDisp - 3);
-    }
-    if (incDisp <= 5) {
-      setIsLessCompleted(true);
-    } else if (incDisp >= 8) {
-      setIsLessCompleted(false);
-    }
-    if (incDisp >= data.length) {
-      setIsMoreCompleted(true);
-    } else if (incDisp < data.length) {
-      setIsMoreCompleted(false);
     }
   };
 
   return (
     <div className="income-container">
-      <header className="income-header">
+      <div className="income-header">
         <h1>Income</h1>
         <p>Add, update, delete, and review your income.</p>
-      </header>
+      </div>
       <section className="income-display">
         <div className="income-list">
+          <h2>Income Receipts</h2>
           {data &&
             data
               .slice(0, incDisp)
