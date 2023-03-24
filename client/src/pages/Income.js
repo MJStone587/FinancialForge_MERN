@@ -132,7 +132,7 @@ function Income() {
       </div>
       <section className="income-display">
         <div className="income-list">
-          <h2>Income Receipts</h2>
+          <h2 className="income-list-title">Income Receipts</h2>
           {data &&
             data
               .slice(0, incDisp)

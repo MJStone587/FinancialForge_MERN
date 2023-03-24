@@ -25,6 +25,11 @@
   flex: 2;
   justify-content: flex-start;
 }
+.header-left h2 {
+  font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1920 - 300)));
+  color: var(--ltBlue-color-);
+  margin-left: 20px;
+}
 #header-image {
   height: calc(35px + (70 - 35) * ((100vw - 300px) / (1920 - 300)));
   width: calc(35px + (70 - 35) * ((100vw - 300px) / (1920 - 300)));
@@ -87,6 +92,10 @@
 .home-nav {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: space-evenly;
+  width: 40%;
+  font-size: calc(18px + (21 - 18) * ((100vw - 300px) / (1920 - 300)));
+  color: var(--ltBlue-color-);
 }
 .income-form-container,
 .expense-form-container {
@@ -140,7 +149,7 @@ select.error {
 }
 .income-header h1,
 .expense-header h1 {
-  font-size: calc(20px + (32 - 20) * ((100vw - 300px) / (1920 - 300)));
+  font-size: calc(30px + (40 - 30) * ((100vw - 300px) / (1920 - 300)));
 }
 #income-create-new {
   color: var(--ltBlue-color-);
@@ -160,6 +169,10 @@ select.error {
 .income-list button,
 .expense-list button {
   width: 50%;
+}
+.income-list-title,
+.expense-list-title {
+  text-decoration: underline;
 }
 #income-create-new {
   color: var(--ltBlue-color-);
@@ -341,7 +354,7 @@ td {
     display: flex;
     flex-flow: column nowrap;
     row-gap: 10px;
-    width: 35vw;
+    width: 60%;
   }
   .income-card,
   .expense-card {

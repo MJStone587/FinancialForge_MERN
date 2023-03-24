@@ -146,7 +146,7 @@ const Receipt = () => {
       </div>
       <section className="expense-display">
         <div className="expense-list">
-          <h2>Expense Receipts</h2>
+          <h2 className="expense-list-title">Expense Receipts</h2>
           {data &&
             data
               .slice(0, expDisp)

@@ -12,7 +12,7 @@ const Home = () => {
         Financial Forge helps you organize your finances so you can save for
         that next big purchase!
       </p>
-      <div className="home_nav">
+      <div className="home-nav">
         <Link to="/income">Income</Link>
         <Link to="/expense">Expense</Link>
       </div>

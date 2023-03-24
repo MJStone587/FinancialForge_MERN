@@ -10,6 +10,7 @@ function Header(props) {
         <Link to="/">
           <img src={forgeIcon} alt="Forge Icon" id="header-image"></img>
         </Link>
+        <h2>Financial Forge</h2>
       </div>
       <div className="header-right">
         <span

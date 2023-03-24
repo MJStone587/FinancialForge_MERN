@@ -1,15 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const catalogRouter = require('./routes/catalog');
-//const cors = require('cors');
-
+const cors = require('cors');
+//""proxy": "http://localhost:5000", added to client package.json for local hosting
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
-//app.use(cors);
+app.use(cors);
 
 const uri = process.env.ATLAS_URI;
 
