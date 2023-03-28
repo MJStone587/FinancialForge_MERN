@@ -4,9 +4,9 @@ const catalogRouter = require('./routes/catalog');
 const cors = require('cors');
 //"proxy": "http://localhost:5000", added to client package.json for local hosting
 require('dotenv').config();
-app.use(cors);
 
 const app = express();
+app.use(cors);
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
