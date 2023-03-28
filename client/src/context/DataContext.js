@@ -4,14 +4,24 @@ export const DataContext = createContext();
 
 export const dataReducer = (state, action) => {
   switch (action.type) {
-    case 'SET_DATA':
+    case 'SET_INCDATA':
       return { data: action.payload };
-    case 'CREATE_DATA':
+    case 'SET_EXPDATA':
+      return { expData: action.payload };
+    case 'CREATE_INCDATA':
       return { data: [action.payload, ...state.data] };
-    case 'DELETE_DATA':
+    case 'CREATE_EXPDATA':
+      return { expData: [action.payload, ...state.data] };
+    case 'DELETE_INCDATA':
       return { data: state.data.filter((d) => d._id !== action.payload._id) };
-    case 'UPDATE_DATA':
+    case 'DELETE_EXPDATA':
+      return {
+        expData: state.data.filter((d) => d._id !== action.payload._id),
+      };
+    case 'UPDATE_INCDATA':
       return { data: [action.payload, ...state.data] };
+    case 'UPDATE_EXPDATA':
+      return { expData: [action.payload, ...state.data] };
     case 'GET_SINGLE_DATA':
       return { data: state.data.filter((d) => d._id !== action.payload._id) };
     default:
@@ -20,7 +30,10 @@ export const dataReducer = (state, action) => {
 };
 
 export const DataContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(dataReducer, { data: null });
+  const [state, dispatch] = useReducer(dataReducer, {
+    data: null,
+    expData: null,
+  });
 
   return (
     <DataContext.Provider value={{ ...state, dispatch }}>

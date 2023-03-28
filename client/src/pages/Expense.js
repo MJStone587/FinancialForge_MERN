@@ -55,7 +55,7 @@ const Receipt = () => {
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New expense has been added!');
-      dispatch({ type: 'CREATE_DATA', payload: json });
+      dispatch({ type: 'CREATE_EXPDATA', payload: json });
     }
   };
 
@@ -68,7 +68,7 @@ const Receipt = () => {
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_DATA', payload: json });
+        dispatch({ type: 'SET_EXPDATA', payload: json });
       }
     };
 

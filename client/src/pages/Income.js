@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function Income() {
-  const { incData, dispatch } = useDataContext();
+  const { data, dispatch } = useDataContext();
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
@@ -28,7 +28,7 @@ function Income() {
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_DATA', payload: json });
+        dispatch({ type: 'SET_INCDATA', payload: json });
       }
     };
     fetchIncome();
@@ -64,7 +64,7 @@ function Income() {
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New income has been added!');
-      dispatch({ type: 'CREATE_DATA', payload: json });
+      dispatch({ type: 'CREATE_INCDATA', payload: json });
     }
   };
 
@@ -97,7 +97,7 @@ function Income() {
       setDate('');
       setError(null);
       setSuccess('Success: Income has been updated!');
-      dispatch({ type: 'UPDATE_DATA', payload: json });
+      dispatch({ type: 'UPDATE_INCDATA', payload: json });
     }
   };
 
@@ -117,13 +117,13 @@ function Income() {
   }, [dataLength, incDisp]);
 
   useEffect(() => {
-    if (incData) {
-      setDataLength(incData.length);
+    if (data) {
+      setDataLength(data.length);
     }
-  }, [incData]);
+  }, [data]);
 
   const loadMore = () => {
-    if (incDisp < incData.length && incDisp >= 5) {
+    if (incDisp < data.length && incDisp >= 5) {
       setIncDisp(incDisp + 3);
     }
   };
@@ -142,8 +142,8 @@ function Income() {
       <section className="income-display">
         <div className="income-list">
           <h2 className="income-list-title">Income Receipts</h2>
-          {incData &&
-            incData
+          {data &&
+            data
               .slice(0, incDisp)
               .map((income) => (
                 <IncomeDetails
