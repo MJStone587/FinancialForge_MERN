@@ -8,9 +8,7 @@ function Summary() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/income'
-      );
+      const response = await fetch('/catalog/income');
       const json = await response.json();
       if (response.ok) {
         setIncome(json);
@@ -21,9 +19,7 @@ function Summary() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense'
-      );
+      const response = await fetch('/catalog/expense');
       const json = await response.json();
       if (response.ok) {
         setExpense(json);
