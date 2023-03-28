@@ -32,7 +32,7 @@ function Income() {
       }
     };
     fetchIncome();
-  }, []);
+  }, [data, dispatch]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
