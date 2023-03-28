@@ -5,7 +5,7 @@ import ExpenseDetails from '../components/ExpenseDetails';
 import DatePicker from 'react-datepicker';
 
 const Receipt = () => {
-  const { data, dispatch } = useDataContext();
+  const { expData, dispatch } = useDataContext();
   const [expID, setExpID] = useState('');
   const [name, setName] = useState('');
   const [expDisp, setExpDisp] = useState(5);
@@ -131,13 +131,13 @@ const Receipt = () => {
   }, [dataLength, expDisp]);
 
   useEffect(() => {
-    if (data) {
-      setDataLength(data.length);
+    if (expData) {
+      setDataLength(expData.length);
     }
-  }, [data]);
+  }, [expData]);
 
   const loadMore = () => {
-    if (expDisp < data.length && expDisp >= 5) {
+    if (expDisp < expData.length && expDisp >= 5) {
       setExpDisp(expDisp + 3);
     }
   };
@@ -157,8 +157,8 @@ const Receipt = () => {
       <section className="expense-display">
         <div className="expense-list">
           <h2 className="expense-list-title">Expense Receipts</h2>
-          {data &&
-            data
+          {expData &&
+            expData
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails

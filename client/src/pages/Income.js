@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function Income() {
-  const { data, dispatch } = useDataContext();
+  const { incData, dispatch } = useDataContext();
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
@@ -32,7 +32,7 @@ function Income() {
       }
     };
     fetchIncome();
-  }, [data, dispatch]);
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -117,13 +117,13 @@ function Income() {
   }, [dataLength, incDisp]);
 
   useEffect(() => {
-    if (data) {
-      setDataLength(data.length);
+    if (incData) {
+      setDataLength(incData.length);
     }
-  }, [data]);
+  }, [incData]);
 
   const loadMore = () => {
-    if (incDisp < data.length && incDisp >= 5) {
+    if (incDisp < incData.length && incDisp >= 5) {
       setIncDisp(incDisp + 3);
     }
   };
@@ -142,8 +142,8 @@ function Income() {
       <section className="income-display">
         <div className="income-list">
           <h2 className="income-list-title">Income Receipts</h2>
-          {data &&
-            data
+          {incData &&
+            incData
               .slice(0, incDisp)
               .map((income) => (
                 <IncomeDetails
