@@ -22,7 +22,8 @@ const Receipt = () => {
   const [emptyFields, setEmptyFields] = useState([]);
 
   //Form Submit Handler
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     const expense = {
       name,
       description,
@@ -75,7 +76,8 @@ const Receipt = () => {
   }, []);
 
   //FORM UPDATE HANDLER
-  const updateHandler = async () => {
+  const updateHandler = async (e) => {
+    e.preventDefault();
     const expense = {
       name,
       description,

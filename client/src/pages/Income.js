@@ -68,7 +68,8 @@ function Income() {
     }
   };
 
-  const updateHandler = async () => {
+  const updateHandler = async (e) => {
+    e.preventDefault();
     const income = {
       name,
       description,
