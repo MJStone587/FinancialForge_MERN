@@ -1,1 +1,8 @@
 # Redirects from what the browser requests to what we serve
+
+# Redirects from what the browser requests to what we serve
+
+/home /
+/expense /expense
+/income /income
+/summary /summary
