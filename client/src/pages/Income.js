@@ -22,7 +22,9 @@ function Income() {
 
   useEffect(() => {
     const fetchIncome = async () => {
-      const response = await fetch('/catalog/income');
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/income'
+      );
       const json = await response.json();
 
       if (response.ok) {
@@ -41,11 +43,14 @@ function Income() {
       total,
       dateReceived,
     };
-    const response = await fetch('/catalog/income/create', {
-      method: 'POST',
-      body: JSON.stringify(income),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      'https://financialforge-mern.onrender.com/catalog/income/create',
+      {
+        method: 'POST',
+        body: JSON.stringify(income),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
@@ -72,11 +77,14 @@ function Income() {
       dateReceived,
     };
 
-    const response = await fetch('/catalog/income/' + incID, {
-      method: 'POST',
-      body: JSON.stringify(income),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      'https://financialforge-mern.onrender.com/catalog/income/' + incID,
+      {
+        method: 'POST',
+        body: JSON.stringify(income),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
     const json = await response.json();
     if (!response.ok) {
       setError(json.error);
