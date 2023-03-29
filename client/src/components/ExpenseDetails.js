@@ -15,7 +15,7 @@ const ExpenseDetails = (expense) => {
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: 'DELETE_DATA', payload: json });
+      dispatch({ type: 'DELETE_EXPDATA', payload: json });
     }
   };
 
