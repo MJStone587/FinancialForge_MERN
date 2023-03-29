@@ -7,9 +7,12 @@ const ExpenseDetails = (expense) => {
   const [modal, setModal] = useState(false);
 
   const handleDel = async () => {
-    const response = await fetch('/catalog/expense/' + expense.id, {
-      method: 'DELETE',
-    });
+    const response = await fetch(
+      'https://financialforge-mern.onrender.com/catalog/expense/' + expense.id,
+      {
+        method: 'DELETE',
+      }
+    );
     const json = await response.json();
     if (response.ok) {
       dispatch({ type: 'DELETE_DATA', payload: json });
