@@ -73,7 +73,7 @@ const Receipt = () => {
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   //FORM UPDATE HANDLER
   const updateHandler = async (e) => {
