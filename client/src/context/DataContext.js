@@ -11,17 +11,27 @@ export const dataReducer = (state, action) => {
     case 'CREATE_INCDATA':
       return { data: [action.payload, ...state.data] };
     case 'CREATE_EXPDATA':
-      return { expData: [action.payload, ...state.data] };
+      return { expData: [action.payload, ...state.expData] };
     case 'DELETE_INCDATA':
       return { data: state.data.filter((d) => d._id !== action.payload._id) };
     case 'DELETE_EXPDATA':
       return {
-        expData: state.data.filter((d) => d._id !== action.payload._id),
+        expData: state.expData.filter((d) => d._id !== action.payload._id),
       };
     case 'UPDATE_INCDATA':
-      return { data: [action.payload, ...state.data] };
+      return {
+        data: [
+          action.payload,
+          state.data.filter((d) => d._id !== action.payload._id),
+        ],
+      };
     case 'UPDATE_EXPDATA':
-      return { expData: [action.payload, ...state.data] };
+      return {
+        expData: [
+          action.payload,
+          state.expData.filter((d) => d._id !== action.payload._id),
+        ],
+      };
     case 'GET_SINGLE_DATA':
       return { data: state.data.filter((d) => d._id !== action.payload._id) };
     default:
