@@ -23,7 +23,7 @@ function Income() {
   useEffect(() => {
     const fetchIncome = async () => {
       const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/income'
+        '/catalog/income'
       );
       const json = await response.json();
 
@@ -44,7 +44,7 @@ function Income() {
       dateReceived,
     };
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/create',
+      '/catalog/income/create',
       {
         method: 'POST',
         body: JSON.stringify(income),
@@ -79,7 +79,7 @@ function Income() {
     };
 
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/' + incID,
+      '/catalog/income/' + incID,
       {
         method: 'PUT',
         body: JSON.stringify(income),

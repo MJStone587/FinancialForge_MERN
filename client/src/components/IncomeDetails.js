@@ -7,12 +7,9 @@ const IncomeDetails = (income) => {
   const [modal, setModal] = useState(false);
 
   const handleDel = async () => {
-    const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/' + income.id,
-      {
-        method: 'DELETE',
-      }
-    );
+    const response = await fetch('/catalog/income/' + income.id, {
+      method: 'DELETE',
+    });
     const json = await response.json();
     if (response.ok) {
       dispatch({ type: 'DELETE_INCDATA', payload: json });
