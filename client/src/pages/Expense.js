@@ -90,7 +90,7 @@ const Receipt = () => {
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense/' + expID,
       {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(expense),
         headers: { 'Content-Type': 'application/json' },
       }

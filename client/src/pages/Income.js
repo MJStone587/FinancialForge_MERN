@@ -81,7 +81,7 @@ function Income() {
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income/' + incID,
       {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(income),
         headers: { 'Content-Type': 'application/json' },
       }
