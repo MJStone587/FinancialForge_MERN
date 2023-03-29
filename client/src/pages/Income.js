@@ -96,7 +96,6 @@ function Income() {
       setTotal('');
       setDate('');
       setError(null);
-      setDataUpdated(true);
       dispatch({ type: 'UPDATE_INCDATA', payload: json });
       setSuccess('Success: Income has been updated!');
     }
