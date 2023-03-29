@@ -33,7 +33,7 @@ const Receipt = () => {
       category,
     };
     const response = await fetch(
-      'https://financialforge-mern.onrender.com:10000/catalog/expense/create',
+      'https://financialforge-mern.onrender.com/catalog/expense/create',
       {
         method: 'POST',
         body: JSON.stringify(expense),
@@ -63,7 +63,7 @@ const Receipt = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        'https://financialforge-mern.onrender.com:10000/catalog/expense'
+        'https://financialforge-mern.onrender.com/catalog/expense'
       );
       const json = await response.json();
 
@@ -88,7 +88,7 @@ const Receipt = () => {
     };
 
     const response = await fetch(
-      'https://financialforge-mern.onrender.com:10000/catalog/expense/' + expID,
+      'https://financialforge-mern.onrender.com/catalog/expense/' + expID,
       {
         method: 'POST',
         body: JSON.stringify(expense),

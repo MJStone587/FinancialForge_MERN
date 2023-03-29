@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 function Income() {
   const { data, dispatch } = useDataContext();
+  const { dataUpdated, setDataUpdated } = useState(false);
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
@@ -96,8 +97,9 @@ function Income() {
       setTotal('');
       setDate('');
       setError(null);
-      setSuccess('Success: Income has been updated!');
+      setDataUpdated(true);
       dispatch({ type: 'UPDATE_INCDATA', payload: json });
+      setSuccess('Success: Income has been updated!');
     }
   };
 
@@ -142,7 +144,7 @@ function Income() {
       <section className="income-display">
         <div className="income-list">
           <h2 className="income-list-title">Income Receipts</h2>
-          {data &&
+          {dataUpdated &&
             data
               .slice(0, incDisp)
               .map((income) => (
