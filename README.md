@@ -6,3 +6,4 @@ upon the performance and styling. Having a better understand of everything that 
 the app performance.
 
 -also simplified this from the original so that I can take less time.
+VISIT SITE: https://financialforge.netlify.app/
