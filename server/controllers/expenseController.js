@@ -75,6 +75,30 @@ exports.expense_update = async function (req, res) {
   const { id } = req.params;
   const { name, description, dateReceived, total, paymentType, category } =
     req.body;
+  let emptyFields = [];
+  if (!name) {
+    emptyFields.push('name');
+  }
+  if (!description) {
+    emptyFields.push('description');
+  }
+  if (!dateReceived) {
+    emptyFields.push('dateReceived');
+  }
+  if (!total) {
+    emptyFields.push('total');
+  }
+  if (!paymentType) {
+    emptyFields.push('paymentType');
+  }
+  if (!category) {
+    emptyFields.push('category');
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: 'Please fill in all required fields', emptyFields });
+  }
 
   try {
     const expense = await Expense.findByIdAndUpdate(

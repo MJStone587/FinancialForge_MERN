@@ -87,6 +87,30 @@ exports.income_delete = async (req, res) => {
 exports.income_update = async (req, res) => {
   const { id } = req.params;
   const { name, description, category, dateReceived, total } = req.body;
+  let emptyFields = [];
+
+  if (!name) {
+    emptyFields.push('name');
+  }
+  if (!description) {
+    emptyFields.push('description');
+  }
+  if (!category) {
+    emptyFields.push('category');
+  }
+  if (!dateReceived) {
+    emptyFields.push('date');
+  }
+  if (!total) {
+    emptyFields.push('total');
+  }
+
+  if (emptyFields.length > 0) {
+    return res.status(400).json({
+      error: 'Please fill in all fields! ',
+      emptyFields,
+    });
+  }
 
   try {
     const income = await Income.findByIdAndUpdate(
