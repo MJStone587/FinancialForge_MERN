@@ -75,6 +75,16 @@ const Receipt = () => {
     fetchData();
   }, [dispatch]);
 
+  const fetchAgain = async () => {
+    const response = await fetch(
+      'https://financialforge-mern.onrender.com/catalog/expense'
+    );
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: 'SET_EXPDATA', payload: json });
+    }
+  };
   //FORM UPDATE HANDLER
   const updateHandler = async (e) => {
     e.preventDefault();
@@ -113,6 +123,7 @@ const Receipt = () => {
       dispatch({ type: 'UPDATE_EXPDATA', payload: json });
       setSuccess('Success: Expense has been updated!');
     }
+    fetchAgain();
   };
 
   useEffect(() => {
