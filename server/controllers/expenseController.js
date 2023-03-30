@@ -77,14 +77,18 @@ exports.expense_update = async function (req, res) {
     req.body;
 
   try {
-    const expense = await Expense.findByIdAndUpdate(id, {
-      name,
-      description,
-      category,
-      total,
-      dateReceived,
-      paymentType,
-    });
+    const expense = await Expense.findByIdAndUpdate(
+      id,
+      {
+        name,
+        description,
+        category,
+        total,
+        dateReceived,
+        paymentType,
+      },
+      { new: true }
+    );
     res.status(200).json(expense);
   } catch (error) {
     res.status(400).json({ error: error.message });

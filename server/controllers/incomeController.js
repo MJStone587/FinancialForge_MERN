@@ -89,13 +89,17 @@ exports.income_update = async (req, res) => {
   const { name, description, category, dateReceived, total } = req.body;
 
   try {
-    const income = await Income.findByIdAndUpdate(id, {
-      name,
-      description,
-      category,
-      dateReceived,
-      total,
-    });
+    const income = await Income.findByIdAndUpdate(
+      id,
+      {
+        name,
+        description,
+        category,
+        dateReceived,
+        total,
+      },
+      { new: true }
+    );
     res.status(200).json(income);
   } catch (error) {
     res.status(400).json({ error: error.message });
