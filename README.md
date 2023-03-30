@@ -5,5 +5,5 @@ I recreated my Financial Forge app, this time using React as my frontend. So thi
 upon the performance and styling. Having a better understand of everything that is going on I found better opportunities to use asynchronous functions to improve
 the app performance.
 
--also simplified this from the original so that I can take less time.
-VISIT SITE: https://financialforge.netlify.app/
+-also simplified this from the original so it took less time overall.
+/n VISIT SITE: https://financialforge.netlify.app/
