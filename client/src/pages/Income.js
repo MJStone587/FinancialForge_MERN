@@ -88,12 +88,12 @@ function Income() {
       }
     );
     const json = await response.json();
-    await delay(3000);
 
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
     } else if (response.ok) {
+      await delay(3000);
       setName('');
       setDescription('');
       setTotal('');
