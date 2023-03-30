@@ -34,6 +34,16 @@ function Income() {
     fetchIncome();
   }, [dispatch]);
 
+  const fetchAgain = async () => {
+    const response = await fetch(
+      'https://financialforge-mern.onrender.com/catalog/income'
+    );
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: 'SET_INCDATA', payload: json });
+    }
+  };
   const submitHandler = async (e) => {
     e.preventDefault();
     const income = {
@@ -100,6 +110,7 @@ function Income() {
       dispatch({ type: 'UPDATE_INCDATA', payload: json });
       setSuccess('Success: Income has been updated!');
     }
+    fetchAgain();
   };
 
   useEffect(() => {
