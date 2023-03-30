@@ -70,20 +70,11 @@ function Income() {
 
   const updateHandler = async (e) => {
     e.preventDefault();
-    const income = {
-      name,
-      description,
-      category,
-      total,
-      dateReceived,
-    };
 
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income/' + incID,
       {
         method: 'POST',
-        body: JSON.stringify(income),
-        headers: { 'Content-Type': 'application/json' },
       }
     );
     const json = await response.json();

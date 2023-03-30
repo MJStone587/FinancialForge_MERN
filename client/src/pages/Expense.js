@@ -78,21 +78,11 @@ const Receipt = () => {
   //FORM UPDATE HANDLER
   const updateHandler = async (e) => {
     e.preventDefault();
-    const expense = {
-      name,
-      description,
-      paymentType,
-      dateReceived,
-      total,
-      category,
-    };
 
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense/' + expID,
       {
         method: 'POST',
-        body: JSON.stringify(expense),
-        headers: { 'Content-Type': 'application/json' },
       }
     );
 
