@@ -19,6 +19,7 @@ function Income() {
   const [emptyFields, setEmptyFields] = useState([]);
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
   const [isLessCompleted, setIsLessCompleted] = useState(false);
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   useEffect(() => {
     const fetchIncome = async () => {
@@ -87,6 +88,7 @@ function Income() {
       }
     );
     const json = await response.json();
+    await delay(3000);
 
     if (!response.ok) {
       setError(json.error);
