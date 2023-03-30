@@ -19,10 +19,12 @@ export const dataReducer = (state, action) => {
         expData: state.expData.filter((d) => d._id !== action.payload._id),
       };
     case 'UPDATE_INCDATA':
-      return { data: state.data.filter((d) => d._id !== action.payload._id) };
+      return {
+        data: [action.payload, ...state.data],
+      };
     case 'UPDATE_EXPDATA':
       return {
-        expData: state.expData.filter((d) => d._id !== action.payload._id),
+        expData: [action.payload, state.expData],
       };
     case 'GET_SINGLE_DATA':
       return { data: state.data.filter((d) => d._id !== action.payload._id) };
