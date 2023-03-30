@@ -83,6 +83,7 @@ function Income() {
       {
         method: 'POST',
         body: JSON.stringify(income),
+        headers: { 'Content-Type': 'application/json' },
       }
     );
     const json = await response.json();

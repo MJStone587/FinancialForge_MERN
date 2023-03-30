@@ -92,6 +92,7 @@ const Receipt = () => {
       {
         method: 'POST',
         body: JSON.stringify(expense),
+        headers: { 'Content-Type': 'application/json' },
       }
     );
 
