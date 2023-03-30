@@ -110,8 +110,8 @@ const Receipt = () => {
       setPaymentType('');
       setError(null);
       setEmptyFields([]);
+      dispatch({ type: 'UPDATE_EXPDATA', payload: json });
       setSuccess('Success: Expense has been updated!');
-      dispatch({ type: 'UPDATE_DATA', payload: json });
     }
   };
 
