@@ -20,7 +20,6 @@ const Receipt = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
-  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   //Form Submit Handler
   const submitHandler = async (e) => {
@@ -103,7 +102,6 @@ const Receipt = () => {
       setError(json.error);
       setSuccess('');
     } else {
-      await delay(3000);
       setName('');
       setDescription('');
       setTotal('');
