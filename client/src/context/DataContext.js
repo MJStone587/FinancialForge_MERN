@@ -25,7 +25,7 @@ export const dataReducer = (state, action) => {
     case 'UPDATE_EXPDATA':
       return {
         expData: [
-          state.data.filter((d) => d._id !== action.payload._id),
+          action.payload.filter((d) => d._id !== action.payload._id),
           ...state.expData,
         ],
       };
