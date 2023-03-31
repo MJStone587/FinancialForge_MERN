@@ -215,8 +215,8 @@ const Receipt = () => {
           {expData &&
             sortBy === 'total' &&
             expData
-              .slice(0, expDisp)
               .sort((a, b) => a.total - b.total)
+              .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
                   key={data._id}
@@ -240,8 +240,8 @@ const Receipt = () => {
           {expData &&
             sortBy === 'title' &&
             expData
-              .slice(0, expDisp)
               .sort()
+              .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
                   key={data._id}
