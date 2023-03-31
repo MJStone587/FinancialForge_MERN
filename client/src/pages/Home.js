@@ -10,7 +10,7 @@ const Home = () => {
       </p>
       <p>
         As the server is not used often the initial load of data might take a
-        moment. Please be patient.
+        moment due to server sleeping. Please be patient he had a late night.
       </p>
       <p>
         Financial Forge helps you organize your finances so you can save for
