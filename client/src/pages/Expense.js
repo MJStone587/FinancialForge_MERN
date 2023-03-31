@@ -178,7 +178,7 @@ const Receipt = () => {
           <div>
             <button onClick={() => setSortBy('total')}>Total</button>
             <button onClick={() => setSortBy('title')}>Title</button>
-            <button>Date</button>
+            <button onClick={() => setSortBy('default')}>Date</button>
           </div>
           {isLoading ? (
             <p>
@@ -238,10 +238,10 @@ const Receipt = () => {
                 />
               ))}
           {expData &&
-            sortBy === 'total' &&
+            sortBy === 'title' &&
             expData
               .slice(0, expDisp)
-              .sort((a, b) => a.total - b.total)
+              .sort()
               .map((data) => (
                 <ExpenseDetails
                   key={data._id}
