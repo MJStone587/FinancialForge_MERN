@@ -274,7 +274,7 @@ const Receipt = () => {
               ))}
           {sortBy === 'title' &&
             expData
-              .sort(sortByName())
+              .sort()
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
