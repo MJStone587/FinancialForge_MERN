@@ -209,10 +209,11 @@ const Receipt = () => {
           ) : (
             ''
           )}
-          {expData &&
-            sortBy === 'default' &&
+          {sortBy === 'default' &&
             expData
-              .sort((a, b) => a.dateReceived - b.dateReceived)
+              .sort((a, b) => {
+                return a.dateReceived - b.dateReceived;
+              })
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
@@ -234,10 +235,11 @@ const Receipt = () => {
                   setExpID={setExpID}
                 />
               ))}
-          {expData &&
-            sortBy === 'total' &&
+          {sortBy === 'total' &&
             expData
-              .sort((a, b) => a.total - b.total)
+              .sort((a, b) => {
+                return a.total - b.total;
+              })
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
@@ -259,10 +261,21 @@ const Receipt = () => {
                   setExpID={setExpID}
                 />
               ))}
-          {expData &&
-            sortBy === 'title' &&
+          {sortBy === 'title' &&
             expData
-              .sort()
+              .sort((a, b) => {
+                const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                  return 1;
+                }
+
+                // names must be equal
+                return 0;
+              })
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
