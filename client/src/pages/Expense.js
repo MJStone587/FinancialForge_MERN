@@ -176,9 +176,30 @@ const Receipt = () => {
         <div className="expense-list">
           <h2 className="expense-list-title">Expense Receipts</h2>
           <div>
-            <button onClick={() => setSortBy('total')}>Total</button>
-            <button onClick={() => setSortBy('title')}>Title</button>
-            <button onClick={() => setSortBy('default')}>Date</button>
+            <button
+              onClick={() => {
+                setSortBy('total');
+                console.log(sortBy);
+              }}
+            >
+              Total
+            </button>
+            <button
+              onClick={() => {
+                setSortBy('title');
+                console.log(sortBy);
+              }}
+            >
+              Title
+            </button>
+            <button
+              onClick={() => {
+                setSortBy('default');
+                console.log(sortBy);
+              }}
+            >
+              Date
+            </button>
           </div>
           {isLoading ? (
             <p>
