@@ -191,6 +191,7 @@ const Receipt = () => {
           {expData &&
             sortBy === 'default' &&
             expData
+              .sort((a, b) => a.dateReceived - b.dateReceived)
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
