@@ -9,10 +9,6 @@ const Home = () => {
         modify your expense, income, and more.
       </p>
       <p>
-        As the server is not used often the initial load of data might take a
-        moment due to server sleeping. Please be patient he had a late night.
-      </p>
-      <p>
         Financial Forge helps you organize your finances so you can save for
         that next big purchase!
       </p>
