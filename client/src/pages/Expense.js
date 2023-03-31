@@ -153,6 +153,21 @@ const Receipt = () => {
     }
   }, [expData]);
 
+  const sortByName = (a, b) => {
+    {
+      const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    }
+  };
   // load more button function
   const loadMore = () => {
     if (expDisp < expData.length && expDisp >= 5) {
@@ -211,9 +226,7 @@ const Receipt = () => {
           )}
           {sortBy === 'default' &&
             expData
-              .sort((a, b) => {
-                return a.dateReceived - b.dateReceived;
-              })
+              .sort((a, b) => a.dateReceived - b.dateReceived)
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
@@ -237,9 +250,7 @@ const Receipt = () => {
               ))}
           {sortBy === 'total' &&
             expData
-              .sort((a, b) => {
-                return a.total - b.total;
-              })
+              .sort((a, b) => a.total - b.total)
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
@@ -263,19 +274,7 @@ const Receipt = () => {
               ))}
           {sortBy === 'title' &&
             expData
-              .sort((a, b) => {
-                const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-                const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-                if (nameA < nameB) {
-                  return -1;
-                }
-                if (nameA > nameB) {
-                  return 1;
-                }
-
-                // names must be equal
-                return 0;
-              })
+              .sort(sortByName())
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
