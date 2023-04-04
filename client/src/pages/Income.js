@@ -164,7 +164,7 @@ function Income() {
           {sortBy === 'default' &&
             data &&
             data
-              .sort((a, b) => parseISO(a.dateCreated) - parseISO(b.dateCreated))
+              .sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
               .slice(0, incDisp)
               .map((income) => (
                 <IncomeDetails

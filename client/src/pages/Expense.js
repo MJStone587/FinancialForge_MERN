@@ -192,7 +192,7 @@ const Receipt = () => {
           {sortBy === 'default' &&
             expData &&
             expData
-              .sort((a, b) => parseISO(a.dateCreated) - parseISO(b.dateCreated))
+              .sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
