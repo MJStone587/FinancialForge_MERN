@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 import ExpenseDetails from '../components/ExpenseDetails';
 import DatePicker from 'react-datepicker';
+import { parseISO } from 'date-fns';
 
 const Receipt = () => {
   const { expData, dispatch } = useDataContext();
@@ -189,6 +190,9 @@ const Receipt = () => {
           {sortBy === 'default' &&
             expData &&
             expData
+              .sort(
+                (a, b) => parseISO(a.dateReceived) - parseISO(b.dateReceived)
+              )
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
