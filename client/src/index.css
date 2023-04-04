@@ -213,6 +213,7 @@ select.error {
   display: flex;
   flex-flow: row nowrap;
   max-height: 50px;
+  margin: 10px;
 }
 .material-symbols-outlined {
   align-self: flex-end;
