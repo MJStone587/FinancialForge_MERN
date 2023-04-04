@@ -128,8 +128,7 @@ const Receipt = () => {
     }
     fetchAgain();
   };
-  // A data check to display less or more button based
-  // on how many expense cards are being displayed
+  // A data check to display less or more button
   useEffect(() => {
     if (dataLength) {
       if (expDisp <= 5) {
@@ -153,19 +152,6 @@ const Receipt = () => {
     }
   }, [expData]);
 
-  /*const sortByName = (a, b) => {
-    const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-    const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-
-    // names must be equal
-    return 0;
-  };*/
   // load more button function
   const loadMore = () => {
     if (expDisp < expData.length && expDisp >= 5) {
@@ -190,7 +176,6 @@ const Receipt = () => {
           <h2 className="expense-list-title">Expense Receipts</h2>
           <div>
             <button onClick={() => setSortBy('total')}>Total</button>
-            <button onClick={() => setSortBy('title')}>Title</button>
             <button onClick={() => setSortBy('default')}>Date</button>
           </div>
           {isLoading ? (
@@ -202,8 +187,8 @@ const Receipt = () => {
             ''
           )}
           {sortBy === 'default' &&
+            expData &&
             expData
-              .sort()
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
@@ -226,32 +211,9 @@ const Receipt = () => {
                 />
               ))}
           {sortBy === 'total' &&
+            expData &&
             expData
               .sort((a, b) => a.total - b.total)
-              .slice(0, expDisp)
-              .map((data) => (
-                <ExpenseDetails
-                  key={data._id}
-                  id={data._id}
-                  name={data.name}
-                  description={data.description}
-                  category={data.category}
-                  dateReceived={data.dateReceived}
-                  dateReceivedF={data.date_received_med}
-                  paymentType={data.paymentType}
-                  total={data.total}
-                  setName={setName}
-                  setCategory={setCategory}
-                  setDateReceived={setDateReceived}
-                  setDescription={setDescription}
-                  setPaymentType={setPaymentType}
-                  setTotal={setTotal}
-                  setExpID={setExpID}
-                />
-              ))}
-          {sortBy === 'title' &&
-            expData
-              .sort()
               .slice(0, expDisp)
               .map((data) => (
                 <ExpenseDetails
