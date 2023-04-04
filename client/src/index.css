@@ -209,6 +209,10 @@ select.error {
   color: var(--ltBlue-color-);
   cursor: pointer;
 }
+.expense-sort-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
 .material-symbols-outlined {
   align-self: flex-end;
   padding: 3px;
