@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 import IncomeDetails from '../components/IncomeDetails';
 import DatePicker from 'react-datepicker';
+import { parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function Income() {
@@ -9,6 +10,7 @@ function Income() {
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
+  const [sortBy, setSortBy] = useState('default');
   const [description, setDescription] = useState('');
   const [dataLength, setDataLength] = useState();
   const [category, setCategory] = useState('');
@@ -154,8 +156,40 @@ function Income() {
       <section className="income-display">
         <div className="income-list">
           <h2 className="income-list-title">Income Receipts</h2>
-          {data &&
+          <div className="income-sort-container">
+            <p>Sort:</p>
+            <button onClick={() => setSortBy('total')}>Total</button>
+            <button onClick={() => setSortBy('default')}>Date</button>
+          </div>
+          {sortBy === 'default' &&
+            data &&
             data
+              .sort((a, b) => parseISO(a.dateCreated) - parseISO(b.dateCreated))
+              .slice(0, incDisp)
+              .map((income) => (
+                <IncomeDetails
+                  key={income._id}
+                  name={income.name}
+                  id={income._id}
+                  dateReceived={income.dateReceived}
+                  dateReceivedF={income.date_received_med}
+                  category={income.category}
+                  description={income.description}
+                  dateCreated={income.dateCreated}
+                  dateCreatedF={income.date_created_med}
+                  total={income.total}
+                  setIncID={setIncID}
+                  setName={setName}
+                  setTotal={setTotal}
+                  setDescription={setDescription}
+                  setCategory={setCategory}
+                  setDate={setDate}
+                />
+              ))}
+          {sortBy === 'total' &&
+            data &&
+            data
+              .sort((a, b) => a.total - b.total)
               .slice(0, incDisp)
               .map((income) => (
                 <IncomeDetails

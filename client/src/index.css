@@ -209,12 +209,18 @@ select.error {
   color: var(--ltBlue-color-);
   cursor: pointer;
 }
-.expense-sort-container {
+.expense-sort-container,
+.income-sort-container {
   display: flex;
   flex-flow: row nowrap;
   max-height: 50px;
   margin: 10px;
 }
+.expense-sort-container p,
+.income-sort-container p {
+  margin: 5px;
+}
+
 .material-symbols-outlined {
   align-self: flex-end;
   padding: 3px;

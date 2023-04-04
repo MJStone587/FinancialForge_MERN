@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
 import ExpenseDetails from '../components/ExpenseDetails';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
 const Receipt = () => {
