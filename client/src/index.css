@@ -212,6 +212,7 @@ select.error {
 .expense-sort-container {
   display: flex;
   flex-flow: row nowrap;
+  max-height: 50px;
 }
 .material-symbols-outlined {
   align-self: flex-end;
