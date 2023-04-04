@@ -176,7 +176,7 @@ const Receipt = () => {
         <div className="expense-list">
           <h2 className="expense-list-title">Expense Receipts</h2>
           <div className="expense-sort-container">
-            <h2>Sort By:</h2>
+            <p>Sort By:</p>
             <button onClick={() => setSortBy('total')}>Total</button>
             <button onClick={() => setSortBy('default')}>Date</button>
           </div>
