@@ -28,6 +28,8 @@ const Receipt = () => {
   //Form Submit Handler
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    // expense object
     const expense = {
       name,
       description,
@@ -36,6 +38,8 @@ const Receipt = () => {
       total,
       category,
     };
+
+    // wait for response from server
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense/create',
       {
@@ -44,7 +48,10 @@ const Receipt = () => {
         headers: { 'Content-Type': 'application/json' },
       }
     );
+    //store response as json
     const json = await response.json();
+
+    // run this is response failed or response succeeeded
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
@@ -63,7 +70,7 @@ const Receipt = () => {
     }
   };
 
-  //INITIAL RETRIEVE ALL DATA
+  //INITIAL RETRIEVAL OF ALL DATA
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -147,7 +154,6 @@ const Receipt = () => {
   }, [dataLength, expDisp]);
 
   // waits for data to be loaded and then sets dataLength variable
-  // so that my previous useEffect will only happen once data is loaded
   useEffect(() => {
     if (expData) {
       setDataLength(expData.length);

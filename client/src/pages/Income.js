@@ -23,6 +23,7 @@ function Income() {
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
   const [isLessCompleted, setIsLessCompleted] = useState(false);
 
+  //on load/reload send request to server
   useEffect(() => {
     const fetchIncome = async () => {
       const response = await fetch(
@@ -38,6 +39,7 @@ function Income() {
     fetchIncome();
   }, [dispatch]);
 
+  // Another fetch function that needs to be called
   const fetchAgain = async () => {
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income'
@@ -48,6 +50,8 @@ function Income() {
       dispatch({ type: 'SET_INCDATA', payload: json });
     }
   };
+
+  //form submission handler
   const submitHandler = async (e) => {
     e.preventDefault();
     const income = {
@@ -82,6 +86,7 @@ function Income() {
     }
   };
 
+  // for posting update after update button click
   const updateHandler = async (e) => {
     e.preventDefault();
     const income = {
@@ -117,6 +122,8 @@ function Income() {
     fetchAgain();
   };
 
+  // function to display a Show More or Show Less button
+  // requires dataLength (aka data loaded) before running
   useEffect(() => {
     if (dataLength) {
       if (incDisp <= 5) {
@@ -132,18 +139,24 @@ function Income() {
     }
   }, [dataLength, incDisp]);
 
+  // if Data is loaded set dataLength variable
   useEffect(() => {
     if (data) {
       setDataLength(data.length);
     }
   }, [data]);
 
+  //load more button function
   const loadMore = () => {
+    // check if we've reached the max amount of income cards
     if (incDisp < data.length && incDisp >= 5) {
       setIncDisp(incDisp + 3);
     }
   };
+
+  // load less button function
   const loadLess = () => {
+    // check how many cards are showing so we dont'go under 5
     if (incDisp >= 8) {
       setIncDisp(incDisp - 3);
     }
