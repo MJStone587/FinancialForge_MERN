@@ -10,6 +10,7 @@ function Income() {
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState('default');
   const [description, setDescription] = useState('');
   const [dataLength, setDataLength] = useState();
@@ -31,6 +32,7 @@ function Income() {
 
       if (response.ok) {
         dispatch({ type: 'SET_INCDATA', payload: json });
+        setIsLoading(false);
       }
     };
     fetchIncome();
