@@ -182,7 +182,7 @@ const Receipt = () => {
             <button onClick={() => setSortBy('default')}>Date</button>
           </div>
           {isLoading ? (
-            <p>
+            <p className="server-loading">
               Server just woke up, data will load in a moment. Please be patient
               he had a late night.
             </p>

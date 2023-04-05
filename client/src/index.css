@@ -241,6 +241,9 @@ select.error {
 #expense-edit:hover {
   color: rgb(11, 247, 255);
 }
+.server-loading {
+  font-size: calc(20px + (45 - 18) * ((100vw - 300px) / (1920 - 300)));
+}
 .modal {
   display: none;
   position: fixed;
