@@ -242,8 +242,8 @@ select.error {
   color: rgb(11, 247, 255);
 }
 .server-loading {
-  font-size: calc(18px + (28 - 18) * ((100vw - 300px) / (1920 - 300)));
-  border: 1px dotted var(--ltBlue-color-);
+  font-size: calc(18px + (26 - 18) * ((100vw - 300px) / (1920 - 300)));
+  border: 3px dotted black;
 }
 .modal {
   display: none;
