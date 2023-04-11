@@ -6,6 +6,7 @@ function Summary() {
   const [incGrandTotal, setIncGrandTotal] = useState();
   const [expGrandTotal, setExpGrandTotal] = useState();
 
+  // request for all income data
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -19,6 +20,7 @@ function Summary() {
     fetchData();
   }, []);
 
+  // request for all expense data
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -32,12 +34,14 @@ function Summary() {
     fetchData();
   }, []);
 
+  // method to add up income and expense data for display
   useEffect(() => {
     var incGrandTotal = 0;
     var expGrandTotal = 0;
     income && income.map((inc) => (incGrandTotal += inc.total));
     expense && expense.map((exp) => (expGrandTotal += exp.total));
     setIncGrandTotal(Math.round((incGrandTotal + Number.EPSILON) * 100) / 100);
+    // PERSONAL NOTE BELOW
     // Using toFixed to see differences in rounding if any
     //plus sign converts the normal string output back to a number
     //this is preferably since it's possible I will use the number again

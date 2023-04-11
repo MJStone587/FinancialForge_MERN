@@ -23,7 +23,7 @@ function Income() {
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
   const [isLessCompleted, setIsLessCompleted] = useState(false);
 
-  //on load/reload send request to server
+  //initial request to server to receive all income data
   useEffect(() => {
     const fetchIncome = async () => {
       const response = await fetch(
@@ -39,7 +39,7 @@ function Income() {
     fetchIncome();
   }, [dispatch]);
 
-  // Another fetch function that needs to be called
+  // Another fetch to get data that must be called
   const fetchAgain = async () => {
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income'
@@ -54,6 +54,7 @@ function Income() {
   //form submission handler
   const submitHandler = async (e) => {
     e.preventDefault();
+    // create income object from input data
     const income = {
       name,
       description,
@@ -61,6 +62,7 @@ function Income() {
       total,
       dateReceived,
     };
+    //post request to server with income object
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income/create',
       {
@@ -70,6 +72,8 @@ function Income() {
       }
     );
     const json = await response.json();
+
+    // handle error or success
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
@@ -86,9 +90,10 @@ function Income() {
     }
   };
 
-  // for posting update after update button click
+  // update button handler
   const updateHandler = async (e) => {
     e.preventDefault();
+    // create income object from input fields
     const income = {
       name,
       description,
@@ -97,6 +102,7 @@ function Income() {
       dateReceived,
     };
 
+    // create post request to server for specific income id
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income/' + incID,
       {
@@ -106,7 +112,7 @@ function Income() {
       }
     );
     const json = await response.json();
-
+    // handle errors and success
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
@@ -119,13 +125,15 @@ function Income() {
       dispatch({ type: 'UPDATE_INCDATA', payload: json });
       setSuccess('Success: Income has been updated!');
     }
+    // call fetchAgain method to update income display and state
     fetchAgain();
   };
 
   // function to display a Show More or Show Less button
-  // requires dataLength (aka data loaded) before running
   useEffect(() => {
+    // check for dataLength
     if (dataLength) {
+      // based on dataLength and income data displayed show more or less button
       if (incDisp <= 5) {
         setIsLessCompleted(true);
       } else if (incDisp >= 8) {
@@ -148,7 +156,6 @@ function Income() {
 
   //load more button function
   const loadMore = () => {
-    // check if we've reached the max amount of income cards
     if (incDisp < data.length && incDisp >= 5) {
       setIncDisp(incDisp + 3);
     }
@@ -156,7 +163,6 @@ function Income() {
 
   // load less button function
   const loadLess = () => {
-    // check how many cards are showing so we dont'go under 5
     if (incDisp >= 8) {
       setIncDisp(incDisp - 3);
     }
@@ -320,8 +326,8 @@ function Income() {
             />
             <button onClick={submitHandler}>Add NEW Income</button>
             <button onClick={updateHandler}>Update Income</button>
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
           </form>
         </aside>
       </section>

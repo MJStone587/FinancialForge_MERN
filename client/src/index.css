@@ -117,10 +117,10 @@
   padding: 10px 0px;
 }
 input.error {
-  border: 2px solid var(--error-color);
+  border: 2px solid var(--error-color-);
 }
 select.error {
-  border: 2px solid var(--error-col);
+  border: 2px solid var(--error-color-);
 }
 .income-container,
 .expense-container {

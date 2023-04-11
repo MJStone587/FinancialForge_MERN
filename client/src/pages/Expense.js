@@ -29,7 +29,7 @@ const Receipt = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // expense object
+    // create expense object from input data
     const expense = {
       name,
       description,
@@ -48,10 +48,9 @@ const Receipt = () => {
         headers: { 'Content-Type': 'application/json' },
       }
     );
-    //store response as json
     const json = await response.json();
 
-    // run this is response failed or response succeeeded
+    // handle error and success
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
@@ -87,6 +86,7 @@ const Receipt = () => {
     fetchData();
   }, [dispatch]);
 
+  // fetch all data method that requires call
   const fetchAgain = async () => {
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense'
@@ -100,6 +100,7 @@ const Receipt = () => {
   //FORM UPDATE HANDLER
   const updateHandler = async (e) => {
     e.preventDefault();
+    // expense object from input data
     const expense = {
       name,
       description,
@@ -108,7 +109,7 @@ const Receipt = () => {
       total,
       category,
     };
-
+    // request for post to update single expense document
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense/' + expID,
       {
@@ -119,7 +120,7 @@ const Receipt = () => {
     );
 
     const json = await response.json();
-
+    // handle error and success
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
@@ -137,9 +138,11 @@ const Receipt = () => {
     }
     fetchAgain();
   };
-  // A data check to display less or more button
+  // function to show more or less button
   useEffect(() => {
+    //check for dataLength
     if (dataLength) {
+      // check for data being displayed to show more or less buttons
       if (expDisp <= 5) {
         setIsLessCompleted(true);
       } else if (expDisp >= 8) {

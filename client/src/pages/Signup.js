@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Signup() {
+  // state managment and variables
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -10,15 +11,17 @@ function Signup() {
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState('');
 
+  // form submission handler
   const submitHandler = async (e) => {
     e.preventDefault();
+    // create user object from input
     const user = {
       firstName,
       lastName,
       email,
       password,
     };
-
+    // send post request to server with user object
     const response = await fetch('http://localhost:5000/catalog/user/create', {
       method: 'POST',
       body: JSON.stringify(user),
@@ -26,6 +29,7 @@ function Signup() {
     });
 
     const json = await response.json();
+    // handle response failure or success and act accordingly
     if (!response.ok) {
       setError(json.error);
       setSuccess(null);
