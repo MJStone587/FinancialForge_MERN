@@ -2,13 +2,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const catalogRouter = require('./routes/catalog');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 //"proxy": "http://localhost:5000", added to client package.json for local hosting
+
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: '*',

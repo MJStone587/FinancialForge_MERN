@@ -7,6 +7,8 @@ import Summary from './pages/Summary.js';
 import Expense from './pages/Expense.js';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
+import Login from './pages/Login.js';
+import Signup from './pages/Signup.js';
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -33,6 +35,8 @@ function App() {
           <Route path="/income" element={<Income />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="/expense" element={<Expense />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
     </main>

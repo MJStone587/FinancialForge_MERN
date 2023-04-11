@@ -5,18 +5,11 @@ function Navbar() {
   return (
     <div className="navbar-container">
       <nav className="navbar-links">
-        <Link to="/" id="link">
-          <h2>Home</h2>
-        </Link>
-        <Link to="/income" id="link">
-          <h2>Income</h2>
-        </Link>
-        <Link to="/expense" id="link">
-          <h2>Expense</h2>
-        </Link>
-        <Link to="/summary" id="link">
-          <h2>Summary</h2>
-        </Link>
+        <Link to="/">Home</Link>
+        <Link to="/income">Income</Link>
+        <Link to="/expense">Expense</Link>
+        <Link to="/summary">Summary</Link>
+        <Link to="/login">Login</Link>
       </nav>
     </div>
   );
