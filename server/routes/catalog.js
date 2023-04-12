@@ -30,5 +30,7 @@ router.delete('/expense/:id', expense_controller.expense_delete);
 router.get('/user', user_controller.get_all_users);
 //create new user
 router.post('/user/create', user_controller.post_new_user);
+//login check
+router.post('/user/login', user_controller.user_login);
 
 module.exports = router;
