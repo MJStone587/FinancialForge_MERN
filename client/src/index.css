@@ -470,4 +470,7 @@ td {
   .modal-content {
     width: 80%;
   }
+  .navbar-links {
+    margin: 5px;
+  }
 }
