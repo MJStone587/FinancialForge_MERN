@@ -8,7 +8,7 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '1d' });
 };
 
-//Placeholder for potential user authentication and login
+// RETRIEVE ALL USERS DATA
 exports.get_all_users = async (req, res) => {
   try {
     const users = await User.find({}).sort({});
@@ -18,6 +18,7 @@ exports.get_all_users = async (req, res) => {
   }
 };
 
+// CREATE NEW USER
 exports.post_new_user = async (req, res) => {
   // get data from input fields
   const { firstName, lastName, email, password } = req.body;
@@ -89,7 +90,7 @@ exports.post_new_user = async (req, res) => {
     }
   });
 };
-
+// LOGIN AUTHENTICATION
 exports.user_login = async (req, res) => {
   const { email, password } = req.body;
   const emptyFields = [];
