@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 function Login() {
+  const { dispatch } = useAuthContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -29,6 +31,7 @@ function Login() {
       setError(null);
       setSuccess(json.success);
       setEmptyFields([]);
+      dispatch({ type: 'LOGIN' });
     }
   };
 
@@ -58,7 +61,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               className={emptyFields.includes('password') ? 'error' : ''}
             />
-            <button type="submit">Submit</button>
+            <button type="submit">Login</button>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
           </form>

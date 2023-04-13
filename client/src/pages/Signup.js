@@ -85,7 +85,7 @@ function Signup() {
               onChange={(e) => setPassword(e.target.value)}
               className={emptyFields.includes('password') ? 'error' : ''}
             />
-            <button type="submit">Submit</button>
+            <button type="submit">Sign Up</button>
           </form>
           {error && <p className="error-message">{error}</p>}
           {success && <p className="success-message">{success}</p>}
