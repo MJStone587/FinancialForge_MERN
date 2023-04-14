@@ -10,11 +10,11 @@ const Home = () => {
       </p>
       <p>
         Financial Forge helps you organize your finances so you can save for
-        that next big purchase!
+        that next big purchase. Login or sign up to get started!
       </p>
       <div className="home-nav">
-        <Link to="/income">Income</Link>
-        <Link to="/expense">Expense</Link>
+        <Link to="/login">Login</Link>
+        <Link to="/signup">Sign Up</Link>
       </div>
     </section>
   );

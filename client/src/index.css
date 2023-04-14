@@ -76,6 +76,11 @@
   text-decoration: none;
   cursor: pointer;
 }
+.navLinks {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 10px;
+}
 .home {
   display: flex;
   flex-flow: column nowrap;
@@ -302,9 +307,6 @@ select.error {
 .date {
   width: 15vw;
 }
-.disabled {
-  display: none;
-}
 .btn-loadMore {
   background-color: var(--ltBlue-color-);
 }
@@ -342,17 +344,17 @@ td {
   font-weight: bold;
   font-size: calc(19px + (24 - 19) * ((100vw - 300px) / (1920 - 300)));
 }
-.signin-container {
+.login-container {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   height: 90vh;
 }
-.signin-container-header {
+.login-container-header {
   margin: 15px;
 }
-.signin-card {
+.login-card {
   display: flex;
   flex-flow: row nowrap;
   height: 400px;
@@ -360,7 +362,7 @@ td {
   box-shadow: 2px 2px 15px var(--charcoal-bg-);
   border-radius: 5px;
 }
-.signin-card-left {
+.login-card-left {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -370,12 +372,12 @@ td {
   flex-basis: 35%;
   background-color: var(--ltBlue-color-);
 }
-.signin-card-right {
+.login-card-right {
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 65%;
 }
-.signin-card-form {
+.login-card-form {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -385,6 +387,17 @@ td {
 }
 .input-label {
   text-decoration: underline;
+}
+.eye-wrapper {
+  position: relative;
+  width: 40%;
+  display: inline;
+}
+.eye {
+  font-size: calc(14px + (17 - 14) * ((100vw - 300px) / (1920 - 300)));
+  position: absolute;
+  right: 8%;
+  top: 5;
 }
 .signup-container {
   display: flex;
@@ -430,6 +443,12 @@ td {
 }
 .success-message {
   color: var(--success-color-);
+}
+.disabled {
+  display: none;
+}
+.faded {
+  color: rgb(0, 0, 0, 0.4);
 }
 @media screen and (max-width: 414px) {
   .home {

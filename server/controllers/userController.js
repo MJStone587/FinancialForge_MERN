@@ -120,8 +120,12 @@ exports.user_login = async (req, res) => {
       return res.status(400).json({ error: 'Incorrect Password', emptyFields });
     }
     const token = createToken(emailExists._id);
-    return res
-      .status(200)
-      .json({ success: 'You have successfully logged in', emptyFields, token });
+    const email = emailExists.email;
+    return res.status(200).json({
+      success: 'You have successfully logged in',
+      emptyFields,
+      token,
+      email,
+    });
   });
 };
