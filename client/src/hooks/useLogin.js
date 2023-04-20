@@ -23,10 +23,7 @@ export const useLogin = () => {
       setError(null);
       setSuccess(json.success);
       setEmptyFields([]);
-      localStorage.setItem(
-        'user',
-        JSON.stringify({ token: json.token, email: json.email })
-      );
+      localStorage.setItem('user', JSON.stringify(json));
       dispatch({ type: 'LOGIN', payload: json });
     }
   };

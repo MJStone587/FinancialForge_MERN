@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
 
 const ExpenseDetails = (expense) => {
   const { dispatch } = useDataContext();
+  const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
   const handleDel = async () => {
+    if (!user) {
+      expense.setError('Unauthorized Access!');
+      return;
+    }
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense/' + expense.id,
       {
@@ -27,6 +33,7 @@ const ExpenseDetails = (expense) => {
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);
     expense.setExpID(expense.id);
+    console.log(expense.id);
   };
 
   const modalOn = () => {

@@ -4,8 +4,6 @@ const catalogRouter = require('./routes/catalog');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-//"proxy": "http://localhost:5000", added to client package.json for local hosting
-
 require('dotenv').config();
 
 const app = express();

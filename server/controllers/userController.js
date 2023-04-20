@@ -93,6 +93,7 @@ exports.post_new_user = async (req, res) => {
 // LOGIN AUTHENTICATION
 exports.user_login = async (req, res) => {
   const { email, password } = req.body;
+  var emailF = email.toLowerCase();
   const emptyFields = [];
   if (!email) {
     emptyFields.push('email');
@@ -106,7 +107,7 @@ exports.user_login = async (req, res) => {
       .status(400)
       .json({ error: 'Please fill in all fields', emptyFields });
   }
-  const emailExists = await User.findOne({ email });
+  const emailExists = await User.findOne({ email: emailF });
   if (!emailExists) {
     return res
       .status(400)
@@ -120,12 +121,11 @@ exports.user_login = async (req, res) => {
       return res.status(400).json({ error: 'Incorrect Password', emptyFields });
     }
     const token = createToken(emailExists._id);
-    const email = emailExists.email;
     return res.status(200).json({
       success: 'You have successfully logged in',
       emptyFields,
       token,
-      email,
+      email: emailF,
     });
   });
 };

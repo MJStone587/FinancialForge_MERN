@@ -36,6 +36,11 @@
   height: calc(35px + (70 - 35) * ((100vw - 300px) / (1920 - 300)));
   width: calc(35px + (70 - 35) * ((100vw - 300px) / (1920 - 300)));
 }
+.welcome-sign {
+  color: white;
+  font-size: calc(13px + (20 - 13) * ((100vw - 300px) / (1920 - 300)));
+  margin: 10px;
+}
 .header-right {
   display: flex;
   flex-flow: row nowrap;
@@ -80,6 +85,17 @@
   display: flex;
   flex-flow: column nowrap;
   row-gap: 10px;
+}
+.navbar-logout {
+  cursor: pointer;
+  font-size: calc(16px + (20 - 16) * ((100vw - 300px) / (1920 - 300)));
+  color: var(--ltBlue-color-);
+  border: 1px solid var(--ltBlue-color-);
+  background-color: var(--charcoal-bg-);
+}
+.navbar-logout:hover {
+  color: white;
+  border: 1px solid white;
 }
 .home {
   display: flex;
@@ -251,6 +267,7 @@ select.error {
 .server-loading {
   font-size: calc(18px + (26 - 18) * ((100vw - 300px) / (1920 - 300)));
   border: 3px dotted black;
+  align-self: center;
 }
 .modal {
   display: none;
@@ -389,15 +406,18 @@ td {
   text-decoration: underline;
 }
 .eye-wrapper {
+  float: right;
+  margin-bottom: -34px;
+  margin-left: 135px;
   position: relative;
-  width: 40%;
-  display: inline;
+  z-index: 1;
+  cursor: pointer;
 }
 .eye {
   font-size: calc(14px + (17 - 14) * ((100vw - 300px) / (1920 - 300)));
-  position: absolute;
-  right: 8%;
-  top: 5;
+}
+.eye:hover {
+  color: rgb(0, 0, 0);
 }
 .signup-container {
   display: flex;
@@ -456,6 +476,9 @@ td {
   }
   .header-container {
     padding: 0px 25px;
+  }
+  .header-left h2 {
+    display: none;
   }
   table {
     width: 300px;

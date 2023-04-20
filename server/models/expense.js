@@ -35,8 +35,6 @@ let ExpenseSchema = new Schema(
   opts
 );
 
-//ExpenseSchema.set('toObject', { virtuals: true });
-
 ExpenseSchema.virtual('date_received_med').get(function () {
   return this.dateReceived.toLocaleDateString(DateTime.DATE_MED);
 });

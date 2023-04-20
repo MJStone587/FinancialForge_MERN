@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import IncomeDetails from '../components/IncomeDetails';
 import DatePicker from 'react-datepicker';
 import { parseISO } from 'date-fns';
@@ -7,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 function Income() {
   const { data, dispatch } = useDataContext();
+  const { user } = useAuthContext();
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
@@ -26,9 +28,11 @@ function Income() {
   //initial request to server to receive all income data
   useEffect(() => {
     const fetchIncome = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/income'
-      );
+      const response = await fetch('http://localhost:5000/catalog/income', {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -36,14 +40,18 @@ function Income() {
         setIsLoading(false);
       }
     };
-    fetchIncome();
-  }, [dispatch]);
+    if (user) {
+      fetchIncome();
+    }
+  }, [dispatch, user]);
 
   // Another fetch to get data that must be called
   const fetchAgain = async () => {
-    const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income'
-    );
+    if (!user) {
+      setError('Unathorized Access');
+      return;
+    }
+    const response = await fetch('http://localhost:5000/catalog/income');
     const json = await response.json();
 
     if (response.ok) {
@@ -54,6 +62,10 @@ function Income() {
   //form submission handler
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (!user) {
+      setError('Unathorized Access!');
+      return;
+    }
     // create income object from input data
     const income = {
       name,
@@ -64,11 +76,14 @@ function Income() {
     };
     //post request to server with income object
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/create',
+      'http://localhost:5000/catalog/income/create',
       {
         method: 'POST',
         body: JSON.stringify(income),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await response.json();
@@ -108,7 +123,10 @@ function Income() {
       {
         method: 'POST',
         body: JSON.stringify(income),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await response.json();
@@ -125,8 +143,9 @@ function Income() {
       dispatch({ type: 'UPDATE_INCDATA', payload: json });
       setSuccess('Success: Income has been updated!');
     }
-    // call fetchAgain method to update income display and state
-    fetchAgain();
+    if (user) {
+      fetchAgain();
+    }
   };
 
   // function to display a Show More or Show Less button
@@ -183,10 +202,9 @@ function Income() {
             <button onClick={() => setSortBy('default')}>Date</button>
           </div>
           {isLoading ? (
-            <p className="server-loading">
-              Server just woke up, data will load in a moment. Please be patient
-              he had a late night.
-            </p>
+            <span className="material-symbols-outlined server-loading">
+              pending
+            </span>
           ) : (
             ''
           )}
@@ -195,9 +213,9 @@ function Income() {
             data
               .sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
               .slice(0, incDisp)
-              .map((income) => (
+              .map((income, dex) => (
                 <IncomeDetails
-                  key={income._id}
+                  key={dex}
                   name={income.name}
                   id={income._id}
                   dateReceived={income.dateReceived}
@@ -210,6 +228,7 @@ function Income() {
                   setIncID={setIncID}
                   setName={setName}
                   setTotal={setTotal}
+                  setError={setError}
                   setDescription={setDescription}
                   setCategory={setCategory}
                   setDate={setDate}

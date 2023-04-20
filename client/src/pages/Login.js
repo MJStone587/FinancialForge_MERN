@@ -6,6 +6,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [visiblePass, setVisiblePass] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
   const { login, error, success, emptyFields } = useLogin();
 
   const submitHandler = async (e) => {
@@ -15,6 +16,7 @@ function Login() {
 
   const eyeHandler = () => {
     setVisiblePass(!visiblePass);
+    setIsVisible(!isVisible);
   };
   return (
     <section className="login-container">
@@ -41,7 +43,7 @@ function Login() {
                 className="material-symbols-outlined eye faded"
                 onClick={eyeHandler}
               >
-                visibility
+                {isVisible ? 'visibility_off' : 'visibility'}
               </span>
             </div>
             <input

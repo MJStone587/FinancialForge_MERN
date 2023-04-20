@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import ExpenseDetails from '../components/ExpenseDetails';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -8,6 +9,7 @@ import { parseISO } from 'date-fns';
 
 const Receipt = () => {
   const { expData, dispatch } = useDataContext();
+  const { user } = useAuthContext();
   const [expID, setExpID] = useState('');
   const [name, setName] = useState('');
   const [expDisp, setExpDisp] = useState(5);
@@ -25,10 +27,36 @@ const Receipt = () => {
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
 
+  //INITIAL RETRIEVAL OF ALL DATA
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/expense',
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: 'SET_EXPDATA', payload: json });
+        setIsLoading(false);
+      }
+    };
+    if (user) {
+      fetchData();
+    }
+  }, [dispatch, user]);
+
   //Form Submit Handler
   const submitHandler = async (e) => {
     e.preventDefault();
-
+    if (!user) {
+      setError('Unathorized Access!');
+      return;
+    }
     // create expense object from input data
     const expense = {
       name,
@@ -45,7 +73,10 @@ const Receipt = () => {
       {
         method: 'POST',
         body: JSON.stringify(expense),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await response.json();
@@ -69,27 +100,17 @@ const Receipt = () => {
     }
   };
 
-  //INITIAL RETRIEVAL OF ALL DATA
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense'
-      );
-      const json = await response.json();
-
-      if (response.ok) {
-        dispatch({ type: 'SET_EXPDATA', payload: json });
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
   // fetch all data method that requires call
   const fetchAgain = async () => {
+    if (!user) {
+      setError('Unauthorized Access!');
+      return;
+    }
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense'
+      'https://financialforge-mern.onrender.com/catalog/expense',
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
     );
     const json = await response.json();
 
@@ -101,6 +122,10 @@ const Receipt = () => {
   const updateHandler = async (e) => {
     e.preventDefault();
     // expense object from input data
+    if (!user) {
+      setError('Unauthorized Access!');
+      return;
+    }
     const expense = {
       name,
       description,
@@ -109,13 +134,17 @@ const Receipt = () => {
       total,
       category,
     };
+    console.log(JSON.stringify(expense));
     // request for post to update single expense document
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense/' + expID,
       {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(expense),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
 
@@ -136,7 +165,9 @@ const Receipt = () => {
       dispatch({ type: 'UPDATE_EXPDATA', payload: json });
       setSuccess('Success: Expense has been updated!');
     }
-    fetchAgain();
+    if (user) {
+      fetchAgain();
+    }
   };
   // function to show more or less button
   useEffect(() => {
@@ -216,6 +247,7 @@ const Receipt = () => {
                   total={data.total}
                   setName={setName}
                   setCategory={setCategory}
+                  setError={setError}
                   setDateReceived={setDateReceived}
                   setDescription={setDescription}
                   setPaymentType={setPaymentType}
@@ -352,8 +384,8 @@ const Receipt = () => {
             />
             <button onClick={submitHandler}>Add New Expense</button>
             <button onClick={updateHandler}>Update Existing Expense</button>
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
           </form>
         </aside>
       </section>

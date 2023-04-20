@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useDataContext } from '../hooks/useDataContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
 
 const IncomeDetails = (income) => {
   const { dispatch } = useDataContext();
+  const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
   const handleDel = async () => {
+    if (!user) {
+      income.setError('Unauthorized Access!');
+      return;
+    }
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income/' + income.id,
       {
@@ -28,6 +34,7 @@ const IncomeDetails = (income) => {
     income.setCategory(income.category);
     income.setDate(parseISO(income.dateReceived));
     income.setIncID(income.id);
+    console.log(income.id);
   };
   const modalOn = () => {
     setModal(true);

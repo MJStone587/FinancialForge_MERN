@@ -24,10 +24,13 @@ function Navbar() {
         )}
         {user && (
           <div className="navLinks loggedIn">
+            <Link to="/">Home</Link>
             <Link to="/income">Income</Link>
             <Link to="/expense">Expense</Link>
             <Link to="/summary">Summary</Link>
-            <button onClick={handleClick}>Logout</button>
+            <button onClick={handleClick} className="navbar-logout">
+              Logout
+            </button>
           </div>
         )}
       </nav>

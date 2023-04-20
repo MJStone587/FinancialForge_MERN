@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuthContext } from './hooks/useAuthContext';
 import './index.css';
 import Home from './pages/Home.js';
 import Income from './pages/Income.js';
@@ -11,6 +12,7 @@ import Login from './pages/Login.js';
 import Signup from './pages/Signup.js';
 
 function App() {
+  const { user } = useAuthContext();
   const [showNav, setShowNav] = useState(false);
 
   const toggleNav = () => {
@@ -32,11 +34,26 @@ function App() {
         <div className="pages"></div>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/income" element={<Income />} />
-          <Route path="/summary" element={<Summary />} />
-          <Route path="/expense" element={<Expense />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/income"
+            element={user ? <Income /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/summary"
+            element={user ? <Summary /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/expense"
+            element={user ? <Expense /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signup"
+            element={!user ? <Signup /> : <Navigate to="/" />}
+          />
         </Routes>
       </BrowserRouter>
     </main>

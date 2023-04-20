@@ -24,7 +24,6 @@ exports.get_single_income = async (req, res) => {
 exports.income_create_post = async (req, res) => {
   const { name, description, category, dateReceived, total } = req.body;
   let emptyFields = [];
-  console.log(req.secure);
   if (!name) {
     emptyFields.push('name');
   }
@@ -56,11 +55,14 @@ exports.income_create_post = async (req, res) => {
         emptyFields,
       });
     }
+    const user_id = req.user._id;
+    console.log(user_id);
     const income = await Income.create({
       name,
       description,
       category,
       dateReceived,
+      user_id,
       total,
     });
     res.status(200).json(income);
