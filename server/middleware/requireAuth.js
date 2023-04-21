@@ -14,7 +14,12 @@ exports.requireAuth = async (req, res, next) => {
     req.user = await User.findById({ _id }).select('_id');
     next();
   } catch (err) {
-    console.log(err);
-    res.status(401).json({ error: 'Request denied, no valid authorization' });
+    if (err.name == 'TokenExpiredError' && err.message == 'jwt expired') {
+      console.log('Token has expired');
+      res
+        .status(401)
+        .json({ error: 'Your token has expired please log in again' });
+    }
+    res.status(401).json({ error: 'Authorization denied!' });
   }
 };

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useDataContext } from '../hooks/useDataContext';
+import { useExpDataContext } from '../hooks/useExpDataContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
 
 const ExpenseDetails = (expense) => {
-  const { dispatch } = useDataContext();
+  const { dispatch } = useExpDataContext();
   const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
@@ -21,7 +21,7 @@ const ExpenseDetails = (expense) => {
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: 'DELETE_EXPDATA', payload: json });
+      dispatch({ type: 'DELETE_DATA', payload: json });
     }
   };
 

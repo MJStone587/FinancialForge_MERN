@@ -2,8 +2,9 @@ const Income = require('../models/income');
 const mongoose = require('mongoose');
 
 exports.get_all_income = async function (req, res) {
+  const user_id = req.user._id;
   try {
-    const incomeData = await Income.find({}).sort({ dateCreated: -1 });
+    const incomeData = await Income.find({ user_id }).sort({ dateCreated: -1 });
     res.status(200).json(incomeData);
   } catch (error) {
     res.status(400).json({ error: 'Error: please contact support!' });

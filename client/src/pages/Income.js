@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDataContext } from '../hooks/useDataContext';
+import { useIncDataContext } from '../hooks/useIncDataContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import IncomeDetails from '../components/IncomeDetails';
 import DatePicker from 'react-datepicker';
@@ -7,7 +7,7 @@ import { parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function Income() {
-  const { data, dispatch } = useDataContext();
+  const { data, dispatch } = useIncDataContext();
   const { user } = useAuthContext();
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
@@ -29,14 +29,12 @@ function Income() {
   useEffect(() => {
     const fetchIncome = async () => {
       const response = await fetch('http://localhost:5000/catalog/income', {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+        headers: { Authorization: `Bearer ${user.token}` },
       });
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_INCDATA', payload: json });
+        dispatch({ type: 'SET_DATA', payload: json });
         setIsLoading(false);
       }
     };
@@ -55,7 +53,7 @@ function Income() {
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: 'SET_INCDATA', payload: json });
+      dispatch({ type: 'SET_DATA', payload: json });
     }
   };
 
@@ -101,7 +99,7 @@ function Income() {
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New income has been added!');
-      dispatch({ type: 'CREATE_INCDATA', payload: json });
+      dispatch({ type: 'CREATE_DATA', payload: json });
     }
   };
 
@@ -121,7 +119,7 @@ function Income() {
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income/' + incID,
       {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(income),
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +138,7 @@ function Income() {
       setTotal('');
       setDate('');
       setError(null);
-      dispatch({ type: 'UPDATE_INCDATA', payload: json });
+      dispatch({ type: 'UPDATE_DATA', payload: json });
       setSuccess('Success: Income has been updated!');
     }
     if (user) {

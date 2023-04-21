@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useDataContext } from '../hooks/useDataContext';
+import { useExpDataContext } from '../hooks/useExpDataContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import ExpenseDetails from '../components/ExpenseDetails';
 import DatePicker from 'react-datepicker';
@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
 const Receipt = () => {
-  const { expData, dispatch } = useDataContext();
+  const { data, dispatch } = useExpDataContext();
   const { user } = useAuthContext();
   const [expID, setExpID] = useState('');
   const [name, setName] = useState('');
@@ -33,15 +33,13 @@ const Receipt = () => {
       const response = await fetch(
         'https://financialforge-mern.onrender.com/catalog/expense',
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+          headers: { Authorization: `Bearer ${user.token}` },
         }
       );
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_EXPDATA', payload: json });
+        dispatch({ type: 'SET_DATA', payload: json });
         setIsLoading(false);
       }
     };
@@ -96,7 +94,7 @@ const Receipt = () => {
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New expense has been added!');
-      dispatch({ type: 'CREATE_EXPDATA', payload: json });
+      dispatch({ type: 'CREATE_DATA', payload: json });
     }
   };
 
@@ -115,7 +113,7 @@ const Receipt = () => {
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: 'SET_EXPDATA', payload: json });
+      dispatch({ type: 'SET_DATA', payload: json });
     }
   };
   //FORM UPDATE HANDLER
@@ -162,7 +160,7 @@ const Receipt = () => {
       setPaymentType('');
       setError(null);
       setEmptyFields([]);
-      dispatch({ type: 'UPDATE_EXPDATA', payload: json });
+      dispatch({ type: 'UPDATE_DATA', payload: json });
       setSuccess('Success: Expense has been updated!');
     }
     if (user) {
@@ -189,14 +187,14 @@ const Receipt = () => {
 
   // waits for data to be loaded and then sets dataLength variable
   useEffect(() => {
-    if (expData) {
-      setDataLength(expData.length);
+    if (data) {
+      setDataLength(data.length);
     }
-  }, [expData]);
+  }, [data]);
 
   // load more button function
   const loadMore = () => {
-    if (expDisp < expData.length && expDisp >= 5) {
+    if (expDisp < data.length && expDisp >= 5) {
       setExpDisp(expDisp + 3);
     }
   };
@@ -222,16 +220,15 @@ const Receipt = () => {
             <button onClick={() => setSortBy('default')}>Date</button>
           </div>
           {isLoading ? (
-            <p className="server-loading">
-              Server just woke up, data will load in a moment. Please be patient
-              he had a late night.
-            </p>
+            <span className="material-symbols-outlined server-loading">
+              pending
+            </span>
           ) : (
             ''
           )}
           {sortBy === 'default' &&
-            expData &&
-            expData
+            data &&
+            data
               .sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
               .slice(0, expDisp)
               .map((data) => (
@@ -256,8 +253,8 @@ const Receipt = () => {
                 />
               ))}
           {sortBy === 'total' &&
-            expData &&
-            expData
+            data &&
+            data
               .sort((a, b) => a.total - b.total)
               .slice(0, expDisp)
               .map((data) => (

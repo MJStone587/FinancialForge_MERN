@@ -2,8 +2,11 @@ const Expense = require('../models/expense');
 const mongoose = require('mongoose');
 
 exports.expense_list = async function (req, res) {
+  const user_id = req.user._id;
   try {
-    const expenseList = await Expense.find({}).sort({ dateCreated: -1 });
+    const expenseList = await Expense.find({ user_id }).sort({
+      dateCreated: -1,
+    });
     res.status(200).json(expenseList);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -48,6 +51,7 @@ exports.expense_create = async function (req, res) {
         emptyFields,
       });
     }
+    const user_id = req.user._id;
     const expense = await Expense.create({
       name,
       description,
@@ -55,6 +59,7 @@ exports.expense_create = async function (req, res) {
       total,
       dateReceived,
       paymentType,
+      user_id,
     });
     res.status(200).json(expense);
   } catch (error) {
@@ -101,6 +106,7 @@ exports.expense_update = async function (req, res) {
   }
 
   try {
+    const user_id = req.user._id;
     const expense = await Expense.findByIdAndUpdate(
       id,
       {
@@ -110,6 +116,7 @@ exports.expense_update = async function (req, res) {
         total,
         dateReceived,
         paymentType,
+        user_id,
       },
       { new: true }
     );

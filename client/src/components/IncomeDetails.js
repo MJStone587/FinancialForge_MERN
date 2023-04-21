@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useDataContext } from '../hooks/useDataContext';
+import { useIncDataContext } from '../hooks/useIncDataContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
 
 const IncomeDetails = (income) => {
-  const { dispatch } = useDataContext();
+  const { dispatch } = useIncDataContext();
   const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
@@ -21,7 +21,7 @@ const IncomeDetails = (income) => {
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: 'DELETE_INCDATA', payload: json });
+      dispatch({ type: 'DELETE_DATA', payload: json });
     }
   };
 
