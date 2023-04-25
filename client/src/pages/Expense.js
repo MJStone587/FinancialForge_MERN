@@ -13,6 +13,7 @@ const Receipt = () => {
   const [expID, setExpID] = useState('');
   const [name, setName] = useState('');
   const [expDisp, setExpDisp] = useState(5);
+  const [updated, setUpdated] = useState(false);
   const [dataLength, setDataLength] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [description, setDescription] = useState('');
@@ -27,15 +28,14 @@ const Receipt = () => {
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
 
+  //FIX ROUTES TO https://financialforge-mern.onrender.com BEFORE GOING LIVE
+
   //INITIAL RETRIEVAL OF ALL DATA
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense',
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
+      const response = await fetch('http://localhost:5000/catalog/expense', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -67,7 +67,7 @@ const Receipt = () => {
 
     // wait for response from server
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense/create',
+      'http://localhost:5000/catalog/expense/create',
       {
         method: 'POST',
         body: JSON.stringify(expense),
@@ -104,12 +104,9 @@ const Receipt = () => {
       setError('Unauthorized Access!');
       return;
     }
-    const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense',
-      {
-        headers: { Authorization: `Bearer ${user.token}` },
-      }
-    );
+    const response = await fetch('http://localhost:5000/catalog/expense', {
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
     const json = await response.json();
 
     if (response.ok) {
@@ -135,7 +132,7 @@ const Receipt = () => {
     console.log(JSON.stringify(expense));
     // request for post to update single expense document
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense/' + expID,
+      'http://localhost:5000/catalog/expense/' + expID,
       {
         method: 'PUT',
         body: JSON.stringify(expense),
@@ -162,6 +159,7 @@ const Receipt = () => {
       setEmptyFields([]);
       dispatch({ type: 'UPDATE_DATA', payload: json });
       setSuccess('Success: Expense has been updated!');
+      setUpdated(true);
     }
     if (user) {
       fetchAgain();
@@ -243,6 +241,8 @@ const Receipt = () => {
                   paymentType={data.paymentType}
                   total={data.total}
                   setName={setName}
+                  updated={updated}
+                  setUpdated={setUpdated}
                   setCategory={setCategory}
                   setError={setError}
                   setDateReceived={setDateReceived}

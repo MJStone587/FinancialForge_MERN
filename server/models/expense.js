@@ -31,6 +31,7 @@ let ExpenseSchema = new Schema(
     dateReceived: { type: Date, required: true },
     dateCreated: { type: Date, default: () => Date.now() },
     total: { type: Number, required: true },
+    user_id: { type: String, required: true },
   },
   opts
 );

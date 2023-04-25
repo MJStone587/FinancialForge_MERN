@@ -13,61 +13,61 @@ router.post('/user/create', user_controller.post_new_user);
 router.post('/user/login', user_controller.user_login);
 
 //require auth for all routes below
-//router.use(requireAuth.requireAuth);
+router.use(requireAuth.requireAuth);
 
 //Get all income data
 router.get(
   '/income',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   income_controller.get_all_income
 );
 //Get Single Income
 router.get(
   '/income/:id',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   income_controller.get_single_income
 );
 //Post new income
 router.post(
   '/income/create',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   income_controller.income_create_post
 );
 //Delete Income
 router.delete(
   '/income/:id',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   income_controller.income_delete
 );
 //Update Income
 router.put(
   '/income/:id',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   income_controller.income_update
 );
 
 //Get All Expenses
 router.get(
   '/expense',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   expense_controller.expense_list
 );
 //Create new expense
 router.post(
   '/expense/create',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   expense_controller.expense_create
 );
 //Update expense
 router.put(
   '/expense/:id',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   expense_controller.expense_update
 );
 //Delete Expense
 router.delete(
   '/expense/:id',
-  requireAuth.requireAuth,
+  //requireAuth.requireAuth,
   expense_controller.expense_delete
 );
 

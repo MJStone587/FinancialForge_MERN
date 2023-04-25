@@ -12,6 +12,7 @@ function Income() {
   const [incDisp, setIncDisp] = useState(5);
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
+  const [updated, setUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState('default');
   const [description, setDescription] = useState('');
@@ -24,6 +25,8 @@ function Income() {
   const [emptyFields, setEmptyFields] = useState([]);
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
   const [isLessCompleted, setIsLessCompleted] = useState(false);
+
+  //FIX ROUTES TO https://financialforge-mern.onrender.com BEFORE GOING LIVE
 
   //initial request to server to receive all income data
   useEffect(() => {
@@ -42,20 +45,6 @@ function Income() {
       fetchIncome();
     }
   }, [dispatch, user]);
-
-  // Another fetch to get data that must be called
-  const fetchAgain = async () => {
-    if (!user) {
-      setError('Unathorized Access');
-      return;
-    }
-    const response = await fetch('http://localhost:5000/catalog/income');
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: 'SET_DATA', payload: json });
-    }
-  };
 
   //form submission handler
   const submitHandler = async (e) => {
@@ -117,7 +106,7 @@ function Income() {
 
     // create post request to server for specific income id
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/' + incID,
+      'http://localhost:5000/catalog/income/' + incID,
       {
         method: 'PUT',
         body: JSON.stringify(income),
@@ -140,9 +129,7 @@ function Income() {
       setError(null);
       dispatch({ type: 'UPDATE_DATA', payload: json });
       setSuccess('Success: Income has been updated!');
-    }
-    if (user) {
-      fetchAgain();
+      setUpdated(true);
     }
   };
 
@@ -224,6 +211,8 @@ function Income() {
                   dateCreatedF={income.date_created_med}
                   total={income.total}
                   setIncID={setIncID}
+                  updated={updated}
+                  setUpdated={setUpdated}
                   setName={setName}
                   setTotal={setTotal}
                   setError={setError}
@@ -248,6 +237,8 @@ function Income() {
                   description={income.description}
                   dateCreated={income.dateCreated}
                   dateCreatedF={income.date_created_med}
+                  updated={updated}
+                  setUpdated={setUpdated}
                   total={income.total}
                   setIncID={setIncID}
                   setName={setName}

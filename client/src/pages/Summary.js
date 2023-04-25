@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 function Summary() {
+  const { user } = useAuthContext();
   const [expense, setExpense] = useState();
   const [income, setIncome] = useState();
   const [incGrandTotal, setIncGrandTotal] = useState();
@@ -9,30 +11,34 @@ function Summary() {
   // request for all income data
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/income'
-      );
+      const response = await fetch('http://localhost:5000/catalog/income', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
       if (response.ok) {
         setIncome(json);
       }
     };
-    fetchData();
-  }, []);
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
   // request for all expense data
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense'
-      );
+      const response = await fetch('http://localhost:5000/catalog/expense', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
       if (response.ok) {
         setExpense(json);
       }
     };
-    fetchData();
-  }, []);
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
   // method to add up income and expense data for display
   useEffect(() => {

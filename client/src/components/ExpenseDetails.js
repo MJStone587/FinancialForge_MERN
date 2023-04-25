@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useExpDataContext } from '../hooks/useExpDataContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
@@ -7,6 +7,25 @@ const ExpenseDetails = (expense) => {
   const { dispatch } = useExpDataContext();
   const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
+
+  // run fetch after update to remove old document THIS BANDAID FIX UNTIL UNDERSTAND WHATS
+  // GOING ON WITH STATE
+  useEffect(() => {
+    const fetchExpense = async () => {
+      const response = await fetch('http://localhost:5000/catalog/expense', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: 'SET_DATA', payload: json });
+      }
+    };
+    if (user && expense.updated) {
+      fetchExpense();
+      expense.setUpdated(false);
+    }
+  }, [user, dispatch, expense]);
 
   const handleDel = async () => {
     if (!user) {
@@ -33,7 +52,6 @@ const ExpenseDetails = (expense) => {
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);
     expense.setExpID(expense.id);
-    console.log(expense.id);
   };
 
   const modalOn = () => {

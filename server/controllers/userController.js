@@ -82,11 +82,11 @@ exports.post_new_user = async (req, res) => {
         email: email.toLowerCase(),
         password: hash,
       });
-      return res
+      res
         .status(200)
         .json({ success: 'Success: New user created!', emptyFields });
     } catch (err) {
-      return res.status(400).json({ error: err.message, emptyFields });
+      res.status(400).json({ error: err.message, emptyFields });
     }
   });
 };
@@ -115,7 +115,7 @@ exports.user_login = async (req, res) => {
   }
   bcrypt.compare(password, emailExists.password, function (err, result) {
     if (err) {
-      return res.status(400).json({ error: err.message, emptyFields });
+      return console.log('bcrypt login error: ', err);
     }
     if (!result) {
       return res.status(400).json({ error: 'Incorrect Password', emptyFields });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIncDataContext } from '../hooks/useIncDataContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
@@ -8,6 +8,24 @@ const IncomeDetails = (income) => {
   const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
+  useEffect(() => {
+    const fetchIncome = async () => {
+      const response = await fetch('http://localhost:5000/catalog/income', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: 'SET_DATA', payload: json });
+      }
+    };
+    if (user && income.updated) {
+      fetchIncome();
+      income.setUpdated(false);
+    }
+  }, [user, dispatch, income]);
+
+  //button handler for deleting single object
   const handleDel = async () => {
     if (!user) {
       income.setError('Unauthorized Access!');
@@ -34,8 +52,8 @@ const IncomeDetails = (income) => {
     income.setCategory(income.category);
     income.setDate(parseISO(income.dateReceived));
     income.setIncID(income.id);
-    console.log(income.id);
   };
+
   const modalOn = () => {
     setModal(true);
   };

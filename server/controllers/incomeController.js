@@ -57,7 +57,6 @@ exports.income_create_post = async (req, res) => {
       });
     }
     const user_id = req.user._id;
-    console.log(user_id);
     const income = await Income.create({
       name,
       description,
@@ -116,6 +115,7 @@ exports.income_update = async (req, res) => {
   }
 
   try {
+    const user_id = req.user._id;
     const income = await Income.findByIdAndUpdate(
       id,
       {
@@ -124,6 +124,7 @@ exports.income_update = async (req, res) => {
         category,
         dateReceived,
         total,
+        user_id,
       },
       { new: true }
     );
