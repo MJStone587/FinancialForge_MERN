@@ -13,10 +13,10 @@ function Income() {
   const [incID, setIncID] = useState('');
   const [name, setName] = useState('');
   const [updated, setUpdated] = useState(false);
+  const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState('default');
   const [description, setDescription] = useState('');
-  const [dataLength, setDataLength] = useState();
   const [category, setCategory] = useState('');
   const [total, setTotal] = useState('');
   const [dateReceived, setDate] = useState('');
@@ -83,6 +83,7 @@ function Income() {
     } else if (response.ok) {
       setName('');
       setDescription('');
+      setCategory('');
       setTotal('');
       setDate('');
       setError(null);
@@ -125,9 +126,9 @@ function Income() {
       setName('');
       setDescription('');
       setTotal('');
+      setCategory('');
       setDate('');
       setError(null);
-      dispatch({ type: 'UPDATE_DATA', payload: json });
       setSuccess('Success: Income has been updated!');
       setUpdated(true);
     }
@@ -135,28 +136,20 @@ function Income() {
 
   // function to display a Show More or Show Less button
   useEffect(() => {
-    // check for dataLength
-    if (dataLength) {
-      // based on dataLength and income data displayed show more or less button
+    // check for data loaded before proceeding
+    if (data) {
       if (incDisp <= 5) {
         setIsLessCompleted(true);
       } else if (incDisp >= 8) {
         setIsLessCompleted(false);
       }
-      if (incDisp >= dataLength) {
+      if (incDisp >= data.length) {
         setIsMoreCompleted(true);
-      } else if (incDisp < dataLength) {
+      } else if (incDisp < data.length) {
         setIsMoreCompleted(false);
       }
     }
-  }, [dataLength, incDisp]);
-
-  // if Data is loaded set dataLength variable
-  useEffect(() => {
-    if (data) {
-      setDataLength(data.length);
-    }
-  }, [data]);
+  }, [data, incDisp]);
 
   //load more button function
   const loadMore = () => {
@@ -170,6 +163,16 @@ function Income() {
     if (incDisp >= 8) {
       setIncDisp(incDisp - 3);
     }
+  };
+
+  const clearBtn = (e) => {
+    e.preventDefault();
+    setName('');
+    setDescription('');
+    setCategory('');
+    setTotal('');
+    setDate('');
+    setShowUpdateBtn(false);
   };
 
   return (
@@ -213,6 +216,7 @@ function Income() {
                   setIncID={setIncID}
                   updated={updated}
                   setUpdated={setUpdated}
+                  setShowUpdateBtn={setShowUpdateBtn}
                   setName={setName}
                   setTotal={setTotal}
                   setError={setError}
@@ -239,6 +243,7 @@ function Income() {
                   dateCreatedF={income.date_created_med}
                   updated={updated}
                   setUpdated={setUpdated}
+                  setShowUpdateBtn={setShowUpdateBtn}
                   total={income.total}
                   setIncID={setIncID}
                   setName={setName}
@@ -332,8 +337,24 @@ function Income() {
               selected={dateReceived}
               className={emptyFields.includes('date') ? 'error' : 'date'}
             />
-            <button onClick={submitHandler}>Add NEW Income</button>
-            <button onClick={updateHandler}>Update Income</button>
+            <button
+              onClick={submitHandler}
+              className={showUpdateBtn ? 'createBtn disabled' : 'createBtn'}
+            >
+              Add NEW Income
+            </button>
+            <button
+              onClick={updateHandler}
+              className={showUpdateBtn ? 'updateBtn' : 'updateBtn disabled'}
+            >
+              Update Income
+            </button>
+            <button
+              onClick={clearBtn}
+              className={showUpdateBtn ? 'clearBtn' : 'clearBtn disabled'}
+            >
+              Clear
+            </button>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
           </form>

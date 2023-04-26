@@ -48,6 +48,12 @@ exports.income_create_post = async (req, res) => {
     });
   }
 
+  if (total < 0) {
+    return res
+      .status(400)
+      .json({ error: 'Total cannot be less than 0', emptyFields });
+  }
+
   try {
     const incomeDuplicate = await Income.findOne({ name: name });
     if (incomeDuplicate) {
@@ -112,6 +118,12 @@ exports.income_update = async (req, res) => {
       error: 'Please fill in all fields! ',
       emptyFields,
     });
+  }
+
+  if (total < 0) {
+    return res
+      .status(400)
+      .json({ error: 'Total cannot be less than 0', emptyFields });
   }
 
   try {

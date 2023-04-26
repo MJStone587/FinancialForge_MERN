@@ -10,11 +10,11 @@ import { parseISO } from 'date-fns';
 const Receipt = () => {
   const { data, dispatch } = useExpDataContext();
   const { user } = useAuthContext();
-  const [expID, setExpID] = useState('');
+  const [_id, set_id] = useState('');
   const [name, setName] = useState('');
+  const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const [expDisp, setExpDisp] = useState(5);
   const [updated, setUpdated] = useState(false);
-  const [dataLength, setDataLength] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [description, setDescription] = useState('');
   const [sortBy, setSortBy] = useState('default');
@@ -98,21 +98,6 @@ const Receipt = () => {
     }
   };
 
-  // fetch all data method that requires call
-  const fetchAgain = async () => {
-    if (!user) {
-      setError('Unauthorized Access!');
-      return;
-    }
-    const response = await fetch('http://localhost:5000/catalog/expense', {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: 'SET_DATA', payload: json });
-    }
-  };
   //FORM UPDATE HANDLER
   const updateHandler = async (e) => {
     e.preventDefault();
@@ -129,10 +114,10 @@ const Receipt = () => {
       total,
       category,
     };
-    console.log(JSON.stringify(expense));
-    // request for post to update single expense document
+
+    // put request to server to update single expense document
     const response = await fetch(
-      'http://localhost:5000/catalog/expense/' + expID,
+      'http://localhost:5000/catalog/expense/' + _id,
       {
         method: 'PUT',
         body: JSON.stringify(expense),
@@ -157,38 +142,27 @@ const Receipt = () => {
       setPaymentType('');
       setError(null);
       setEmptyFields([]);
-      dispatch({ type: 'UPDATE_DATA', payload: json });
-      setSuccess('Success: Expense has been updated!');
+      setShowUpdateBtn(false);
       setUpdated(true);
-    }
-    if (user) {
-      fetchAgain();
+      setSuccess('Success: Expense has been updated!');
     }
   };
   // function to show more or less button
   useEffect(() => {
-    //check for dataLength
-    if (dataLength) {
-      // check for data being displayed to show more or less buttons
+    //check if data exists and is loaded
+    if (data) {
       if (expDisp <= 5) {
         setIsLessCompleted(true);
       } else if (expDisp >= 8) {
         setIsLessCompleted(false);
       }
-      if (expDisp >= dataLength) {
+      if (expDisp >= data.length) {
         setIsMoreCompleted(true);
-      } else if (expDisp < dataLength) {
+      } else if (expDisp < data.length) {
         setIsMoreCompleted(false);
       }
     }
-  }, [dataLength, expDisp]);
-
-  // waits for data to be loaded and then sets dataLength variable
-  useEffect(() => {
-    if (data) {
-      setDataLength(data.length);
-    }
-  }, [data]);
+  }, [data, expDisp]);
 
   // load more button function
   const loadMore = () => {
@@ -201,6 +175,17 @@ const Receipt = () => {
     if (expDisp >= 8) {
       setExpDisp(expDisp - 3);
     }
+  };
+  //clear btn handler
+  const clearBtn = (e) => {
+    e.preventDefault();
+    setName('');
+    setDescription('');
+    setTotal('');
+    setDateReceived('');
+    setCategory('');
+    setPaymentType('');
+    setShowUpdateBtn(false);
   };
 
   return (
@@ -244,12 +229,13 @@ const Receipt = () => {
                   updated={updated}
                   setUpdated={setUpdated}
                   setCategory={setCategory}
+                  setShowUpdateBtn={setShowUpdateBtn}
                   setError={setError}
                   setDateReceived={setDateReceived}
                   setDescription={setDescription}
                   setPaymentType={setPaymentType}
                   setTotal={setTotal}
-                  setExpID={setExpID}
+                  set_id={set_id}
                 />
               ))}
           {sortBy === 'total' &&
@@ -270,11 +256,12 @@ const Receipt = () => {
                   total={data.total}
                   setName={setName}
                   setCategory={setCategory}
+                  setShowUpdateBtn={setShowUpdateBtn}
                   setDateReceived={setDateReceived}
                   setDescription={setDescription}
                   setPaymentType={setPaymentType}
                   setTotal={setTotal}
-                  setExpID={setExpID}
+                  set_id={set_id}
                 />
               ))}
           {isMoreCompleted ? (
@@ -379,8 +366,24 @@ const Receipt = () => {
               selected={dateReceived}
               className={emptyFields.includes('dateReceived') ? 'error' : ''}
             />
-            <button onClick={submitHandler}>Add New Expense</button>
-            <button onClick={updateHandler}>Update Existing Expense</button>
+            <button
+              onClick={submitHandler}
+              className={showUpdateBtn ? 'createBtn disabled' : 'createBtn'}
+            >
+              Add New Expense
+            </button>
+            <button
+              onClick={updateHandler}
+              className={showUpdateBtn ? 'updateBtn' : 'updateBtn disabled'}
+            >
+              Update Existing Expense
+            </button>
+            <button
+              onClick={clearBtn}
+              className={showUpdateBtn ? 'clearBtn' : 'clearBtn disabled'}
+            >
+              Clear
+            </button>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
           </form>

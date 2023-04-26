@@ -458,6 +458,16 @@ td {
   row-gap: 5px;
   margin: 5px;
 }
+.clearBtn {
+  max-width: 50px;
+  align-self: flex-end;
+  background-color: white;
+  border: 1px solid black;
+}
+.clearBtn:hover {
+  color: rgb(51, 164, 179);
+  border: 1px solid rgb(51, 164, 179);
+}
 .error-message {
   color: var(--error-color-);
 }

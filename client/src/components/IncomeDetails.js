@@ -8,6 +8,7 @@ const IncomeDetails = (income) => {
   const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
+  // find possible better way to
   useEffect(() => {
     const fetchIncome = async () => {
       const response = await fetch('http://localhost:5000/catalog/income', {
@@ -52,6 +53,7 @@ const IncomeDetails = (income) => {
     income.setCategory(income.category);
     income.setDate(parseISO(income.dateReceived));
     income.setIncID(income.id);
+    income.setShowUpdateBtn(true);
   };
 
   const modalOn = () => {

@@ -43,6 +43,12 @@ exports.expense_create = async function (req, res) {
       .json({ error: 'Please fill in all required fields', emptyFields });
   }
 
+  if (total < 0) {
+    return res
+      .status(400)
+      .json({ error: 'Total cannot be less than 0', emptyFields });
+  }
+
   try {
     const expenseDuplicate = await Expense.findOne({ name: name });
     if (expenseDuplicate) {
@@ -103,6 +109,11 @@ exports.expense_update = async function (req, res) {
     return res
       .status(400)
       .json({ error: 'Please fill in all required fields', emptyFields });
+  }
+  if (total < 0) {
+    return res
+      .status(400)
+      .json({ error: 'Total cannot be less than 0', emptyFields });
   }
 
   try {

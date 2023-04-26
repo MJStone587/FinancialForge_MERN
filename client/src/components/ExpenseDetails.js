@@ -27,15 +27,19 @@ const ExpenseDetails = (expense) => {
     }
   }, [user, dispatch, expense]);
 
+  //delete handler
   const handleDel = async () => {
+    // check if user is logged in
     if (!user) {
       expense.setError('Unauthorized Access!');
       return;
     }
+    //fetch request to server
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense/' + expense.id,
+      'http://localhost:5000/catalog/expense/' + expense.id,
       {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${user.token}` },
       }
     );
     const json = await response.json();
@@ -43,7 +47,7 @@ const ExpenseDetails = (expense) => {
       dispatch({ type: 'DELETE_DATA', payload: json });
     }
   };
-
+  //update handler
   const handleUpdate = async () => {
     expense.setName(expense.name);
     expense.setCategory(expense.category);
@@ -51,7 +55,8 @@ const ExpenseDetails = (expense) => {
     expense.setDescription(expense.description);
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);
-    expense.setExpID(expense.id);
+    expense.set_id(expense.id);
+    expense.setShowUpdateBtn(true);
   };
 
   const modalOn = () => {
