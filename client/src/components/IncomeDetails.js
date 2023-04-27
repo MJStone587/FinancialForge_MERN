@@ -11,9 +11,12 @@ const IncomeDetails = (income) => {
   // find possible better way to
   useEffect(() => {
     const fetchIncome = async () => {
-      const response = await fetch('http://localhost:5000/catalog/income', {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/income',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
 
       if (response.ok) {

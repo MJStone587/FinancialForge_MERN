@@ -33,9 +33,12 @@ const Receipt = () => {
   //INITIAL RETRIEVAL OF ALL DATA
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/catalog/expense', {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/expense',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
 
       if (response.ok) {
@@ -67,7 +70,7 @@ const Receipt = () => {
 
     // wait for response from server
     const response = await fetch(
-      'http://localhost:5000/catalog/expense/create',
+      'https://financialforge-mern.onrender.com/catalog/expense/create',
       {
         method: 'POST',
         body: JSON.stringify(expense),
@@ -117,7 +120,7 @@ const Receipt = () => {
 
     // put request to server to update single expense document
     const response = await fetch(
-      'http://localhost:5000/catalog/expense/' + _id,
+      'https://financialforge-mern.onrender.com/catalog/expense/' + _id,
       {
         method: 'PUT',
         body: JSON.stringify(expense),

@@ -31,9 +31,12 @@ function Income() {
   //initial request to server to receive all income data
   useEffect(() => {
     const fetchIncome = async () => {
-      const response = await fetch('http://localhost:5000/catalog/income', {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/income',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
 
       if (response.ok) {
@@ -63,7 +66,7 @@ function Income() {
     };
     //post request to server with income object
     const response = await fetch(
-      'http://localhost:5000/catalog/income/create',
+      'https://financialforge-mern.onrender.com/catalog/income/create',
       {
         method: 'POST',
         body: JSON.stringify(income),
@@ -107,7 +110,7 @@ function Income() {
 
     // create post request to server for specific income id
     const response = await fetch(
-      'http://localhost:5000/catalog/income/' + incID,
+      'https://financialforge-mern.onrender.com/catalog/income/' + incID,
       {
         method: 'PUT',
         body: JSON.stringify(income),

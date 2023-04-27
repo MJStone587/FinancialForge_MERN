@@ -12,9 +12,12 @@ const ExpenseDetails = (expense) => {
   // GOING ON WITH STATE
   useEffect(() => {
     const fetchExpense = async () => {
-      const response = await fetch('http://localhost:5000/catalog/expense', {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/expense',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
 
       if (response.ok) {
@@ -36,7 +39,7 @@ const ExpenseDetails = (expense) => {
     }
     //fetch request to server
     const response = await fetch(
-      'http://localhost:5000/catalog/expense/' + expense.id,
+      'https://financialforge-mern.onrender.com/catalog/expense/' + expense.id,
       {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${user.token}` },
