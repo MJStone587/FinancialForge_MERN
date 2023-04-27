@@ -1,17 +1,20 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useDataContext } from '../hooks/useDataContext';
+import { useExpDataContext } from '../hooks/useExpDataContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import ExpenseDetails from '../components/ExpenseDetails';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
 const Receipt = () => {
-  const { expData, dispatch } = useDataContext();
-  const [expID, setExpID] = useState('');
+  const { data, dispatch } = useExpDataContext();
+  const { user } = useAuthContext();
+  const [_id, set_id] = useState('');
   const [name, setName] = useState('');
+  const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const [expDisp, setExpDisp] = useState(5);
-  const [dataLength, setDataLength] = useState();
+  const [updated, setUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [description, setDescription] = useState('');
   const [sortBy, setSortBy] = useState('default');
@@ -25,11 +28,37 @@ const Receipt = () => {
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
 
+  //FIX ROUTES TO https://financialforge-mern.onrender.com BEFORE GOING LIVE
+
+  //INITIAL RETRIEVAL OF ALL DATA
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/expense',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: 'SET_DATA', payload: json });
+        setIsLoading(false);
+      }
+    };
+    if (user) {
+      fetchData();
+    }
+  }, [dispatch, user]);
+
   //Form Submit Handler
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    // expense object
+    if (!user) {
+      setError('Unathorized Access!');
+      return;
+    }
+    // create expense object from input data
     const expense = {
       name,
       description,
@@ -45,13 +74,15 @@ const Receipt = () => {
       {
         method: 'POST',
         body: JSON.stringify(expense),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
-    //store response as json
     const json = await response.json();
 
-    // run this is response failed or response succeeeded
+    // handle error and success
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
@@ -66,40 +97,18 @@ const Receipt = () => {
       setError(null);
       setEmptyFields([]);
       setSuccess('Success: New expense has been added!');
-      dispatch({ type: 'CREATE_EXPDATA', payload: json });
+      dispatch({ type: 'CREATE_DATA', payload: json });
     }
   };
 
-  //INITIAL RETRIEVAL OF ALL DATA
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense'
-      );
-      const json = await response.json();
-
-      if (response.ok) {
-        dispatch({ type: 'SET_EXPDATA', payload: json });
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
-  const fetchAgain = async () => {
-    const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense'
-    );
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: 'SET_EXPDATA', payload: json });
-    }
-  };
   //FORM UPDATE HANDLER
   const updateHandler = async (e) => {
     e.preventDefault();
+    // expense object from input data
+    if (!user) {
+      setError('Unauthorized Access!');
+      return;
+    }
     const expense = {
       name,
       description,
@@ -109,17 +118,21 @@ const Receipt = () => {
       category,
     };
 
+    // put request to server to update single expense document
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense/' + expID,
+      'https://financialforge-mern.onrender.com/catalog/expense/' + _id,
       {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(expense),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
 
     const json = await response.json();
-
+    // handle error and success
     if (!response.ok) {
       setError(json.error);
       setSuccess('');
@@ -132,37 +145,31 @@ const Receipt = () => {
       setPaymentType('');
       setError(null);
       setEmptyFields([]);
-      dispatch({ type: 'UPDATE_EXPDATA', payload: json });
+      setShowUpdateBtn(false);
+      setUpdated(true);
       setSuccess('Success: Expense has been updated!');
     }
-    fetchAgain();
   };
-  // A data check to display less or more button
+  // function to show more or less button
   useEffect(() => {
-    if (dataLength) {
+    //check if data exists and is loaded
+    if (data) {
       if (expDisp <= 5) {
         setIsLessCompleted(true);
       } else if (expDisp >= 8) {
         setIsLessCompleted(false);
       }
-      if (expDisp >= dataLength) {
+      if (expDisp >= data.length) {
         setIsMoreCompleted(true);
-      } else if (expDisp < dataLength) {
+      } else if (expDisp < data.length) {
         setIsMoreCompleted(false);
       }
     }
-  }, [dataLength, expDisp]);
-
-  // waits for data to be loaded and then sets dataLength variable
-  useEffect(() => {
-    if (expData) {
-      setDataLength(expData.length);
-    }
-  }, [expData]);
+  }, [data, expDisp]);
 
   // load more button function
   const loadMore = () => {
-    if (expDisp < expData.length && expDisp >= 5) {
+    if (expDisp < data.length && expDisp >= 5) {
       setExpDisp(expDisp + 3);
     }
   };
@@ -171,6 +178,19 @@ const Receipt = () => {
     if (expDisp >= 8) {
       setExpDisp(expDisp - 3);
     }
+  };
+  //clear btn handler
+  const clearBtn = (e) => {
+    e.preventDefault();
+    setName('');
+    setDescription('');
+    setTotal('');
+    setDateReceived('');
+    setCategory('');
+    setPaymentType('');
+    setShowUpdateBtn(false);
+    setError(null);
+    setSuccess(null);
   };
 
   return (
@@ -188,16 +208,15 @@ const Receipt = () => {
             <button onClick={() => setSortBy('default')}>Date</button>
           </div>
           {isLoading ? (
-            <p className="server-loading">
-              Server just woke up, data will load in a moment. Please be patient
-              he had a late night.
-            </p>
+            <span className="material-symbols-outlined server-loading">
+              pending
+            </span>
           ) : (
             ''
           )}
           {sortBy === 'default' &&
-            expData &&
-            expData
+            data &&
+            data
               .sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
               .slice(0, expDisp)
               .map((data) => (
@@ -212,17 +231,21 @@ const Receipt = () => {
                   paymentType={data.paymentType}
                   total={data.total}
                   setName={setName}
+                  updated={updated}
+                  setUpdated={setUpdated}
                   setCategory={setCategory}
+                  setShowUpdateBtn={setShowUpdateBtn}
+                  setError={setError}
                   setDateReceived={setDateReceived}
                   setDescription={setDescription}
                   setPaymentType={setPaymentType}
                   setTotal={setTotal}
-                  setExpID={setExpID}
+                  set_id={set_id}
                 />
               ))}
           {sortBy === 'total' &&
-            expData &&
-            expData
+            data &&
+            data
               .sort((a, b) => a.total - b.total)
               .slice(0, expDisp)
               .map((data) => (
@@ -238,11 +261,12 @@ const Receipt = () => {
                   total={data.total}
                   setName={setName}
                   setCategory={setCategory}
+                  setShowUpdateBtn={setShowUpdateBtn}
                   setDateReceived={setDateReceived}
                   setDescription={setDescription}
                   setPaymentType={setPaymentType}
                   setTotal={setTotal}
-                  setExpID={setExpID}
+                  set_id={set_id}
                 />
               ))}
           {isMoreCompleted ? (
@@ -259,7 +283,7 @@ const Receipt = () => {
               type="button"
               className="btn btn-loadmore"
             >
-              Load More
+              + Load More +
             </button>
           )}
           {isLessCompleted ? (
@@ -276,7 +300,7 @@ const Receipt = () => {
               type="button"
               className="btn btn-loadless"
             >
-              Load Less
+              - Load Less -
             </button>
           )}
         </div>
@@ -285,7 +309,7 @@ const Receipt = () => {
             <h2>+ Create New Expense</h2>
           </div>
           <form className="expense-form">
-            <label>Name:</label>
+            <label>Title:</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
@@ -347,10 +371,26 @@ const Receipt = () => {
               selected={dateReceived}
               className={emptyFields.includes('dateReceived') ? 'error' : ''}
             />
-            <button onClick={submitHandler}>Add New Expense</button>
-            <button onClick={updateHandler}>Update Existing Expense</button>
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            <button
+              onClick={submitHandler}
+              className={showUpdateBtn ? 'createBtn disabled' : 'createBtn'}
+            >
+              Add New Expense
+            </button>
+            <button
+              onClick={updateHandler}
+              className={showUpdateBtn ? 'updateBtn' : 'updateBtn disabled'}
+            >
+              Update Existing Expense
+            </button>
+            <button
+              onClick={clearBtn}
+              className={showUpdateBtn ? 'clearBtn' : 'clearBtn disabled'}
+            >
+              Clear
+            </button>
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
           </form>
         </aside>
       </section>

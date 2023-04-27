@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
-import { useDataContext } from '../hooks/useDataContext';
+import React, { useState, useEffect } from 'react';
+import { useIncDataContext } from '../hooks/useIncDataContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
 
 const IncomeDetails = (income) => {
-  const { dispatch } = useDataContext();
+  const { dispatch } = useIncDataContext();
+  const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
+  // find possible better way to
+  useEffect(() => {
+    const fetchIncome = async () => {
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/income',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: 'SET_DATA', payload: json });
+      }
+    };
+    if (user && income.updated) {
+      fetchIncome();
+      income.setUpdated(false);
+    }
+  }, [user, dispatch, income]);
+
+  //button handler for deleting single object
   const handleDel = async () => {
+    if (!user) {
+      income.setError('Unauthorized Access!');
+      return;
+    }
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/income/' + income.id,
       {
@@ -15,7 +43,7 @@ const IncomeDetails = (income) => {
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: 'DELETE_INCDATA', payload: json });
+      dispatch({ type: 'DELETE_DATA', payload: json });
     }
   };
 
@@ -28,7 +56,9 @@ const IncomeDetails = (income) => {
     income.setCategory(income.category);
     income.setDate(parseISO(income.dateReceived));
     income.setIncID(income.id);
+    income.setShowUpdateBtn(true);
   };
+
   const modalOn = () => {
     setModal(true);
   };

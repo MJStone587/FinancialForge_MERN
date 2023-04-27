@@ -15,13 +15,12 @@ let IncomeSchema = new Schema(
     },
     dateReceived: { type: Date, required: true },
     dateCreated: { type: Date, default: () => Date.now() },
-    //author: { type: Schema.Types.ObjectId, ref: 'User' },
+    //author: { type: Schema.Types.ObjectId, ref: 'User' }, PREFERENCE?
     total: { type: Number, required: true },
+    user_id: { type: String, required: true },
   },
   opts
 );
-
-//IncomeSchema.set('toObject', { virtuals: true });
 
 IncomeSchema.virtual('date_received_med').get(function () {
   return this.dateReceived.toLocaleDateString(DateTime.DATE_MED);

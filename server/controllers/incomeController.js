@@ -2,8 +2,9 @@ const Income = require('../models/income');
 const mongoose = require('mongoose');
 
 exports.get_all_income = async function (req, res) {
+  const user_id = req.user._id;
   try {
-    const incomeData = await Income.find({}).sort({ dateCreated: -1 });
+    const incomeData = await Income.find({ user_id }).sort({ dateCreated: -1 });
     res.status(200).json(incomeData);
   } catch (error) {
     res.status(400).json({ error: 'Error: please contact support!' });
@@ -23,8 +24,8 @@ exports.get_single_income = async (req, res) => {
 // Create new income .
 exports.income_create_post = async (req, res) => {
   const { name, description, category, dateReceived, total } = req.body;
+  let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
-
   if (!name) {
     emptyFields.push('name');
   }
@@ -48,6 +49,12 @@ exports.income_create_post = async (req, res) => {
     });
   }
 
+  if (total < 0) {
+    return res
+      .status(400)
+      .json({ error: 'Total cannot be less than 0', emptyFields });
+  }
+
   try {
     const incomeDuplicate = await Income.findOne({ name: name });
     if (incomeDuplicate) {
@@ -56,12 +63,14 @@ exports.income_create_post = async (req, res) => {
         emptyFields,
       });
     }
+    const user_id = req.user._id;
     const income = await Income.create({
       name,
       description,
       category,
       dateReceived,
-      total,
+      user_id,
+      total: totalF,
     });
     res.status(200).json(income);
   } catch (error) {
@@ -87,6 +96,7 @@ exports.income_delete = async (req, res) => {
 exports.income_update = async (req, res) => {
   const { id } = req.params;
   const { name, description, category, dateReceived, total } = req.body;
+  let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
 
   if (!name) {
@@ -112,7 +122,14 @@ exports.income_update = async (req, res) => {
     });
   }
 
+  if (total < 0) {
+    return res
+      .status(400)
+      .json({ error: 'Total cannot be less than 0', emptyFields });
+  }
+
   try {
+    const user_id = req.user._id;
     const income = await Income.findByIdAndUpdate(
       id,
       {
@@ -120,7 +137,8 @@ exports.income_update = async (req, res) => {
         description,
         category,
         dateReceived,
-        total,
+        total: totalF,
+        user_id,
       },
       { new: true }
     );

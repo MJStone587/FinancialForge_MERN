@@ -1,24 +1,56 @@
-import React, { useState } from 'react';
-import { useDataContext } from '../hooks/useDataContext';
+import React, { useState, useEffect } from 'react';
+import { useExpDataContext } from '../hooks/useExpDataContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { parseISO } from 'date-fns';
 
 const ExpenseDetails = (expense) => {
-  const { dispatch } = useDataContext();
+  const { dispatch } = useExpDataContext();
+  const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
+  // run fetch after update to remove old document THIS BANDAID FIX UNTIL UNDERSTAND WHATS
+  // GOING ON WITH STATE
+  useEffect(() => {
+    const fetchExpense = async () => {
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/expense',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: 'SET_DATA', payload: json });
+      }
+    };
+    if (user && expense.updated) {
+      fetchExpense();
+      expense.setUpdated(false);
+    }
+  }, [user, dispatch, expense]);
+
+  //delete handler
   const handleDel = async () => {
+    // check if user is logged in
+    if (!user) {
+      expense.setError('Unauthorized Access!');
+      return;
+    }
+    //fetch request to server
     const response = await fetch(
       'https://financialforge-mern.onrender.com/catalog/expense/' + expense.id,
       {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${user.token}` },
       }
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: 'DELETE_EXPDATA', payload: json });
+      dispatch({ type: 'DELETE_DATA', payload: json });
     }
   };
-
+  //update handler
   const handleUpdate = async () => {
     expense.setName(expense.name);
     expense.setCategory(expense.category);
@@ -26,7 +58,8 @@ const ExpenseDetails = (expense) => {
     expense.setDescription(expense.description);
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);
-    expense.setExpID(expense.id);
+    expense.set_id(expense.id);
+    expense.setShowUpdateBtn(true);
   };
 
   const modalOn = () => {
