@@ -24,6 +24,7 @@ exports.get_single_income = async (req, res) => {
 // Create new income .
 exports.income_create_post = async (req, res) => {
   const { name, description, category, dateReceived, total } = req.body;
+  let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
   if (!name) {
     emptyFields.push('name');
@@ -69,7 +70,7 @@ exports.income_create_post = async (req, res) => {
       category,
       dateReceived,
       user_id,
-      total,
+      total: totalF,
     });
     res.status(200).json(income);
   } catch (error) {
@@ -95,6 +96,7 @@ exports.income_delete = async (req, res) => {
 exports.income_update = async (req, res) => {
   const { id } = req.params;
   const { name, description, category, dateReceived, total } = req.body;
+  let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
 
   if (!name) {
@@ -135,7 +137,7 @@ exports.income_update = async (req, res) => {
         description,
         category,
         dateReceived,
-        total,
+        total: totalF,
         user_id,
       },
       { new: true }

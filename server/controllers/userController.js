@@ -3,6 +3,7 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '1d' });
@@ -59,7 +60,7 @@ exports.post_new_user = async (req, res) => {
     });
   }
   // check to make sure email is unique and not already registered
-  const isDuplicate = await User.findOne({ email });
+  const isDuplicate = await User.findOne({ email: email.toLowerCase() });
   if (isDuplicate) {
     return res.status(400).json({
       error: 'That email is already registered, please try again',
@@ -126,6 +127,7 @@ exports.user_login = async (req, res) => {
       emptyFields,
       token,
       email: emailF,
+      name: emailExists.firstName,
     });
   });
 };

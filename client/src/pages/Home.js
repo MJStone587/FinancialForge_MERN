@@ -25,7 +25,7 @@ const Home = () => {
       )}
       {user && (
         <section className="home">
-          <h1>Welcome back!</h1>
+          <h1>Welcome back, {user.name}!</h1>
           <p>Access your income, expense, and summary</p>
           <div className="home-nav">
             <Link to="/income">Income</Link>

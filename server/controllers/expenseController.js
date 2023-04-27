@@ -18,6 +18,7 @@ exports.expense_list = async function (req, res) {
 exports.expense_create = async function (req, res) {
   const { name, description, dateReceived, total, paymentType, category } =
     req.body;
+  let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
   if (!name) {
     emptyFields.push('name');
@@ -62,7 +63,7 @@ exports.expense_create = async function (req, res) {
       name,
       description,
       category,
-      total,
+      total: totalF,
       dateReceived,
       paymentType,
       user_id,
@@ -86,6 +87,7 @@ exports.expense_update = async function (req, res) {
   const { id } = req.params;
   const { name, description, dateReceived, total, paymentType, category } =
     req.body;
+  let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
   if (!name) {
     emptyFields.push('name');
@@ -124,7 +126,7 @@ exports.expense_update = async function (req, res) {
         name,
         description,
         category,
-        total,
+        total: totalF,
         dateReceived,
         paymentType,
         user_id,

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
+require('dotenv').config();
 
 exports.requireAuth = async (req, res, next) => {
   //verify authentication
@@ -15,7 +16,6 @@ exports.requireAuth = async (req, res, next) => {
     next();
   } catch (err) {
     if (err.name == 'TokenExpiredError' && err.message == 'jwt expired') {
-      console.log('Token has expired');
       res
         .status(401)
         .json({ error: 'Your token has expired please log in again' });

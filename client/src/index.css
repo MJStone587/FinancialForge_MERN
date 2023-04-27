@@ -88,8 +88,9 @@
 }
 .navbar-logout {
   cursor: pointer;
-  font-size: calc(16px + (20 - 16) * ((100vw - 300px) / (1920 - 300)));
+  font-size: calc(14px + (20 - 14) * ((100vw - 300px) / (1920 - 300)));
   color: var(--ltBlue-color-);
+  padding: 0px;
   border: 1px solid var(--ltBlue-color-);
   background-color: var(--charcoal-bg-);
 }
@@ -128,6 +129,7 @@
   align-items: center;
   margin: 5px;
   padding: 10px 0px;
+  border-left: 1px solid black;
 }
 .income-form,
 .expense-form {
@@ -336,11 +338,22 @@ select.error {
   row-gap: 10px;
   padding: 10px;
 }
+.income-table-title,
+.expense-table-title {
+  text-align: center;
+  text-decoration: underline;
+}
+.income-total,
+.expense-total {
+  margin-bottom: 15px;
+}
 .income-table-container {
   overflow: auto;
+  max-height: 350px;
 }
 .expense-table-container {
   overflow: auto;
+  max-height: 350px;
 }
 table {
   border: 1px solid black;

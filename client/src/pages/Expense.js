@@ -186,6 +186,8 @@ const Receipt = () => {
     setCategory('');
     setPaymentType('');
     setShowUpdateBtn(false);
+    setError(null);
+    setSuccess(null);
   };
 
   return (
@@ -278,7 +280,7 @@ const Receipt = () => {
               type="button"
               className="btn btn-loadmore"
             >
-              Load More
+              + Load More +
             </button>
           )}
           {isLessCompleted ? (
@@ -295,7 +297,7 @@ const Receipt = () => {
               type="button"
               className="btn btn-loadless"
             >
-              Load Less
+              - Load Less -
             </button>
           )}
         </div>
@@ -304,7 +306,7 @@ const Receipt = () => {
             <h2>+ Create New Expense</h2>
           </div>
           <form className="expense-form">
-            <label>Name:</label>
+            <label>Title:</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}

@@ -131,6 +131,7 @@ function Income() {
       setError(null);
       setSuccess('Success: Income has been updated!');
       setUpdated(true);
+      setShowUpdateBtn(false);
     }
   };
 
@@ -173,6 +174,8 @@ function Income() {
     setTotal('');
     setDate('');
     setShowUpdateBtn(false);
+    setError(null);
+    setSuccess(null);
   };
 
   return (
@@ -267,7 +270,7 @@ function Income() {
               type="button"
               className="btn btn-loadmore"
             >
-              Load More
+              + Load More +
             </button>
           )}
           {isLessCompleted ? (
@@ -284,7 +287,7 @@ function Income() {
               type="button"
               className="btn btn-loadless"
             >
-              Load Less
+              - Load Less -
             </button>
           )}
         </div>
@@ -293,7 +296,7 @@ function Income() {
             <h2>+ Add New Income</h2>
           </div>
           <form className="income-form">
-            <label>Name:</label>
+            <label>Title:</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
