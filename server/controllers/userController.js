@@ -3,7 +3,6 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '1d' });
