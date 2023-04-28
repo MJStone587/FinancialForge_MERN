@@ -22,11 +22,14 @@ function Signup() {
       password,
     };
     // send post request to server with user object
-    const response = await fetch('http://localhost:5000/catalog/user/create', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      'https://financialforge-mern.onrender.com/catalog/user/create',
+      {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
 
     const json = await response.json();
     // handle response failure or success and act accordingly
