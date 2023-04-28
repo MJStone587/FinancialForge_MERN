@@ -11,9 +11,12 @@ function Summary() {
   // request for all income data
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/catalog/income', {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/income',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
       if (response.ok) {
         setIncome(json);
@@ -27,9 +30,12 @@ function Summary() {
   // request for all expense data
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/catalog/expense', {
-        headers: { Authorization: `Bearer ${user.token}` },
-      });
+      const response = await fetch(
+        'https://financialforge-mern.onrender.com/catalog/expense',
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
       const json = await response.json();
       if (response.ok) {
         setExpense(json);
