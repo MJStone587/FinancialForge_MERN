@@ -35,9 +35,18 @@ function App() {
         <div className="pages"></div>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/income" element={user ? <Income /> : <Home />} />
-          <Route path="/summary" element={user ? <Summary /> : <Home />} />
-          <Route path="/expense" element={user ? <Expense /> : <Home />} />
+          <Route
+            path="/income"
+            element={user ? <Income /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/summary"
+            element={user ? <Summary /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/expense"
+            element={user ? <Expense /> : <Navigate to="/" />}
+          />
           <Route
             path="/login"
             element={!user ? <Login /> : <Navigate to="/" />}
