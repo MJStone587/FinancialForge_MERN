@@ -117,6 +117,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
+  column-gap: 10px;
   width: 40%;
   font-size: calc(18px + (21 - 18) * ((100vw - 300px) / (1920 - 300)));
   color: var(--ltBlue-color-);
