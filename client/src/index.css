@@ -117,7 +117,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
-  column-gap: 10px;
+  column-gap: 3px;
   width: 40%;
   font-size: calc(18px + (21 - 18) * ((100vw - 300px) / (1920 - 300)));
   color: var(--ltBlue-color-);
@@ -538,5 +538,8 @@ td {
   }
   .navbar-links {
     margin: 5px;
+  }
+  .home-nav {
+    flex-flow: column nowrap;
   }
 }
