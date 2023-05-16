@@ -10,12 +10,12 @@ const Home = () => {
         <section className="home">
           <h1>Welcome To The Financial Forge</h1>
           <p>
-            This is a place where you can keep track of your finances View and
-            modify your expense, income, and more.
+            Financial Forge is here to help you organize your expenses. Record
+            and keep track of your spending and saving.
           </p>
           <p>
-            Financial Forge helps you organize your finances so you can save for
-            that next big purchase. Login or sign up to get started!
+            To get started Login with an existing user or Sign Up with a new
+            email.
           </p>
           <div className="home-nav">
             <Link to="/login">Login</Link>

@@ -4,6 +4,7 @@
   --charcoal-bg-: #30353d;
   --ltBlue-color-: #6ee2ff;
   --dkBlue-color-: #14213d;
+  --btnBGblue-color: #59c9e6;
   --white-color-: #ffffff;
   --gold-color: #fca311;
   --gray-color-: #e5e5e5;
@@ -102,8 +103,9 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  background-color: var(--gray-color-);
   justify-content: center;
-  min-height: 80vh;
+  min-height: 90vh;
   padding: 0px 150px;
 }
 .home h1 {
@@ -120,6 +122,18 @@
   width: 40%;
   font-size: calc(18px + (21 - 18) * ((100vw - 300px) / (1920 - 300)));
   color: var(--ltBlue-color-);
+}
+.home-nav a {
+  background-color: var(--btnBGblue-color);
+  border: none;
+  color: white;
+  font-size: calc(16px + (17 - 16) * ((100vw - 300px) / (1920 - 300)));
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 8px;
+}
+.home-nav a:hover {
+  color: var(--dkBlue-color-);
 }
 .income-form-container,
 .expense-form-container {
@@ -326,8 +340,22 @@ select.error {
 .date {
   width: 15vw;
 }
-.btn-loadMore {
-  background-color: var(--ltBlue-color-);
+.createBtn,
+.updateBtn,
+.submitBtn {
+  background-color: var(--btnBGblue-color);
+  border: 1px solid black;
+  color: white;
+  font-size: calc(15px + (16 - 15) * ((100vw - 300px) / (1920 - 300)));
+  text-decoration: none;
+  border-radius: 1px;
+  padding: 3px;
+}
+.createBtn:hover,
+.updateBtn:hover,
+.submitBtn:hover {
+  cursor: pointer;
+  color: var(--dkBlue-color-);
 }
 .summary-container {
   display: flex;
@@ -414,6 +442,10 @@ td {
   align-items: center;
   flex-basis: 100%;
   row-gap: 10px;
+}
+.loginBtn {
+  width: 155px;
+  border-radius: 15px;
 }
 .input-label {
   text-decoration: underline;
@@ -532,6 +564,20 @@ td {
   .expense-card {
     width: 85%;
   }
+  .login-card {
+    flex-flow: column-reverse nowrap;
+    height: 400px;
+    width: 300px;
+  }
+  .signup-card {
+    flex-flow: column-reverse nowrap;
+    height: 450px;
+    width: 300px;
+  }
+  .loginBtn {
+    width: 155px;
+    border-radius: 2px;
+  }
   .modal-content {
     width: 80%;
   }
@@ -541,6 +587,12 @@ td {
   .home-nav {
     flex-flow: column nowrap;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
+  }
+  .home p {
+    text-align: center;
+  }
+  .home-nav a {
+    margin: 5px;
   }
 }
