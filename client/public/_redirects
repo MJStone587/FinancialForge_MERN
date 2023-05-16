@@ -1,9 +1,9 @@
 # Redirects from what the browser requests to what we serve
 
 / /index.html 200
-/summary /index.html 200
-/expense /index.html 200
-/income /index.html 200
-/login /index.html 200
-/signup /index.html 200
-/summary /index.html 200
+/summary /summary 200
+/expense /expense 200
+/income /income 200
+/login /login 200
+/signup /signup 200
+/summary /summary 200
