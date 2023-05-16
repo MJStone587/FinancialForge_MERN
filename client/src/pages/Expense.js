@@ -369,7 +369,9 @@ const Receipt = () => {
               onChange={(date) => setDate(date)}
               value={dateReceived}
               selected={dateReceived}
-              className={emptyFields.includes('dateReceived') ? 'error' : ''}
+              className={
+                emptyFields.includes('dateReceived') ? 'error' : 'dateReceived'
+              }
             />
             <button
               onClick={submitHandler}

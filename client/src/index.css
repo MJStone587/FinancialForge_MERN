@@ -339,10 +339,10 @@ select.error {
   padding: 10px 0px;
 }
 .date {
-  width: 15vw;
+  width: 225px;
 }
 .dateReceived {
-  width: 15vw;
+  width: 225px;
 }
 .createBtn,
 .updateBtn,
@@ -581,6 +581,12 @@ td {
   .loginBtn {
     width: 155px;
     border-radius: 2px;
+  }
+  .date {
+    width: 155px;
+  }
+  .dateReceived {
+    width: 155px;
   }
   .modal-content {
     width: 80%;
