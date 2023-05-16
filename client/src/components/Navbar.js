@@ -23,7 +23,7 @@ function Navbar() {
           </div>
         )}
         {user && (
-          <div className="navLinks loggedIn">
+          <div className="navLinks loggedIn expanded">
             <Link to="/">Home</Link>
             <Link to="/income">Income</Link>
             <Link to="/expense">Expense</Link>
