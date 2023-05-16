@@ -564,6 +564,12 @@ td {
     row-gap: 10px;
     width: 60%;
   }
+  .login-card-form input {
+    height: 30px;
+  }
+  .signup-form input {
+    height: 30px;
+  }
   .income-card,
   .expense-card {
     width: 85%;
