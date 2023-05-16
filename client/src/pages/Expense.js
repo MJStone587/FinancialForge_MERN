@@ -23,7 +23,7 @@ const Receipt = () => {
   const [isLessCompleted, setIsLessCompleted] = useState(false);
   const [total, setTotal] = useState('');
   const [category, setCategory] = useState('');
-  const [dateReceived, setDateReceived] = useState('');
+  const [dateReceived, setDate] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
   const [emptyFields, setEmptyFields] = useState([]);
@@ -91,7 +91,7 @@ const Receipt = () => {
       setName('');
       setDescription('');
       setTotal('');
-      setDateReceived('');
+      setDate('');
       setCategory('');
       setPaymentType('');
       setError(null);
@@ -140,7 +140,7 @@ const Receipt = () => {
       setName('');
       setDescription('');
       setTotal('');
-      setDateReceived('');
+      setDate('');
       setCategory('');
       setPaymentType('');
       setError(null);
@@ -185,7 +185,7 @@ const Receipt = () => {
     setName('');
     setDescription('');
     setTotal('');
-    setDateReceived('');
+    setDate('');
     setCategory('');
     setPaymentType('');
     setShowUpdateBtn(false);
@@ -236,7 +236,7 @@ const Receipt = () => {
                   setCategory={setCategory}
                   setShowUpdateBtn={setShowUpdateBtn}
                   setError={setError}
-                  setDateReceived={setDateReceived}
+                  setDateReceived={setDate}
                   setDescription={setDescription}
                   setPaymentType={setPaymentType}
                   setTotal={setTotal}
@@ -262,7 +262,7 @@ const Receipt = () => {
                   setName={setName}
                   setCategory={setCategory}
                   setShowUpdateBtn={setShowUpdateBtn}
-                  setDateReceived={setDateReceived}
+                  setDateReceived={setDate}
                   setDescription={setDescription}
                   setPaymentType={setPaymentType}
                   setTotal={setTotal}
@@ -366,7 +366,7 @@ const Receipt = () => {
             />
             <label>Date:</label>
             <DatePicker
-              onChange={(date) => setDateReceived(date)}
+              onChange={(date) => setDate(date)}
               value={dateReceived}
               selected={dateReceived}
               className={emptyFields.includes('dateReceived') ? 'error' : ''}

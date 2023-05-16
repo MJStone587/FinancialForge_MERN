@@ -340,6 +340,9 @@ select.error {
 .date {
   width: 15vw;
 }
+.dateReceived {
+  width: 15vw;
+}
 .createBtn,
 .updateBtn,
 .submitBtn {
