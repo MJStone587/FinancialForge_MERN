@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   --charcoal-bg-: #30353d;
   --ltBlue-color-: #6ee2ff;
@@ -106,8 +107,16 @@
   align-items: center;
   background-color: var(--gray-color-);
   justify-content: center;
-  min-height: 90vh;
+  height: 90vh;
   padding: 0px 150px;
+}
+.home-welcome {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
 }
 .home h1 {
   font-size: calc(18px + (24 - 18) * ((100vw - 300px) / (1920 - 300)));
@@ -120,6 +129,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-evenly;
+  margin-top: 20px;
   width: 40%;
   font-size: calc(18px + (21 - 18) * ((100vw - 300px) / (1920 - 300)));
   color: var(--ltBlue-color-);
@@ -449,24 +459,32 @@ td {
 }
 .loginBtn {
   width: 155px;
-  border-radius: 15px;
+  border-radius: 5px;
 }
 .input-label {
   text-decoration: underline;
 }
-.eye-wrapper {
-  float: right;
-  margin-bottom: -34px;
-  margin-left: 135px;
+.eye-wrapper-login {
+  margin-top: -30px;
+  left: 65px;
+  top: 30px;
   position: relative;
-  z-index: 1;
-  cursor: pointer;
+  z-index: 4;
+}
+.eye-wrapper-signup {
+  position: relative;
+  margin-top: -26px;
+  max-width: 20px;
+  left: 130px;
+  top: 49px;
+  z-index: 4;
 }
 .eye {
-  font-size: calc(14px + (17 - 14) * ((100vw - 300px) / (1920 - 300)));
+  font-size: calc(14px + (15.5 - 14) * ((100vw - 300px) / (1920 - 300)));
 }
 .eye:hover {
   color: rgb(0, 0, 0);
+  cursor: pointer;
 }
 .signup-container {
   display: flex;
@@ -610,5 +628,136 @@ td {
   }
   .home-nav a {
     margin: 5px;
+  }
+  .eye-wrapper-login {
+    margin-top: -30px;
+    left: 65px;
+    top: 36px;
+  }
+  .eye-wrapper-signup {
+    margin-top: -26px;
+    max-width: 20px;
+    left: 133px;
+    top: 55px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .home {
+    padding: 0px 10px;
+  }
+  .header-container {
+    padding: 0px 25px;
+  }
+  .header-left h2 {
+    display: none;
+  }
+  table {
+    width: 300px;
+  }
+  .income-display,
+  .expense-display {
+    flex-flow: column nowrap;
+  }
+  .income-list,
+  .expense-list {
+    order: 2;
+    margin: 15px 0px;
+    width: 100%;
+  }
+  .income-form-container,
+  .expense-form-container {
+    order: 1;
+    width: 100%;
+  }
+  .income-form,
+  .expense-form {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 10px;
+    width: 60%;
+  }
+  .login-card-form input {
+    height: 30px;
+  }
+  .signup-form input {
+    height: 30px;
+  }
+  .income-card,
+  .expense-card {
+    width: 85%;
+  }
+  .login-card {
+    flex-flow: column-reverse nowrap;
+    height: 400px;
+    width: 300px;
+  }
+  .signup-card {
+    flex-flow: column-reverse nowrap;
+    height: 450px;
+    width: 300px;
+  }
+  .loginBtn {
+    width: 155px;
+    border-radius: 2px;
+  }
+  .date {
+    width: 155px;
+  }
+  .dateReceived {
+    width: 155px;
+  }
+  .modal-content {
+    width: 80%;
+  }
+  .navbar-links {
+    margin: 5px;
+  }
+  .home-nav {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .home p {
+    text-align: center;
+  }
+  .home-nav a {
+    margin: 5px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .home {
+    padding: 250px 0px;
+    justify-content: flex-start;
+  }
+  .header-container {
+    height: 10vh;
+  }
+  .login-container {
+    padding: 125px 0px;
+    justify-content: flex-start;
+  }
+  .signup-container {
+    padding: 125px 0px;
+    justify-content: flex-start;
+  }
+  .login-card-form input {
+    padding: 3px;
+  }
+  .eye-wrapper-login {
+    top: 34px;
+    left: 68px;
+  }
+  .signup-form input {
+    padding: 3px;
+  }
+  .eye-wrapper-signup {
+    top: 52px;
+    left: 138px;
+  }
+  .date {
+    width: 136px;
+  }
+  .dateReceived {
+    width: 136px;
   }
 }

@@ -5,7 +5,7 @@ import { useLogin } from '../hooks/useLogin.js';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [visiblePass, setVisiblePass] = useState('');
+  const [visiblePass, setVisiblePass] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const { login, error, success, emptyFields } = useLogin();
 
@@ -21,7 +21,7 @@ function Login() {
   return (
     <section className="login-container">
       <div className="login-container-header">
-        <h1>Sign In</h1>
+        <h1>Login</h1>
       </div>
       <div className="login-card">
         <div className="login-card-left">
@@ -38,7 +38,7 @@ function Login() {
               className={emptyFields.includes('email') ? 'error' : ''}
             />
             <label className="input-label pass">Password</label>
-            <div className="eye-wrapper">
+            <div className="eye-wrapper-login">
               <span
                 className="material-symbols-outlined eye faded"
                 onClick={eyeHandler}

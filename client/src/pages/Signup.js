@@ -6,6 +6,8 @@ function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [visiblePass, setVisiblePass] = useState(true);
+  const [isVisible, setVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -48,6 +50,11 @@ function Signup() {
     }
   };
 
+  const eyeClickHandler = () => {
+    setVisiblePass(!visiblePass);
+    setVisible(!isVisible);
+  };
+
   return (
     <section className="signup-container">
       <div className="signup-header-container">
@@ -81,9 +88,17 @@ function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               className={emptyFields.includes('email') ? 'error' : ''}
             />
+            <div className="eye-wrapper-signup">
+              <span
+                className="material-symbols-outlined eye faded"
+                onClick={eyeClickHandler}
+              >
+                {isVisible ? 'visibility_off' : 'visibility'}
+              </span>
+            </div>
             <label>Password:</label>
             <input
-              type="password"
+              type={visiblePass ? 'password' : 'text'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={emptyFields.includes('password') ? 'error' : ''}
