@@ -547,7 +547,7 @@ td {
 .faded {
   color: rgb(0, 0, 0, 0.4);
 }
-@media screen and (max-width: 414px) {
+@media screen and (min-width: 300px) {
   .home {
     padding: 0px 10px;
   }
@@ -641,7 +641,7 @@ td {
     top: 55px;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 415px) {
   .home {
     padding: 0px 10px;
   }
@@ -724,7 +724,7 @@ td {
     margin: 5px;
   }
 }
-@media screen and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
   .home {
     padding: 250px 0px;
     justify-content: flex-start;
