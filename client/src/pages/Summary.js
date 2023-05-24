@@ -7,6 +7,7 @@ function Summary() {
   const [income, setIncome] = useState();
   const [incGrandTotal, setIncGrandTotal] = useState();
   const [expGrandTotal, setExpGrandTotal] = useState();
+  const [balance, setBalance] = useState();
 
   // request for all income data
   useEffect(() => {
@@ -53,9 +54,10 @@ function Summary() {
     income && income.map((inc) => (incGrandTotal += inc.total));
     expense && expense.map((exp) => (expGrandTotal += exp.total));
     setIncGrandTotal(incGrandTotal.toFixed(2));
-    // PERSONAL NOTE BELOW
     setExpGrandTotal(expGrandTotal.toFixed(2));
-  }, [income, expense]);
+    var balance = incGrandTotal - expGrandTotal;
+    setBalance(balance.toFixed(2));
+  }, [income, expense, balance]);
 
   return (
     <section className="summary-container">
@@ -83,7 +85,7 @@ function Summary() {
           </tbody>
         </table>
       </div>
-      <h3 className="income-total">Grand Total: ${incGrandTotal}</h3>
+      <h3 className="income-total">Income Total: ${incGrandTotal}</h3>
       <h2 className="expense-table-title">Expenses</h2>
       <div className="expense-table-container">
         <table className="expense-table">
@@ -108,7 +110,12 @@ function Summary() {
           </tbody>
         </table>
       </div>
-      <h3 className="expense-total">Grand Total: ${expGrandTotal}</h3>
+      <h3 className="expense-total">Expenses Total: ${expGrandTotal}</h3>
+      <div>
+        <div className="balance-container">
+          <h2 className="balance">Balance: ${balance}</h2>
+        </div>
+      </div>
     </section>
   );
 }
