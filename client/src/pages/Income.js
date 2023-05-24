@@ -192,8 +192,18 @@ function Income() {
           <h2 className="income-list-title">Income Receipts</h2>
           <div className="income-sort-container">
             <p>Sort:</p>
-            <button onClick={() => setSortBy('total')}>Total</button>
-            <button onClick={() => setSortBy('default')}>Date</button>
+            <button
+              className="sortBtn sortTotal"
+              onClick={() => setSortBy('total')}
+            >
+              Total
+            </button>
+            <button
+              className="sortBtn sortDate"
+              onClick={() => setSortBy('default')}
+            >
+              Date
+            </button>
           </div>
           {isLoading ? (
             <span className="material-symbols-outlined server-loading">

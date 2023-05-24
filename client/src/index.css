@@ -113,6 +113,7 @@
 .home-welcome {
   display: flex;
   flex-flow: column nowrap;
+  justify-content: center;
   align-items: center;
   background-color: white;
   padding: 30px;
@@ -130,7 +131,8 @@
   flex-flow: row nowrap;
   justify-content: space-evenly;
   margin-top: 20px;
-  width: 40%;
+  column-gap: 10px;
+  max-width: 200px;
   font-size: calc(18px + (21 - 18) * ((100vw - 300px) / (1920 - 300)));
   color: var(--ltBlue-color-);
 }
@@ -154,7 +156,14 @@
   align-items: center;
   margin: 5px;
   padding: 10px 0px;
-  border-left: 1px solid black;
+}
+.income-form-container {
+  border-left: 1px solid var(--gold-color);
+  border-right: 1px solid var(--gold-color);
+}
+.expense-form-container {
+  border-left: 1px solid var(--ltBlue-color-);
+  border-right: 1px solid var(--ltBlue-color-);
 }
 .income-form,
 .expense-form {
@@ -201,9 +210,16 @@ select.error {
 .expense-header h1 {
   font-size: calc(30px + (40 - 30) * ((100vw - 300px) / (1920 - 300)));
 }
+.income-header h1 {
+  color: var(--gold-color);
+}
+.expense-header h1 {
+  color: var(--ltBlue-color-);
+}
 #income-create-new {
   color: var(--ltBlue-color-);
 }
+
 #income-create-new:hover {
   color: var();
 }
@@ -254,6 +270,9 @@ select.error {
   font-size: calc(18px + (25 - 18) * ((100vw - 300px) / (1920 - 300)));
   color: var(--gold-color);
 }
+.expense-title {
+  color: var(--ltBlue-color-);
+}
 .income-title:hover,
 .expense-title:hover {
   color: var(--ltBlue-color-);
@@ -264,13 +283,37 @@ select.error {
   display: flex;
   flex-flow: row nowrap;
   max-height: 50px;
+  width: 200px;
   margin: 10px;
 }
 .expense-sort-container p,
 .income-sort-container p {
   margin: 5px;
+  font-size: calc(16px + (18 - 16) * ((100vw - 300px) / (1920 - 300)));
 }
-
+.sortBtn {
+  background-color: var(--charcoal-bg-);
+  border-radius: 10px;
+  max-width: 75px;
+  margin: 2px;
+  border: 1px solid transparent;
+}
+.income-sort-container .sortBtn {
+  color: var(--gold-color);
+}
+.expense-sort-container .sortBtn {
+  color: var(--ltBlue-color-);
+}
+.expense-sort-container .sortBtn:hover {
+  border: 1px solid var(--ltBlue-color-);
+  cursor: pointer;
+  color: white;
+}
+.income-sort-container .sortBtn:hover {
+  border: 1px solid var(--gold-color);
+  cursor: pointer;
+  color: white;
+}
 .material-symbols-outlined {
   align-self: flex-end;
   padding: 3px;
@@ -328,6 +371,7 @@ select.error {
   align-items: center;
   width: 100%;
 }
+
 .modal-title {
   font-size: calc(20px + (36 - 20) * ((100vw - 300px) / (1920 - 300)));
 }
@@ -364,6 +408,9 @@ select.error {
   text-decoration: none;
   border-radius: 1px;
   padding: 3px;
+}
+.income-form .createBtn {
+  background-color: var(--gold-color);
 }
 .createBtn:hover,
 .updateBtn:hover,
@@ -467,7 +514,7 @@ td {
 .eye-wrapper-login {
   margin-top: -30px;
   left: 65px;
-  top: 30px;
+  top: 31px;
   position: relative;
   z-index: 4;
 }
@@ -547,7 +594,97 @@ td {
 .faded {
   color: rgb(0, 0, 0, 0.4);
 }
-@media screen and (min-width: 300px) {
+/*  @media screen and (max-width: 414px) {
+  .home {
+    padding: 0px 10px;
+  }
+  .header-container {
+    padding: 0px 25px;
+  }
+  .header-left h2 {
+    display: none;
+  }
+  table {
+    width: 300px;
+  }
+  .income-display,
+  .expense-display {
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+  }
+  .income-list,
+  .expense-list {
+    order: 2;
+    margin: 15px 0px;
+    width: 100%;
+  }
+  .income-form-container,
+  .expense-form-container {
+    order: 1;
+    width: 100%;
+  }
+  .income-form,
+  .expense-form {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 10px;
+    width: 100%;
+  }
+  .login-card-form input {
+    height: 30px;
+  }
+  .signup-form input {
+    height: 30px;
+  }
+  .income-card,
+  .expense-card {
+    width: 85%;
+    margin: 0px 0px 10px 0px;
+  }
+  .login-card {
+    flex-flow: column-reverse nowrap;
+    height: 400px;
+    width: 300px;
+  }
+  .signup-card {
+    flex-flow: column-reverse nowrap;
+    height: 450px;
+    width: 300px;
+  }
+  .loginBtn {
+    width: 155px;
+    border-radius: 2px;
+  }
+  .modal-content {
+    width: 80%;
+  }
+  .navbar-links {
+    margin: 5px;
+  }
+  .home-nav {
+    flex-flow: column nowrap;
+    justify-content: c;
+  }
+  .home p {
+    text-align: center;
+  }
+  .home-nav a {
+    margin: 5px;
+    max-width: 200px;
+  }
+  .eye-wrapper-login {
+    margin-top: -30px;
+    left: 65px;
+    top: 36px;
+  }
+  .eye-wrapper-signup {
+    margin-top: -26px;
+    max-width: 20px;
+    left: 133px;
+    top: 55px;
+  }
+}*/
+@media screen and (max-width: 768px) {
   .home {
     padding: 0px 10px;
   }
@@ -567,7 +704,7 @@ td {
   .income-list,
   .expense-list {
     order: 2;
-    margin: 15px 0px;
+    margin: 0px 0px 5px 0px;
     width: 100%;
   }
   .income-form-container,
@@ -607,10 +744,10 @@ td {
     border-radius: 2px;
   }
   .date {
-    width: 155px;
+    width: 100%;
   }
   .dateReceived {
-    width: 155px;
+    width: 100%;
   }
   .modal-content {
     width: 80%;
@@ -641,90 +778,7 @@ td {
     top: 55px;
   }
 }
-@media screen and (min-width: 415px) {
-  .home {
-    padding: 0px 10px;
-  }
-  .header-container {
-    padding: 0px 25px;
-  }
-  .header-left h2 {
-    display: none;
-  }
-  table {
-    width: 300px;
-  }
-  .income-display,
-  .expense-display {
-    flex-flow: column nowrap;
-  }
-  .income-list,
-  .expense-list {
-    order: 2;
-    margin: 15px 0px;
-    width: 100%;
-  }
-  .income-form-container,
-  .expense-form-container {
-    order: 1;
-    width: 100%;
-  }
-  .income-form,
-  .expense-form {
-    display: flex;
-    flex-flow: column nowrap;
-    row-gap: 10px;
-    width: 60%;
-  }
-  .login-card-form input {
-    height: 30px;
-  }
-  .signup-form input {
-    height: 30px;
-  }
-  .income-card,
-  .expense-card {
-    width: 85%;
-  }
-  .login-card {
-    flex-flow: column-reverse nowrap;
-    height: 400px;
-    width: 300px;
-  }
-  .signup-card {
-    flex-flow: column-reverse nowrap;
-    height: 450px;
-    width: 300px;
-  }
-  .loginBtn {
-    width: 155px;
-    border-radius: 2px;
-  }
-  .date {
-    width: 155px;
-  }
-  .dateReceived {
-    width: 155px;
-  }
-  .modal-content {
-    width: 80%;
-  }
-  .navbar-links {
-    margin: 5px;
-  }
-  .home-nav {
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: stretch;
-  }
-  .home p {
-    text-align: center;
-  }
-  .home-nav a {
-    margin: 5px;
-  }
-}
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (max-width: 1024) {
   .home {
     padding: 250px 0px;
     justify-content: flex-start;

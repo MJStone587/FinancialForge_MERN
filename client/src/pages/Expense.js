@@ -204,8 +204,18 @@ const Receipt = () => {
           <h2 className="expense-list-title">Expense Receipts</h2>
           <div className="expense-sort-container">
             <p>Sort:</p>
-            <button onClick={() => setSortBy('total')}>Total</button>
-            <button onClick={() => setSortBy('default')}>Date</button>
+            <button
+              className="sortBtn sortTotal"
+              onClick={() => setSortBy('total')}
+            >
+              Total
+            </button>
+            <button
+              className="sortBtn sortDate"
+              onClick={() => setSortBy('default')}
+            >
+              Date
+            </button>
           </div>
           {isLoading ? (
             <span className="material-symbols-outlined server-loading">
@@ -306,7 +316,7 @@ const Receipt = () => {
         </div>
         <aside className="expense-form-container">
           <div className="expense-form-header">
-            <h2>+ Create New Expense</h2>
+            <h2>+Create New Expense</h2>
           </div>
           <form className="expense-form">
             <label>Title:</label>

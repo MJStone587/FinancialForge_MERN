@@ -27,12 +27,14 @@ const Home = () => {
       )}
       {user && (
         <section className="home">
-          <h1>Welcome back, {user.name}!</h1>
-          <p>Access your income, expense, and summary</p>
-          <div className="home-nav">
-            <Link to="/income">Income</Link>
-            <Link to="/expense">Expense</Link>
-            <Link to="/summary">Summary</Link>
+          <div className="home-welcome">
+            <h1>Welcome back, {user.name}!</h1>
+            <p>Access your income, expense, and summary</p>
+            <div className="home-nav">
+              <Link to="/income">Income</Link>
+              <Link to="/expense">Expense</Link>
+              <Link to="/summary">Summary</Link>
+            </div>
           </div>
         </section>
       )}
