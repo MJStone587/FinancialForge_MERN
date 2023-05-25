@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
-import { useAuthContext } from '../hooks/useAuthContext';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function Navbar() {
   const { logout } = useLogout();
@@ -13,27 +13,25 @@ function Navbar() {
 
   return (
     <div className="navbar-container">
-      <nav className="navbar-links">
-        {!user && (
-          <div className="navLinks loggedOut">
-            <Link to="/">Home</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-            {user && <span>{user.email}</span>}
-          </div>
-        )}
-        {user && (
-          <div className="navLinks loggedIn expanded">
-            <Link to="/">Home</Link>
-            <Link to="/income">Income</Link>
-            <Link to="/expense">Expense</Link>
-            <Link to="/summary">Summary</Link>
-            <button onClick={handleClick} className="navbar-logout">
-              Logout
-            </button>
-          </div>
-        )}
-      </nav>
+      {!user && (
+        <nav className="navLinks loggedOut">
+          <Link to="/">Home</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign Up</Link>
+          {user && <span>{user.email}</span>}
+        </nav>
+      )}
+      {user && (
+        <nav className="navLinks loggedIn expanded">
+          <Link to="/">Home</Link>
+          <Link to="/income">Income</Link>
+          <Link to="/expense">Expense</Link>
+          <Link to="/summary">Summary</Link>
+          <button onClick={handleClick} className="navbar-logout">
+            Logout
+          </button>
+        </nav>
+      )}
     </div>
   );
 }

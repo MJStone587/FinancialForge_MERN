@@ -1,3 +1,5 @@
+@import "~@csstools/normalize.css";
+
 * {
   margin: 0;
   padding: 0;
@@ -30,7 +32,7 @@
   justify-content: flex-start;
 }
 .header-left h2 {
-  font-size: calc(16px + (26 - 16) * ((100vw - 300px) / (1920 - 300)));
+  font-size: calc(16px + (22 - 16) * ((100vw - 300px) / (1920 - 300)));
   color: var(--ltBlue-color-);
   margin-left: 20px;
 }
@@ -40,7 +42,7 @@
 }
 .welcome-sign {
   color: white;
-  font-size: calc(13px + (20 - 13) * ((100vw - 300px) / (1920 - 300)));
+  font-size: calc(13px + (17 - 13) * ((100vw - 300px) / (1920 - 300)));
   margin: 10px;
 }
 .header-right {
@@ -57,37 +59,38 @@
 }
 #hamburger:hover {
   color: white;
+  cursor: pointer;
 }
 .navbar-container {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
   z-index: 5;
   position: absolute;
   top: calc(0px + (148px - 0) * ((100vw - 300px) / (1920 - 300)));
   right: 0;
   width: calc(100px + (175 - 100) * ((100vw - 300px) / (1920 - 300)));
-  height: 200px;
+  max-height: 275px;
   background-color: var(--charcoal-bg-);
-}
-.navbar-links {
-  padding: 5px;
-}
-.navbar-links a {
-  color: var(--white-color-);
-  text-decoration: none;
-  font-size: calc(18px + (24 - 18) * ((100vw - 300px) / (1920 - 300)));
-}
-.navbar-links a:hover {
-  color: var(--ltBlue-color-);
-  text-decoration: none;
-  cursor: pointer;
+  padding: 2px;
 }
 .navLinks {
   display: flex;
   flex-flow: column nowrap;
+  justify-content: flex-start;
   row-gap: 10px;
+  width: 100%;
+  padding: 10px;
+}
+.navLinks a {
+  color: var(--white-color-);
+  text-decoration: none;
+  font-size: calc(14px + (20 - 14) * ((100vw - 300px) / (1920 - 300)));
+  padding: 5px;
+}
+.navLinks a:hover {
+  color: var(--ltBlue-color-);
+  text-decoration: none;
+  cursor: pointer;
 }
 .navbar-logout {
   cursor: pointer;
@@ -108,20 +111,22 @@
   background-color: var(--gray-color-);
   justify-content: center;
   height: 90vh;
-  padding: 0px 150px;
+  width: 100%;
 }
 .home-welcome {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   background-color: white;
-  padding: 30px;
+  padding: 20px;
   border-radius: 10px;
+  max-width: 100%;
 }
 .home h1 {
-  font-size: calc(18px + (24 - 18) * ((100vw - 300px) / (1920 - 300)));
+  font-size: calc(18px + (22 - 18) * ((100vw - 300px) / (1920 - 300)));
   text-decoration: underline;
+  margin-bottom: 10px;
 }
 .home p {
   font-size: calc(16px + (18 - 16) * ((100vw - 300px) / (1920 - 300)));
@@ -204,11 +209,16 @@ select.error {
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  margin: 20px 0px;
+  margin: 15px 0px;
+  max-width: 100%;
 }
 .income-header h1,
 .expense-header h1 {
   font-size: calc(30px + (40 - 30) * ((100vw - 300px) / (1920 - 300)));
+}
+.income-header p,
+.expense-header p {
+  font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1920 - 300)));
 }
 .income-header h1 {
   color: var(--gold-color);
@@ -254,10 +264,18 @@ select.error {
   width: 50%;
   align-items: center;
   margin: 10px 10px;
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 2px 2px 5px black;
   padding: 5px;
+  border-radius: 5px;
 }
-
+.income-card:hover {
+  border: 2px solid var(--gold-color);
+  box-shadow: 2px 2px 5 px var(--gold-color);
+}
+.expense-card:hover {
+  border: 2px solid var(--ltBlue-color-);
+  box-shadow: 2px 2px 5px var(--ltBlue-color-);
+}
 .income-description,
 .expense-description {
   font-style: italic;
@@ -273,9 +291,10 @@ select.error {
 .expense-title {
   color: var(--ltBlue-color-);
 }
-.income-title:hover,
+.income-title:hover {
+  cursor: pointer;
+}
 .expense-title:hover {
-  color: var(--ltBlue-color-);
   cursor: pointer;
 }
 .expense-sort-container,
@@ -513,7 +532,7 @@ td {
 }
 .eye-wrapper-login {
   margin-top: -30px;
-  left: 65px;
+  left: 90px;
   top: 31px;
   position: relative;
   z-index: 4;
@@ -594,96 +613,6 @@ td {
 .faded {
   color: rgb(0, 0, 0, 0.4);
 }
-/*  @media screen and (max-width: 414px) {
-  .home {
-    padding: 0px 10px;
-  }
-  .header-container {
-    padding: 0px 25px;
-  }
-  .header-left h2 {
-    display: none;
-  }
-  table {
-    width: 300px;
-  }
-  .income-display,
-  .expense-display {
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-  }
-  .income-list,
-  .expense-list {
-    order: 2;
-    margin: 15px 0px;
-    width: 100%;
-  }
-  .income-form-container,
-  .expense-form-container {
-    order: 1;
-    width: 100%;
-  }
-  .income-form,
-  .expense-form {
-    display: flex;
-    flex-flow: column nowrap;
-    row-gap: 10px;
-    width: 100%;
-  }
-  .login-card-form input {
-    height: 30px;
-  }
-  .signup-form input {
-    height: 30px;
-  }
-  .income-card,
-  .expense-card {
-    width: 85%;
-    margin: 0px 0px 10px 0px;
-  }
-  .login-card {
-    flex-flow: column-reverse nowrap;
-    height: 400px;
-    width: 300px;
-  }
-  .signup-card {
-    flex-flow: column-reverse nowrap;
-    height: 450px;
-    width: 300px;
-  }
-  .loginBtn {
-    width: 155px;
-    border-radius: 2px;
-  }
-  .modal-content {
-    width: 80%;
-  }
-  .navbar-links {
-    margin: 5px;
-  }
-  .home-nav {
-    flex-flow: column nowrap;
-    justify-content: c;
-  }
-  .home p {
-    text-align: center;
-  }
-  .home-nav a {
-    margin: 5px;
-    max-width: 200px;
-  }
-  .eye-wrapper-login {
-    margin-top: -30px;
-    left: 65px;
-    top: 36px;
-  }
-  .eye-wrapper-signup {
-    margin-top: -26px;
-    max-width: 20px;
-    left: 133px;
-    top: 55px;
-  }
-}*/
 @media screen and (max-width: 768px) {
   .home {
     padding: 0px 10px;
@@ -752,7 +681,7 @@ td {
   .modal-content {
     width: 80%;
   }
-  .navbar-links {
+  .navLinks {
     margin: 5px;
   }
   .home-nav {
@@ -768,14 +697,18 @@ td {
   }
   .eye-wrapper-login {
     margin-top: -30px;
-    left: 65px;
+    left: 90px;
     top: 36px;
   }
   .eye-wrapper-signup {
     margin-top: -26px;
     max-width: 20px;
-    left: 133px;
+    left: 185px;
     top: 55px;
+  }
+  .navLinks a {
+    text-align: center;
+    border: 1px solid white;
   }
 }
 @media screen and (max-width: 1024) {
@@ -813,5 +746,16 @@ td {
   }
   .dateReceived {
     width: 136px;
+  }
+  .eye-wrapper-login {
+    margin-top: -30px;
+    left: 30px;
+    top: 36px;
+  }
+  .eye-wrapper-signup {
+    margin-top: -26px;
+    max-width: 20px;
+    left: 150px;
+    top: 55px;
   }
 }
