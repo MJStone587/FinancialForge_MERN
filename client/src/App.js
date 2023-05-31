@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useAuthContext } from './hooks/useAuthContext';
-import './index.css';
-import Home from './pages/Home.js';
-import Income from './pages/Income.js';
-import Summary from './pages/Summary.js';
-import Expense from './pages/Expense.js';
-import Header from './components/Header';
-import Navbar from './components/Navbar';
-import Login from './pages/Login.js';
-import Signup from './pages/Signup.js';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuthContext } from "./hooks/useAuthContext";
+import "./index.css";
+import Home from "./pages/Home.js";
+import Income from "./pages/Income.js";
+import Summary from "./pages/Summary.js";
+import Expense from "./pages/Expense.js";
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import Login from "./pages/Login.js";
+import Signup from "./pages/Signup.js";
 
 function App() {
   const { user } = useAuthContext();
@@ -24,9 +24,9 @@ function App() {
       className="App"
       onClick={(e) =>
         //make better -self note
-        e.target.tagName !== 'NAV' && e.target.tagName !== 'SPAN'
+        e.target.tagName !== "NAV" && e.target.tagName !== "SPAN"
           ? setShowNav(false)
-          : ''
+          : ""
       }
     >
       <BrowserRouter>
@@ -37,15 +37,15 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route
             path="/income"
-            element={user ? <Income /> : <Navigate to="/" />}
+            element={user ? <Income /> : <Navigate to="/login" />}
           />
           <Route
             path="/summary"
-            element={user ? <Summary /> : <Navigate to="/" />}
+            element={user ? <Summary /> : <Navigate to="/login" />}
           />
           <Route
             path="/expense"
-            element={user ? <Expense /> : <Navigate to="/" />}
+            element={user ? <Expense /> : <Navigate to="/login" />}
           />
           <Route
             path="/login"

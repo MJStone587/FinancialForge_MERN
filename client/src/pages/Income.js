@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useIncDataContext } from '../hooks/useIncDataContext';
-import { useAuthContext } from '../hooks/useAuthContext';
-import IncomeDetails from '../components/IncomeDetails';
-import DatePicker from 'react-datepicker';
-import { parseISO } from 'date-fns';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useEffect, useState } from "react";
+import { useIncDataContext } from "../hooks/useIncDataContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+import IncomeDetails from "../components/IncomeDetails";
+import DatePicker from "react-datepicker";
+import { parseISO } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Income() {
   const { data, dispatch } = useIncDataContext();
   const { user } = useAuthContext();
   const [incDisp, setIncDisp] = useState(5);
-  const [incID, setIncID] = useState('');
-  const [name, setName] = useState('');
+  const [incID, setIncID] = useState("");
+  const [name, setName] = useState("");
   const [updated, setUpdated] = useState(false);
   const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortBy, setSortBy] = useState('default');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [total, setTotal] = useState('');
-  const [dateReceived, setDate] = useState('');
+  const [sortBy, setSortBy] = useState("default");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [total, setTotal] = useState("");
+  const [dateReceived, setDate] = useState("");
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
   const [isLessCompleted, setIsLessCompleted] = useState(false);
@@ -32,7 +32,7 @@ function Income() {
   useEffect(() => {
     const fetchIncome = async () => {
       const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/income',
+        "https://financialforge-mern.onrender.com/catalog/income",
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -40,7 +40,7 @@ function Income() {
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_DATA', payload: json });
+        dispatch({ type: "SET_DATA", payload: json });
         setIsLoading(false);
       }
     };
@@ -53,7 +53,7 @@ function Income() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!user) {
-      setError('Unathorized Access!');
+      setError("Unathorized Access!");
       return;
     }
     // create income object from input data
@@ -66,12 +66,12 @@ function Income() {
     };
     //post request to server with income object
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/create',
+      "https://financialforge-mern.onrender.com/catalog/income/create",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(income),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       }
@@ -81,18 +81,18 @@ function Income() {
     // handle error or success
     if (!response.ok) {
       setError(json.error);
-      setSuccess('');
+      setSuccess("");
       setEmptyFields(json.emptyFields);
     } else if (response.ok) {
-      setName('');
-      setDescription('');
-      setCategory('');
-      setTotal('');
-      setDate('');
+      setName("");
+      setDescription("");
+      setCategory("");
+      setTotal("");
+      setDate("");
       setError(null);
       setEmptyFields([]);
-      setSuccess('Success: New income has been added!');
-      dispatch({ type: 'CREATE_DATA', payload: json });
+      setSuccess("Success: New income has been added!");
+      dispatch({ type: "CREATE_DATA", payload: json });
     }
   };
 
@@ -110,12 +110,12 @@ function Income() {
 
     // create post request to server for specific income id
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/' + incID,
+      "https://financialforge-mern.onrender.com/catalog/income/" + incID,
       {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify(income),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       }
@@ -124,15 +124,15 @@ function Income() {
     // handle errors and success
     if (!response.ok) {
       setError(json.error);
-      setSuccess('');
+      setSuccess("");
     } else if (response.ok) {
-      setName('');
-      setDescription('');
-      setTotal('');
-      setCategory('');
-      setDate('');
+      setName("");
+      setDescription("");
+      setTotal("");
+      setCategory("");
+      setDate("");
       setError(null);
-      setSuccess('Success: Income has been updated!');
+      setSuccess("Success: Income has been updated!");
       setUpdated(true);
       setShowUpdateBtn(false);
     }
@@ -171,36 +171,36 @@ function Income() {
 
   const clearBtn = (e) => {
     e.preventDefault();
-    setName('');
-    setDescription('');
-    setCategory('');
-    setTotal('');
-    setDate('');
+    setName("");
+    setDescription("");
+    setCategory("");
+    setTotal("");
+    setDate("");
     setShowUpdateBtn(false);
     setError(null);
     setSuccess(null);
   };
 
   return (
-    <div className="income-container">
+    <section className="income-container">
       <div className="income-header">
         <h1>Income</h1>
         <p>Add, update, delete, and review your income.</p>
       </div>
-      <section className="income-display">
+      <div className="income-display">
         <div className="income-list">
           <h2 className="income-list-title">Income Receipts</h2>
           <div className="income-sort-container">
             <p>Sort:</p>
             <button
               className="sortBtn sortTotal"
-              onClick={() => setSortBy('total')}
+              onClick={() => setSortBy("total")}
             >
               Total
             </button>
             <button
               className="sortBtn sortDate"
-              onClick={() => setSortBy('default')}
+              onClick={() => setSortBy("default")}
             >
               Date
             </button>
@@ -210,9 +210,9 @@ function Income() {
               pending
             </span>
           ) : (
-            ''
+            ""
           )}
-          {sortBy === 'default' &&
+          {sortBy === "default" &&
             data &&
             data
               .sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
@@ -241,7 +241,7 @@ function Income() {
                   setDate={setDate}
                 />
               ))}
-          {sortBy === 'total' &&
+          {sortBy === "total" &&
             data &&
             data
               .sort((a, b) => a.total - b.total)
@@ -314,14 +314,14 @@ function Income() {
               type="text"
               onChange={(e) => setName(e.target.value)}
               value={name}
-              className={emptyFields.includes('name') ? 'error' : ''}
+              className={emptyFields.includes("name") ? "error" : ""}
             />
             <label>Description:</label>
             <input
               type="text"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
-              className={emptyFields.includes('description') ? 'error' : ''}
+              className={emptyFields.includes("description") ? "error" : ""}
             />
             <label htmlFor="income-category">Category:</label>
             <select
@@ -329,7 +329,7 @@ function Income() {
               id="income-category"
               onChange={(e) => setCategory(e.target.value)}
               value={category}
-              className={emptyFields.includes('category') ? 'error' : ''}
+              className={emptyFields.includes("category") ? "error" : ""}
             >
               <option value="" defaultValue></option>
               <option value="Job">Job</option>
@@ -344,30 +344,30 @@ function Income() {
               type="number"
               onChange={(e) => setTotal(e.target.value)}
               value={total}
-              className={emptyFields.includes('total') ? 'error' : ''}
+              className={emptyFields.includes("total") ? "error" : ""}
             />
             <label>Date:</label>
             <DatePicker
               onChange={(date) => setDate(date)}
               value={dateReceived}
               selected={dateReceived}
-              className={emptyFields.includes('date') ? 'error' : 'date'}
+              className={emptyFields.includes("date") ? "error" : "date"}
             />
             <button
               onClick={submitHandler}
-              className={showUpdateBtn ? 'createBtn disabled' : 'createBtn'}
+              className={showUpdateBtn ? "createBtn disabled" : "createBtn"}
             >
               Add NEW Income
             </button>
             <button
               onClick={updateHandler}
-              className={showUpdateBtn ? 'updateBtn' : 'updateBtn disabled'}
+              className={showUpdateBtn ? "updateBtn" : "updateBtn disabled"}
             >
               Update Income
             </button>
             <button
               onClick={clearBtn}
-              className={showUpdateBtn ? 'clearBtn' : 'clearBtn disabled'}
+              className={showUpdateBtn ? "clearBtn" : "clearBtn disabled"}
             >
               Clear
             </button>
@@ -375,8 +375,8 @@ function Income() {
             {success && <p className="success-message">{success}</p>}
           </form>
         </aside>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
 

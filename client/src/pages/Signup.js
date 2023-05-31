@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Signup() {
   // state managment and variables
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [visiblePass, setVisiblePass] = useState(true);
   const [isVisible, setVisible] = useState(false);
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [emptyFields, setEmptyFields] = useState('');
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [emptyFields, setEmptyFields] = useState("");
+  const labelFirstName = "First Name";
+  const labelLastName = "Last Name";
+  const labelEmail = "Email";
+  const labelPassword = "Password";
 
   // form submission handler
   const submitHandler = async (e) => {
@@ -25,11 +29,11 @@ function Signup() {
     };
     // send post request to server with user object
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/user/create',
+      "https://financialforge-mern.onrender.com/catalog/user/create",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(user),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       }
     );
 
@@ -40,10 +44,10 @@ function Signup() {
       setSuccess(null);
       setEmptyFields(json.emptyFields);
     } else if (response.ok) {
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPassword('');
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
       setEmptyFields([]);
       setError(null);
       setSuccess(json.success);
@@ -67,41 +71,53 @@ function Signup() {
         </div>
         <div className="signup-card-right">
           <form className="signup-form" onSubmit={submitHandler}>
-            <label>First Name:</label>
             <input
               type="text"
+              placeholder="First Name"
+              aria-label={labelFirstName}
+              aria-required="true"
               value={firstName}
+              id="firstName"
               onChange={(e) => setFirstName(e.target.value)}
-              className={emptyFields.includes('firstName') ? 'error' : ''}
+              className={emptyFields.includes("firstName") ? "error" : ""}
             />
-            <label>Last Name:</label>
             <input
               type="text"
+              placeholder="Last Name"
+              aria-label={labelLastName}
+              aria-required="true"
               value={lastName}
+              id="lastName"
               onChange={(e) => setLastName(e.target.value)}
-              className={emptyFields.includes('lastName') ? 'error' : ''}
+              className={emptyFields.includes("lastName") ? "error" : ""}
             />
-            <label>Email:</label>
             <input
               type="email"
+              placeholder="Email"
+              aria-label={labelEmail}
+              aria-required="true"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={emptyFields.includes('email') ? 'error' : ''}
+              className={emptyFields.includes("email") ? "error" : ""}
             />
             <div className="eye-wrapper-signup">
               <span
                 className="material-symbols-outlined eye faded"
                 onClick={eyeClickHandler}
               >
-                {isVisible ? 'visibility_off' : 'visibility'}
+                {isVisible ? "visibility_off" : "visibility"}
               </span>
             </div>
-            <label>Password:</label>
             <input
-              type={visiblePass ? 'password' : 'text'}
+              type={visiblePass ? "password" : "text"}
+              placeholder="Password"
+              aria-label={labelPassword}
+              aria-required="true"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={emptyFields.includes('password') ? 'error' : ''}
+              className={emptyFields.includes("password") ? "error" : ""}
             />
             <button type="submit" className="submitBtn">
               Sign Up

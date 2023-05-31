@@ -1,31 +1,31 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { useExpDataContext } from '../hooks/useExpDataContext';
-import { useAuthContext } from '../hooks/useAuthContext';
-import ExpenseDetails from '../components/ExpenseDetails';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { parseISO } from 'date-fns';
+import React from "react";
+import { useEffect, useState } from "react";
+import { useExpDataContext } from "../hooks/useExpDataContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+import ExpenseDetails from "../components/ExpenseDetails";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { parseISO } from "date-fns";
 
 const Receipt = () => {
   const { data, dispatch } = useExpDataContext();
   const { user } = useAuthContext();
-  const [_id, set_id] = useState('');
-  const [name, setName] = useState('');
+  const [_id, set_id] = useState("");
+  const [name, setName] = useState("");
   const [showUpdateBtn, setShowUpdateBtn] = useState(false);
   const [expDisp, setExpDisp] = useState(5);
   const [updated, setUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [description, setDescription] = useState('');
-  const [sortBy, setSortBy] = useState('default');
-  const [paymentType, setPaymentType] = useState('');
+  const [description, setDescription] = useState("");
+  const [sortBy, setSortBy] = useState("default");
+  const [paymentType, setPaymentType] = useState("");
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
   const [isLessCompleted, setIsLessCompleted] = useState(false);
-  const [total, setTotal] = useState('');
-  const [category, setCategory] = useState('');
-  const [dateReceived, setDate] = useState('');
+  const [total, setTotal] = useState("");
+  const [category, setCategory] = useState("");
+  const [dateReceived, setDate] = useState("");
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
 
   //FIX ROUTES TO https://financialforge-mern.onrender.com BEFORE GOING LIVE
@@ -34,7 +34,7 @@ const Receipt = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense',
+        "https://financialforge-mern.onrender.com/catalog/expense",
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -42,7 +42,7 @@ const Receipt = () => {
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_DATA', payload: json });
+        dispatch({ type: "SET_DATA", payload: json });
         setIsLoading(false);
       }
     };
@@ -55,7 +55,7 @@ const Receipt = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!user) {
-      setError('Unathorized Access!');
+      setError("Unathorized Access!");
       return;
     }
     // create expense object from input data
@@ -70,12 +70,12 @@ const Receipt = () => {
 
     // wait for response from server
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense/create',
+      "https://financialforge-mern.onrender.com/catalog/expense/create",
       {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(expense),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       }
@@ -85,19 +85,19 @@ const Receipt = () => {
     // handle error and success
     if (!response.ok) {
       setError(json.error);
-      setSuccess('');
+      setSuccess("");
       setEmptyFields(json.emptyFields);
     } else if (response.ok) {
-      setName('');
-      setDescription('');
-      setTotal('');
-      setDate('');
-      setCategory('');
-      setPaymentType('');
+      setName("");
+      setDescription("");
+      setTotal("");
+      setDate("");
+      setCategory("");
+      setPaymentType("");
       setError(null);
       setEmptyFields([]);
-      setSuccess('Success: New expense has been added!');
-      dispatch({ type: 'CREATE_DATA', payload: json });
+      setSuccess("Success: New expense has been added!");
+      dispatch({ type: "CREATE_DATA", payload: json });
     }
   };
 
@@ -106,7 +106,7 @@ const Receipt = () => {
     e.preventDefault();
     // expense object from input data
     if (!user) {
-      setError('Unauthorized Access!');
+      setError("Unauthorized Access!");
       return;
     }
     const expense = {
@@ -120,12 +120,12 @@ const Receipt = () => {
 
     // put request to server to update single expense document
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense/' + _id,
+      "https://financialforge-mern.onrender.com/catalog/expense/" + _id,
       {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify(expense),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       }
@@ -135,19 +135,19 @@ const Receipt = () => {
     // handle error and success
     if (!response.ok) {
       setError(json.error);
-      setSuccess('');
+      setSuccess("");
     } else {
-      setName('');
-      setDescription('');
-      setTotal('');
-      setDate('');
-      setCategory('');
-      setPaymentType('');
+      setName("");
+      setDescription("");
+      setTotal("");
+      setDate("");
+      setCategory("");
+      setPaymentType("");
       setError(null);
       setEmptyFields([]);
       setShowUpdateBtn(false);
       setUpdated(true);
-      setSuccess('Success: Expense has been updated!');
+      setSuccess("Success: Expense has been updated!");
     }
   };
   // function to show more or less button
@@ -182,37 +182,37 @@ const Receipt = () => {
   //clear btn handler
   const clearBtn = (e) => {
     e.preventDefault();
-    setName('');
-    setDescription('');
-    setTotal('');
-    setDate('');
-    setCategory('');
-    setPaymentType('');
+    setName("");
+    setDescription("");
+    setTotal("");
+    setDate("");
+    setCategory("");
+    setPaymentType("");
     setShowUpdateBtn(false);
     setError(null);
     setSuccess(null);
   };
 
   return (
-    <div className="expense-container">
+    <section className="expense-container">
       <div className="expense-header">
         <h1>Expenses</h1>
         <p>Add, update, delete, and review your income.</p>
       </div>
-      <section className="expense-display">
+      <div className="expense-display">
         <div className="expense-list">
           <h2 className="expense-list-title">Expense Receipts</h2>
           <div className="expense-sort-container">
             <p>Sort:</p>
             <button
               className="sortBtn sortTotal"
-              onClick={() => setSortBy('total')}
+              onClick={() => setSortBy("total")}
             >
               Total
             </button>
             <button
               className="sortBtn sortDate"
-              onClick={() => setSortBy('default')}
+              onClick={() => setSortBy("default")}
             >
               Date
             </button>
@@ -222,9 +222,9 @@ const Receipt = () => {
               pending
             </span>
           ) : (
-            ''
+            ""
           )}
-          {sortBy === 'default' &&
+          {sortBy === "default" &&
             data &&
             data
               .sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
@@ -253,7 +253,7 @@ const Receipt = () => {
                   set_id={set_id}
                 />
               ))}
-          {sortBy === 'total' &&
+          {sortBy === "total" &&
             data &&
             data
               .sort((a, b) => a.total - b.total)
@@ -324,21 +324,21 @@ const Receipt = () => {
               type="text"
               onChange={(e) => setName(e.target.value)}
               value={name}
-              className={emptyFields.includes('name') ? 'error' : ''}
+              className={emptyFields.includes("name") ? "error" : ""}
             />
             <label>Description:</label>
             <input
               type="text"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
-              className={emptyFields.includes('description') ? 'error' : ''}
+              className={emptyFields.includes("description") ? "error" : ""}
             />
             <label htmlFor="expense-category">Category:</label>
             <select
               id="expense-category"
               onChange={(e) => setCategory(e.target.value)}
               value={category}
-              className={emptyFields.includes('category') ? 'error' : ''}
+              className={emptyFields.includes("category") ? "error" : ""}
             >
               <option value="" defaultValue></option>
               <option value="Entertainment">Entertainment</option>
@@ -356,7 +356,7 @@ const Receipt = () => {
               id="expense-type"
               onChange={(e) => setPaymentType(e.target.value)}
               value={paymentType}
-              className={emptyFields.includes('paymentType') ? 'error' : ''}
+              className={emptyFields.includes("paymentType") ? "error" : ""}
             >
               <option value="" defaultValue></option>
               <option value="Debit">Debit</option>
@@ -372,7 +372,7 @@ const Receipt = () => {
               type="number"
               onChange={(e) => setTotal(e.target.value)}
               value={total}
-              className={emptyFields.includes('total') ? 'error' : ''}
+              className={emptyFields.includes("total") ? "error" : ""}
             />
             <label>Date:</label>
             <DatePicker
@@ -380,24 +380,24 @@ const Receipt = () => {
               value={dateReceived}
               selected={dateReceived}
               className={
-                emptyFields.includes('dateReceived') ? 'error' : 'dateReceived'
+                emptyFields.includes("dateReceived") ? "error" : "dateReceived"
               }
             />
             <button
               onClick={submitHandler}
-              className={showUpdateBtn ? 'createBtn disabled' : 'createBtn'}
+              className={showUpdateBtn ? "createBtn disabled" : "createBtn"}
             >
               Add New Expense
             </button>
             <button
               onClick={updateHandler}
-              className={showUpdateBtn ? 'updateBtn' : 'updateBtn disabled'}
+              className={showUpdateBtn ? "updateBtn" : "updateBtn disabled"}
             >
               Update Existing Expense
             </button>
             <button
               onClick={clearBtn}
-              className={showUpdateBtn ? 'clearBtn' : 'clearBtn disabled'}
+              className={showUpdateBtn ? "clearBtn" : "clearBtn disabled"}
             >
               Clear
             </button>
@@ -405,8 +405,8 @@ const Receipt = () => {
             {success && <p className="success-message">{success}</p>}
           </form>
         </aside>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

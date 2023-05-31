@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useIncDataContext } from '../hooks/useIncDataContext';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { parseISO } from 'date-fns';
+import React, { useState, useEffect } from "react";
+import { useIncDataContext } from "../hooks/useIncDataContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { parseISO } from "date-fns";
 
 const IncomeDetails = (income) => {
   const { dispatch } = useIncDataContext();
   const { user } = useAuthContext();
   const [modal, setModal] = useState(false);
 
-  // find possible better way to
+  // If an entry has been updated refresh data
   useEffect(() => {
     const fetchIncome = async () => {
       const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/income',
+        "https://financialforge-mern.onrender.com/catalog/income",
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -20,7 +20,7 @@ const IncomeDetails = (income) => {
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_DATA', payload: json });
+        dispatch({ type: "SET_DATA", payload: json });
       }
     };
     if (user && income.updated) {
@@ -32,23 +32,22 @@ const IncomeDetails = (income) => {
   //button handler for deleting single object
   const handleDel = async () => {
     if (!user) {
-      income.setError('Unauthorized Access!');
+      income.setError("Unauthorized Access!");
       return;
     }
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/income/' + income.id,
+      "https://financialforge-mern.onrender.com/catalog/income/" + income.id,
       {
-        method: 'DELETE',
+        method: "DELETE",
       }
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: 'DELETE_DATA', payload: json });
+      dispatch({ type: "DELETE_DATA", payload: json });
     }
   };
 
-  //Overnight income required parseISO to properly set date
-  // but expense doesn't?? both using same format
+  // Update Handler -- Fills in the form and ID
   const handleUpdateClick = () => {
     income.setTotal(income.total);
     income.setName(income.name);
@@ -59,11 +58,12 @@ const IncomeDetails = (income) => {
     income.setShowUpdateBtn(true);
   };
 
+  // Modal On - Off
   const modalOn = () => {
     setModal(true);
   };
   const modalOff = (e) => {
-    if (e.target.className === 'modal' || e.target.className === 'close') {
+    if (e.target.className === "modal" || e.target.className === "close") {
       setModal(false);
     }
   };
@@ -89,7 +89,7 @@ const IncomeDetails = (income) => {
       <article
         className="modal"
         onClick={modalOff}
-        style={modal ? { display: 'flex' } : { display: 'none' }}
+        style={modal ? { display: "flex" } : { display: "none" }}
       >
         <div className="modal-content">
           <div className="modal-content-header">

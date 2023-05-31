@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../index.css';
-import forgeIcon from '../images/forge-ltblue.png';
-import { useAuthContext } from '../hooks/useAuthContext';
+import React from "react";
+import { Link } from "react-router-dom";
+import "../index.css";
+import forgeIcon from "../images/forge-ltblue.png";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 function Header(props) {
   const { user } = useAuthContext();
 
   return (
-    <section className="header-container">
+    <header className="header-container">
       <div className="header-left">
         <Link to="/">
           <img src={forgeIcon} alt="Forge Icon" id="header-image"></img>
@@ -25,7 +25,7 @@ function Header(props) {
           menu
         </span>
       </div>
-    </section>
+    </header>
   );
 }
 
