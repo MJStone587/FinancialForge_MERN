@@ -1,4 +1,4 @@
-@import "~@csstools/normalize.css";
+@import-normalize;
 
 * {
   margin: 0;
@@ -626,7 +626,7 @@ td {
 .faded {
   color: rgb(0, 0, 0, 0.4);
 }
-@media screen and (min-width: 300px) and (max-width: 766px) {
+@media screen and (min-width: 300px) and (max-width: 766px) and (orientation: portrait) {
   section {
     padding: 0px 40px;
   }
@@ -723,6 +723,32 @@ td {
   .navLinks a {
     text-align: center;
     border: 1px solid white;
+  }
+}
+@media all and (min--moz-device-pixel-ratio: 0) {
+  .eye-wrapper-login {
+    margin-top: -30px;
+    left: 92px;
+    top: 32px;
+  }
+  .eye-wrapper-signup {
+    margin-top: -26px;
+    max-width: 20px;
+    left: 187px;
+    top: 29px;
+  }
+}
+@media all and (min--moz-device-pixel-ratio: 0) and (max-width: 500px) {
+  .eye-wrapper-login {
+    margin-top: -30px;
+    left: 92px;
+    top: 36px;
+  }
+  .eye-wrapper-signup {
+    margin-top: -26px;
+    max-width: 20px;
+    left: 185px;
+    top: 35px;
   }
 }
 @media screen and (min-width: 767px) and (max-width: 1024px) {
