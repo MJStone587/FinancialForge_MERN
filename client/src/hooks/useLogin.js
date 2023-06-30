@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useAuthContext } from './useAuthContext.js';
+import { useState } from "react";
+import { useAuthContext } from "./useAuthContext.js";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
@@ -9,10 +9,10 @@ export const useLogin = () => {
 
   const login = async (email, password) => {
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/user/login',
+      "https://financialforge-mern.onrender.com/catalog/user/login",
       {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       }
     );
@@ -26,8 +26,8 @@ export const useLogin = () => {
       setError(null);
       setSuccess(json.success);
       setEmptyFields([]);
-      localStorage.setItem('user', JSON.stringify(json));
-      dispatch({ type: 'LOGIN', payload: json });
+      localStorage.setItem("user", JSON.stringify(json));
+      dispatch({ type: "LOGIN", payload: json });
     }
   };
   return { login, error, success, emptyFields };

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 function Signup() {
   // state managment and variables
@@ -70,8 +73,8 @@ function Signup() {
           <Link to="/login">Login</Link>
         </div>
         <div className="signup-card-right">
-          <form className="signup-form" onSubmit={submitHandler}>
-            <input
+          <Form className="signup-form" onSubmit={submitHandler}>
+            <Form.Control
               type="text"
               placeholder="First Name"
               aria-label={labelFirstName}
@@ -81,7 +84,7 @@ function Signup() {
               onChange={(e) => setFirstName(e.target.value)}
               className={emptyFields.includes("firstName") ? "error" : ""}
             />
-            <input
+            <Form.Control
               type="text"
               placeholder="Last Name"
               aria-label={labelLastName}
@@ -91,7 +94,7 @@ function Signup() {
               onChange={(e) => setLastName(e.target.value)}
               className={emptyFields.includes("lastName") ? "error" : ""}
             />
-            <input
+            <Form.Control
               type="email"
               placeholder="Email"
               aria-label={labelEmail}
@@ -101,28 +104,30 @@ function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               className={emptyFields.includes("email") ? "error" : ""}
             />
-            <div className="eye-wrapper-signup">
-              <span
-                className="material-symbols-outlined eye faded"
-                onClick={eyeClickHandler}
-              >
-                {isVisible ? "visibility_off" : "visibility"}
-              </span>
-            </div>
-            <input
-              type={visiblePass ? "password" : "text"}
-              placeholder="Password"
-              aria-label={labelPassword}
-              aria-required="true"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={emptyFields.includes("password") ? "error" : ""}
-            />
-            <button type="submit" className="submitBtn">
+            <InputGroup bsPrefix="signup-password-field ">
+              <Form.Control
+                type={visiblePass ? "password" : "text"}
+                placeholder="Password"
+                aria-label={labelPassword}
+                aria-required="true"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={emptyFields.includes("password") ? "error" : ""}
+              />
+              <InputGroup.Text>
+                <span
+                  className="material-symbols-outlined eye faded"
+                  onClick={eyeClickHandler}
+                >
+                  {isVisible ? "visibility_off" : "visibility"}
+                </span>
+              </InputGroup.Text>
+            </InputGroup>
+            <Button type="submit" className="submitBtn">
               Sign Up
-            </button>
-          </form>
+            </Button>
+          </Form>
           {error && <p className="error-message">{error}</p>}
           {success && <p className="success-message">{success}</p>}
         </div>

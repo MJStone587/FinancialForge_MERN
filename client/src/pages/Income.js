@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useIncDataContext } from "../hooks/useIncDataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import IncomeDetails from "../components/IncomeDetails";
-import DatePicker from "react-datepicker";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { parseISO } from "date-fns";
-import "react-datepicker/dist/react-datepicker.css";
 
 function Income() {
   const { data, dispatch } = useIncDataContext();
@@ -26,8 +27,7 @@ function Income() {
   const [isMoreCompleted, setIsMoreCompleted] = useState(false);
   const [isLessCompleted, setIsLessCompleted] = useState(false);
 
-  //FIX ROUTES TO https://financialforge-mern.onrender.com BEFORE GOING LIVE
-
+  //LIVE ROUTE https://financialforge-mern.onrender.com
   //initial request to server to receive all income data
   useEffect(() => {
     const fetchIncome = async () => {
@@ -189,21 +189,21 @@ function Income() {
       </div>
       <div className="income-display">
         <div className="income-list">
-          <h2 className="income-list-title">Income Receipts</h2>
+          <h2 className="income-list-title">Income List</h2>
           <div className="income-sort-container">
             <p>Sort:</p>
-            <button
-              className="sortBtn sortTotal"
+            <Button
+              bsPrefix="sortBtn sortTotal"
               onClick={() => setSortBy("total")}
             >
               Total
-            </button>
-            <button
-              className="sortBtn sortDate"
+            </Button>
+            <Button
+              bsPrefix="sortBtn sortDate"
               onClick={() => setSortBy("default")}
             >
               Date
-            </button>
+            </Button>
           </div>
           {isLoading ? (
             <span className="material-symbols-outlined server-loading">
@@ -270,110 +270,115 @@ function Income() {
                 />
               ))}
           {isMoreCompleted ? (
-            <button
+            <Button
               onClick={loadMore}
               type="button"
-              className="btn btn-loadmore disabled"
-            >
-              That's It
-            </button>
+              variant="outline-info"
+              bsPrefix="disabled"
+              disabled
+            ></Button>
           ) : (
-            <button
-              onClick={loadMore}
-              type="button"
-              className="btn btn-loadmore"
-            >
+            <Button onClick={loadMore} variant="outline-info" type="button">
               + Load More +
-            </button>
+            </Button>
           )}
           {isLessCompleted ? (
-            <button
+            <Button
               onClick={loadLess}
               type="button"
-              className="btn btn-loadless disabled"
-            >
-              That's It
-            </button>
+              variant="outline-info"
+              bsPrefix="disabled"
+              disabled
+            ></Button>
           ) : (
-            <button
-              onClick={loadLess}
-              type="button"
-              className="btn btn-loadless"
-            >
+            <Button onClick={loadLess} variant="outline-info" type="button">
               - Load Less -
-            </button>
+            </Button>
           )}
         </div>
         <aside className="income-form-container">
           <div className="income-form-header">
-            <h2>+ Add New Income</h2>
+            <h2>+ Create New Income</h2>
           </div>
-          <form className="income-form">
-            <label>Title:</label>
-            <input
-              type="text"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              className={emptyFields.includes("name") ? "error" : ""}
-            />
-            <label>Description:</label>
-            <input
-              type="text"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-              className={emptyFields.includes("description") ? "error" : ""}
-            />
-            <label htmlFor="income-category">Category:</label>
-            <select
-              name="income-category"
-              id="income-category"
-              onChange={(e) => setCategory(e.target.value)}
-              value={category}
-              className={emptyFields.includes("category") ? "error" : ""}
-            >
-              <option value="" defaultValue></option>
-              <option value="Job">Job</option>
-              <option value="Gift">Gift</option>
-              <option value="Investment">Investment</option>
-              <option value="Savings">Savings</option>
-              <option value="Other">Other</option>
-            </select>
-            <label>Total: </label>
-            <input
-              id="income-description"
-              type="number"
-              onChange={(e) => setTotal(e.target.value)}
-              value={total}
-              className={emptyFields.includes("total") ? "error" : ""}
-            />
-            <label>Date:</label>
-            <DatePicker
-              onChange={(date) => setDate(date)}
-              value={dateReceived}
-              selected={dateReceived}
-              className={emptyFields.includes("date") ? "error" : "date"}
-            />
-            <button
+          <Form className="income-form">
+            <FloatingLabel controlId="income-title" label="Title">
+              <Form.Control
+                type="text"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                placeholder="Title"
+                className={emptyFields.includes("name") ? "error" : ""}
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="income-description" label="Description">
+              <Form.Control
+                placeholder="Description"
+                type="text"
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
+                className={emptyFields.includes("description") ? "error" : ""}
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="income-category" label="Category">
+              <Form.Select
+                name="income-category"
+                onChange={(e) => setCategory(e.target.value)}
+                value={category}
+                className={emptyFields.includes("category") ? "error" : ""}
+              >
+                <option value="" defaultValue></option>
+                <option value="Job">Job</option>
+                <option value="Gift">Gift</option>
+                <option value="Investment">Investment</option>
+                <option value="Savings">Savings</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+            </FloatingLabel>
+            <FloatingLabel controlId="income-total" label="Total">
+              <Form.Control
+                type="number"
+                placeholder="Total"
+                onChange={(e) => setTotal(e.target.value)}
+                value={total}
+                className={emptyFields.includes("total") ? "error" : ""}
+              />
+            </FloatingLabel>
+            <FloatingLabel controlId="income-date" label="Date">
+              <Form.Control
+                type="date"
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+                value={dateReceived}
+                selected={dateReceived}
+                placeholder="Date"
+                className={emptyFields.includes("date") ? "error" : "date"}
+              />
+            </FloatingLabel>
+            <Button
               onClick={submitHandler}
-              className={showUpdateBtn ? "createBtn disabled" : "createBtn"}
+              bsPrefix={showUpdateBtn ? "disabled" : ""}
             >
-              Add NEW Income
-            </button>
-            <button
+              CREATE Income
+            </Button>
+            <Button
               onClick={updateHandler}
-              className={showUpdateBtn ? "updateBtn" : "updateBtn disabled"}
+              bsPrefix={showUpdateBtn ? "" : "disabled"}
             >
-              Update Income
-            </button>
-            <button
+              UPDATE Income
+            </Button>
+            <Button
               onClick={clearBtn}
-              className={showUpdateBtn ? "clearBtn" : "clearBtn disabled"}
+              variant="light"
+              bsPrefix={showUpdateBtn ? "" : "disabled"}
             >
               Clear
-            </button>
-            {error && <p className="error-message">{error}</p>}
-            {success && <p className="success-message">{success}</p>}
-          </form>
+            </Button>
+            <div className="warning-text">
+              {error && <p className="error-message">{error}</p>}
+              {success && <p className="success-message">{success}</p>}
+            </div>
+          </Form>
         </aside>
       </div>
     </section>

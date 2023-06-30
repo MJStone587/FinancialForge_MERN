@@ -1,23 +1,25 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const catalogRouter = require('./routes/catalog');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-
+const express = require("express");
+const mongoose = require("mongoose");
+const catalogRouter = require("./routes/catalog");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 const app = express();
+
+//port 10000
 const port = process.env.PORT || 10000;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: '*',
+    origin: "*",
   })
 );
 
+//const uri = process.env.ATLAS_URI;
 const uri = process.env.ATLAS_URI;
 
-mongoose.set('strictQuery', false);
+mongoose.set("strictQuery", false);
 mongoose
   .connect(uri)
   .then(() => {
@@ -29,4 +31,4 @@ mongoose
     console.log(error);
   });
 
-app.use('/catalog', catalogRouter);
+app.use("/catalog", catalogRouter);

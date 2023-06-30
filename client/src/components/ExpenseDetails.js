@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useExpDataContext } from '../hooks/useExpDataContext';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { parseISO } from 'date-fns';
+import React, { useState, useEffect } from "react";
+import { useExpDataContext } from "../hooks/useExpDataContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+import Modal from "react-bootstrap/Modal";
 
 const ExpenseDetails = (expense) => {
   const { dispatch } = useExpDataContext();
@@ -12,16 +12,13 @@ const ExpenseDetails = (expense) => {
   // GOING ON WITH STATE
   useEffect(() => {
     const fetchExpense = async () => {
-      const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense',
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
+      const response = await fetch("http://localhost:5000/catalog/expense", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: 'SET_DATA', payload: json });
+        dispatch({ type: "SET_DATA", payload: json });
       }
     };
     if (user && expense.updated) {
@@ -34,27 +31,27 @@ const ExpenseDetails = (expense) => {
   const handleDel = async () => {
     // check if user is logged in
     if (!user) {
-      expense.setError('Unauthorized Access!');
+      expense.setError("Unauthorized Access!");
       return;
     }
     //fetch request to server
     const response = await fetch(
-      'https://financialforge-mern.onrender.com/catalog/expense/' + expense.id,
+      "http://localhost:5000/catalog/expense/" + expense.id,
       {
-        method: 'DELETE',
+        method: "DELETE",
         headers: { Authorization: `Bearer ${user.token}` },
       }
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: 'DELETE_DATA', payload: json });
+      dispatch({ type: "DELETE_DATA", payload: json });
     }
   };
   //update handler
   const handleUpdate = async () => {
     expense.setName(expense.name);
     expense.setCategory(expense.category);
-    expense.setDateReceived(parseISO(expense.dateReceived));
+    expense.setDateReceived(expense.dateReceived.split("T")[0]);
     expense.setDescription(expense.description);
     expense.setPaymentType(expense.paymentType);
     expense.setTotal(expense.total);
@@ -65,10 +62,8 @@ const ExpenseDetails = (expense) => {
   const modalOn = () => {
     setModal(true);
   };
-  const modalOff = (e) => {
-    if (e.target.className === 'modal' || e.target.className === 'close') {
-      setModal(false);
-    }
+  const modalOff = () => {
+    setModal(false);
   };
 
   return (
@@ -89,36 +84,37 @@ const ExpenseDetails = (expense) => {
       >
         Edit
       </span>
-      <article
-        className="modal"
-        onClick={modalOff}
-        style={modal ? { display: 'flex' } : { display: 'none' }}
+      <Modal
+        show={modal}
+        backdrop="true"
+        animation="true"
+        onHide={modalOff}
+        size="lg"
+        centered
+        keyboard="true"
       >
-        <div className="modal-content">
-          <div className="modal-content-header">
-            <span className="close">X</span>
-            <h2>{expense.name}</h2>
-          </div>
-          <div className="modal-content-body">
-            <p className="expense-description">{expense.description}</p>
-            <p>
-              <strong>Date Received: </strong>
-              {expense.dateReceivedF}
-            </p>
-            <p>
-              <strong>Category: </strong>
-              {expense.category}
-            </p>
-            <p>
-              <strong>Payment Type: </strong>
-              {expense.paymentType}
-            </p>
-            <p>
-              <strong>Total: </strong>${expense.total}
-            </p>
-          </div>
-        </div>
-      </article>
+        <Modal.Header closeButton>
+          <Modal.Title id="modal-content-header">{expense.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Date Received: </strong>
+            {expense.dateReceived.split("T")[0]}
+          </p>
+          <p>
+            <strong>Category: </strong>
+            {expense.category}
+          </p>
+          <p>
+            <strong>Payment Type: </strong>
+            {expense.paymentType}
+          </p>
+          <p>
+            <strong>Total: </strong>${expense.total}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>{expense.description}</Modal.Footer>
+      </Modal>
     </div>
   );
 };

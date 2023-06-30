@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { useExpDataContext } from "../hooks/useExpDataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import ExpenseDetails from "../components/ExpenseDetails";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { parseISO } from "date-fns";
 
 const Receipt = () => {
@@ -201,7 +202,7 @@ const Receipt = () => {
       </div>
       <div className="expense-display">
         <div className="expense-list">
-          <h2 className="expense-list-title">Expense Receipts</h2>
+          <h2 className="expense-list-title">Expense List</h2>
           <div className="expense-sort-container">
             <p>Sort:</p>
             <button
@@ -280,130 +281,141 @@ const Receipt = () => {
                 />
               ))}
           {isMoreCompleted ? (
-            <button
+            <Button
               onClick={loadMore}
               type="button"
-              className="btn btn-loadmore disabled"
+              variant="outline-info"
+              bsPrefix="disabled"
             >
               That's It
-            </button>
+            </Button>
           ) : (
-            <button
-              onClick={loadMore}
-              type="button"
-              className="btn btn-loadmore"
-            >
+            <Button onClick={loadMore} variant="outline-info" type="button">
               + Load More +
-            </button>
+            </Button>
           )}
           {isLessCompleted ? (
-            <button
+            <Button
               onClick={loadLess}
+              variant="outline-info"
               type="button"
-              className="btn btn-loadless disabled"
+              bsPrefix="disabled"
             >
               That's It
-            </button>
+            </Button>
           ) : (
-            <button
-              onClick={loadLess}
-              type="button"
-              className="btn btn-loadless"
-            >
+            <Button onClick={loadLess} variant="outline-info" type="button">
               - Load Less -
-            </button>
+            </Button>
           )}
         </div>
         <aside className="expense-form-container">
           <div className="expense-form-header">
-            <h2>+Create New Expense</h2>
+            <h2>+ Create New Expense</h2>
           </div>
-          <form className="expense-form">
-            <label>Title:</label>
-            <input
-              type="text"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              className={emptyFields.includes("name") ? "error" : ""}
-            />
-            <label>Description:</label>
-            <input
-              type="text"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-              className={emptyFields.includes("description") ? "error" : ""}
-            />
-            <label htmlFor="expense-category">Category:</label>
-            <select
-              id="expense-category"
-              onChange={(e) => setCategory(e.target.value)}
-              value={category}
-              className={emptyFields.includes("category") ? "error" : ""}
-            >
-              <option value="" defaultValue></option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Food">Food</option>
-              <option value="House">House</option>
-              <option value="Car">Car</option>
-              <option value="Work">Work</option>
-              <option value="Clothing">Clothing</option>
-              <option value="Pet">Pet</option>
-              <option value="Self-Care">Self-Care</option>
-              <option value="Other">Other</option>
-            </select>
-            <label htmlFor="expense-type">Payment Type:</label>
-            <select
-              id="expense-type"
-              onChange={(e) => setPaymentType(e.target.value)}
-              value={paymentType}
-              className={emptyFields.includes("paymentType") ? "error" : ""}
-            >
-              <option value="" defaultValue></option>
-              <option value="Debit">Debit</option>
-              <option value="Credit">Credit</option>
-              <option value="Cash">Cash</option>
-              <option value="Gift Card">Gift Card</option>
-              <option value="Check">Check</option>
-              <option value="Other">Other</option>
-            </select>
-            <label>Total: </label>
-            <input
-              id="expense-description"
-              type="number"
-              onChange={(e) => setTotal(e.target.value)}
-              value={total}
-              className={emptyFields.includes("total") ? "error" : ""}
-            />
-            <label>Date:</label>
-            <DatePicker
-              onChange={(date) => setDate(date)}
-              value={dateReceived}
-              selected={dateReceived}
-              className={
-                emptyFields.includes("dateReceived") ? "error" : "dateReceived"
-              }
-            />
-            <button
+          <Form className="expense-form">
+            <FloatingLabel label="Name">
+              <Form.Control
+                type="text"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                placeholder="Name"
+                className={emptyFields.includes("name") ? "error" : ""}
+              />
+            </FloatingLabel>
+            <FloatingLabel label="Description">
+              <Form.Control
+                type="text"
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
+                placeholder="Description"
+                className={emptyFields.includes("description") ? "error" : ""}
+              />
+            </FloatingLabel>
+            <FloatingLabel label="Category">
+              <Form.Select
+                id="expense-category"
+                onChange={(e) => setCategory(e.target.value)}
+                value={category}
+                placeholder="Category"
+                className={emptyFields.includes("category") ? "error" : ""}
+              >
+                <option value="" defaultValue></option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Food">Food</option>
+                <option value="House">House</option>
+                <option value="Car">Car</option>
+                <option value="Work">Work</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Pet">Pet</option>
+                <option value="Self-Care">Self-Care</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+            </FloatingLabel>
+            <FloatingLabel label="Payment Type">
+              <Form.Select
+                id="expense-type"
+                onChange={(e) => setPaymentType(e.target.value)}
+                value={paymentType}
+                placeholder="Payment Type"
+                className={emptyFields.includes("paymentType") ? "error" : ""}
+              >
+                <option value="" defaultValue></option>
+                <option value="Debit">Debit</option>
+                <option value="Credit">Credit</option>
+                <option value="Cash">Cash</option>
+                <option value="Gift Card">Gift Card</option>
+                <option value="Check">Check</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+            </FloatingLabel>
+            <FloatingLabel label="Total">
+              <Form.Control
+                id="expense-description"
+                type="number"
+                onChange={(e) => setTotal(e.target.value)}
+                placeholder="Total"
+                value={total}
+                className={emptyFields.includes("total") ? "error" : ""}
+              />
+            </FloatingLabel>
+            <FloatingLabel label="Date">
+              <Form.Control
+                type="date"
+                onChange={(e) => setDate(e.target.value)}
+                value={dateReceived}
+                selected={dateReceived}
+                placeholder="Date"
+                className={
+                  emptyFields.includes("dateReceived")
+                    ? "error"
+                    : "dateReceived"
+                }
+              />
+            </FloatingLabel>
+            <Button
               onClick={submitHandler}
-              className={showUpdateBtn ? "createBtn disabled" : "createBtn"}
+              bsPrefix={showUpdateBtn ? "disabled" : ""}
             >
-              Add New Expense
-            </button>
-            <button
+              CREATE Expense
+            </Button>
+            <Button
               onClick={updateHandler}
-              className={showUpdateBtn ? "updateBtn" : "updateBtn disabled"}
+              bsPrefix={showUpdateBtn ? "" : "disabled"}
             >
-              Update Existing Expense
-            </button>
-            <button
+              UPDATE Expense
+            </Button>
+            <Button
+              type="reset"
+              variant="light"
               onClick={clearBtn}
-              className={showUpdateBtn ? "clearBtn" : "clearBtn disabled"}
+              bsPrefix={showUpdateBtn ? "" : "disabled"}
             >
               Clear
-            </button>
+            </Button>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
-          </form>
+          </Form>
         </aside>
       </div>
     </section>

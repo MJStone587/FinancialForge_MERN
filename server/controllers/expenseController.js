@@ -1,8 +1,7 @@
-const Expense = require('../models/expense');
-const mongoose = require('mongoose');
+const Expense = require("../models/expense");
+const mongoose = require("mongoose");
 
 exports.expense_list = async function (req, res) {
-  //requireAUth not running for expense so id will not exist
   const user_id = req.user._id;
   try {
     const expenseList = await Expense.find({ user_id }).sort({
@@ -21,40 +20,40 @@ exports.expense_create = async function (req, res) {
   let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
   if (!name) {
-    emptyFields.push('name');
+    emptyFields.push("name");
   }
   if (!description) {
-    emptyFields.push('description');
+    emptyFields.push("description");
   }
   if (!dateReceived) {
-    emptyFields.push('dateReceived');
+    emptyFields.push("dateReceived");
   }
   if (!total) {
-    emptyFields.push('total');
+    emptyFields.push("total");
   }
   if (!paymentType) {
-    emptyFields.push('paymentType');
+    emptyFields.push("paymentType");
   }
   if (!category) {
-    emptyFields.push('category');
+    emptyFields.push("category");
   }
   if (emptyFields.length > 0) {
     return res
       .status(400)
-      .json({ error: 'Please fill in all required fields', emptyFields });
+      .json({ error: "Please fill in all required fields", emptyFields });
   }
 
   if (total < 0) {
     return res
       .status(400)
-      .json({ error: 'Total cannot be less than 0', emptyFields });
+      .json({ error: "Total cannot be less than 0", emptyFields });
   }
 
   try {
     const expenseDuplicate = await Expense.findOne({ name: name });
     if (expenseDuplicate) {
       return res.status(400).json({
-        error: 'Duplicate names found, please create Expense with new name',
+        error: "Duplicate names found, please create Expense with new name",
         emptyFields,
       });
     }
@@ -78,7 +77,7 @@ exports.expense_detail = async function (req, res) {
   const { id } = req.params;
   const getExp = await Expense.findById(id);
   if (!income) {
-    return res.status(400).json({ error: 'No income found' });
+    return res.status(400).json({ error: "No income found" });
   }
   res.status(200).json(getExp);
 };
@@ -90,32 +89,32 @@ exports.expense_update = async function (req, res) {
   let totalF = parseFloat(total).toFixed(2);
   let emptyFields = [];
   if (!name) {
-    emptyFields.push('name');
+    emptyFields.push("name");
   }
   if (!description) {
-    emptyFields.push('description');
+    emptyFields.push("description");
   }
   if (!dateReceived) {
-    emptyFields.push('dateReceived');
+    emptyFields.push("dateReceived");
   }
   if (!total) {
-    emptyFields.push('total');
+    emptyFields.push("total");
   }
   if (!paymentType) {
-    emptyFields.push('paymentType');
+    emptyFields.push("paymentType");
   }
   if (!category) {
-    emptyFields.push('category');
+    emptyFields.push("category");
   }
   if (emptyFields.length > 0) {
     return res
       .status(400)
-      .json({ error: 'Please fill in all required fields', emptyFields });
+      .json({ error: "Please fill in all required fields", emptyFields });
   }
   if (total < 0) {
     return res
       .status(400)
-      .json({ error: 'Total cannot be less than 0', emptyFields });
+      .json({ error: "Total cannot be less than 0", emptyFields });
   }
 
   try {
@@ -142,12 +141,12 @@ exports.expense_update = async function (req, res) {
 exports.expense_delete = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: 'This expense does not exist' });
+    return res.status(400).json({ error: "This expense does not exist" });
   }
   const expense = await Expense.findByIdAndDelete({ _id: id });
 
   if (!expense) {
-    return res.status(400).json({ error: 'Error will robinson' });
+    return res.status(400).json({ error: "Error will robinson" });
   }
   res.status(200).json(expense);
 };

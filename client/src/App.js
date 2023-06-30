@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuthContext } from "./hooks/useAuthContext";
-import "./index.css";
+//import "./index.css";
+import "bootstrap/dist/css/bootstrap.css";
 import Home from "./pages/Home.js";
 import Income from "./pages/Income.js";
 import Summary from "./pages/Summary.js";
 import Expense from "./pages/Expense.js";
 import Header from "./components/Header";
-import Navbar from "./components/Navbar";
 import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
 
@@ -31,7 +31,6 @@ function App() {
     >
       <BrowserRouter>
         <Header toggleNav={toggleNav} />
-        {showNav && <Navbar />}
         <div className="pages"></div>
         <Routes>
           <Route path="/" element={<Home />} />

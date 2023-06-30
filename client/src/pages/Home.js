@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useAuthContext } from "../hooks/useAuthContext";
+import { Link } from "react-router-dom";
+import Nav from "react-bootstrap/Nav";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -18,10 +19,18 @@ const Home = () => {
               To get started Login with an existing user or Sign Up with a new
               email.
             </p>
-            <div className="home-nav">
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
+            <Nav className="flex-column">
+              <Nav.Item>
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} to="/signup">
+                  Sign up
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
           </div>
         </section>
       )}
@@ -30,11 +39,23 @@ const Home = () => {
           <div className="home-welcome">
             <h1>Welcome back, {user.name}!</h1>
             <p>Access your income, expense, and summary</p>
-            <div className="home-nav">
-              <Link to="/income">Income</Link>
-              <Link to="/expense">Expense</Link>
-              <Link to="/summary">Summary</Link>
-            </div>
+            <Nav className="flex-column">
+              <Nav.Item>
+                <Nav.Link as={Link} to="/income">
+                  Income
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} to="/expense">
+                  Expense
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} to="/summary">
+                  Summary
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
           </div>
         </section>
       )}

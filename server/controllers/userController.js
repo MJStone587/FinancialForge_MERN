@@ -4,8 +4,12 @@ const bcrypt = require("bcrypt");
 const saltRounds = 12;
 const jwt = require("jsonwebtoken");
 
+//process.env.SECRET
+
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "1d" });
+  return jwt.sign({ _id }, process.env.SECRET, {
+    expiresIn: "30d",
+  });
 };
 
 // RETRIEVE ALL USERS DATA

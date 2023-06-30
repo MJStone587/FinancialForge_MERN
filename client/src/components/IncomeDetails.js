@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useIncDataContext } from "../hooks/useIncDataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { parseISO } from "date-fns";
+import Modal from "react-bootstrap/Modal";
 
 const IncomeDetails = (income) => {
   const { dispatch } = useIncDataContext();
@@ -9,14 +9,12 @@ const IncomeDetails = (income) => {
   const [modal, setModal] = useState(false);
 
   // If an entry has been updated refresh data
+
   useEffect(() => {
     const fetchIncome = async () => {
-      const response = await fetch(
-        "https://financialforge-mern.onrender.com/catalog/income",
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
+      const response = await fetch("http://localhost:5000/catalog/income", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -36,7 +34,7 @@ const IncomeDetails = (income) => {
       return;
     }
     const response = await fetch(
-      "https://financialforge-mern.onrender.com/catalog/income/" + income.id,
+      "http://localhost:5000/catalog/income/" + income.id,
       {
         method: "DELETE",
       }
@@ -53,7 +51,7 @@ const IncomeDetails = (income) => {
     income.setName(income.name);
     income.setDescription(income.description);
     income.setCategory(income.category);
-    income.setDate(parseISO(income.dateReceived));
+    income.setDate(income.dateReceived.split("T")[0]);
     income.setIncID(income.id);
     income.setShowUpdateBtn(true);
   };
@@ -62,10 +60,8 @@ const IncomeDetails = (income) => {
   const modalOn = () => {
     setModal(true);
   };
-  const modalOff = (e) => {
-    if (e.target.className === "modal" || e.target.className === "close") {
-      setModal(false);
-    }
+  const modalOff = () => {
+    setModal(false);
   };
 
   return (
@@ -86,32 +82,33 @@ const IncomeDetails = (income) => {
       >
         Edit
       </span>
-      <article
-        className="modal"
-        onClick={modalOff}
-        style={modal ? { display: "flex" } : { display: "none" }}
+      <Modal
+        show={modal}
+        backdrop="true"
+        animation="true"
+        onHide={modalOff}
+        size="lg"
+        centered
+        keyboard="true"
       >
-        <div className="modal-content">
-          <div className="modal-content-header">
-            <span className="close">X</span>
-            <h2 className="modal-title">{income.name}</h2>
-          </div>
-          <div className="modal-content-body">
-            <p className="income-description">{income.description}</p>
-            <p>
-              <strong>Date Received: </strong>
-              {income.dateReceivedF}
-            </p>
-            <p>
-              <strong>Category: </strong>
-              {income.category}
-            </p>
-            <p>
-              <strong>Total: </strong>${income.total}
-            </p>
-          </div>
-        </div>
-      </article>
+        <Modal.Header closeButton>
+          <Modal.Title id="modal-content-header">{income.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            <strong>Date Received: </strong>
+            {income.dateReceived.split("T")[0]}
+          </p>
+          <p>
+            <strong>Category: </strong>
+            {income.category}
+          </p>
+          <p>
+            <strong>Total: </strong>${income.total}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>{income.description}</Modal.Footer>
+      </Modal>
     </div>
   );
 };

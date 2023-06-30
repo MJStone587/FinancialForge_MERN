@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
+import Table from "react-bootstrap/Table";
 
 function Summary() {
   const { user } = useAuthContext();
@@ -13,7 +14,7 @@ function Summary() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/income',
+        "https://financialforge-mern.onrender.com/catalog/income",
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -32,7 +33,7 @@ function Summary() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        'https://financialforge-mern.onrender.com/catalog/expense',
+        "https://financialforge-mern.onrender.com/catalog/expense",
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -47,7 +48,7 @@ function Summary() {
     }
   }, [user]);
 
-  // method to add up income and expense data for display
+  // method to add up income, expense data and format the results
   useEffect(() => {
     var incGrandTotal = 0;
     var expGrandTotal = 0;
@@ -61,19 +62,21 @@ function Summary() {
 
   return (
     <section className="summary-container">
-      <h1>Summary</h1>
-      <p>Review all financial records</p>
-      <h2 className="income-table-title">Income</h2>
+      <div className="summary-title">
+        <h1>Summary</h1>
+        <p>Review all financial records</p>
+      </div>
       <div className="income-table-container">
-        <table className="income-table">
+        <h2 className="income-table-title">Income</h2>
+        <Table striped="false" bordered hover responsive="md">
           <thead>
-            <tr className="income-header-row">
+            <tr>
               <th>Name:</th>
               <th>Category:</th>
               <th>Total:</th>
             </tr>
           </thead>
-          <tbody className="income-tbody">
+          <tbody>
             {income &&
               income.map((inc) => (
                 <tr key={inc._id}>
@@ -83,21 +86,25 @@ function Summary() {
                 </tr>
               ))}
           </tbody>
-        </table>
+        </Table>
       </div>
-      <h3 className="income-total">Income Total: ${incGrandTotal}</h3>
-      <h2 className="expense-table-title">Expenses</h2>
+      <div className="income-table-total-container">
+        <h3>
+          <strong>Total: </strong>${incGrandTotal}
+        </h3>
+      </div>
       <div className="expense-table-container">
-        <table className="expense-table">
+        <h2 className="expense-table-title">Expenses</h2>
+        <Table striped="false" bordered hover responsive="md" size="sm">
           <thead>
-            <tr className="expense-header-row">
+            <tr>
               <th>Name:</th>
               <th>Payment Type:</th>
               <th>Category:</th>
               <th>Total:</th>
             </tr>
           </thead>
-          <tbody className="expense-tbody">
+          <tbody>
             {expense &&
               expense.map((exp) => (
                 <tr key={exp._id}>
@@ -108,13 +115,15 @@ function Summary() {
                 </tr>
               ))}
           </tbody>
-        </table>
+        </Table>
       </div>
-      <h3 className="expense-total">Expenses Total: ${expGrandTotal}</h3>
-      <div>
-        <div className="balance-container">
-          <h2 className="balance">Balance: ${balance}</h2>
-        </div>
+      <div className="expense-table-total-container">
+        <h3>
+          <strong>Total: </strong>${expGrandTotal}
+        </h3>
+      </div>
+      <div className="balance-container">
+        <h2 className="balance">Balance: ${balance}</h2>
       </div>
     </section>
   );
