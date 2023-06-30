@@ -23,9 +23,19 @@ let IncomeSchema = new Schema(
 );
 
 IncomeSchema.virtual("date_received_med").get(function () {
+<<<<<<< HEAD
   return this.dateReceived.toLocaleDateString(DateTime.DATE_FULL);
 });
 
+=======
+  return this.dateReceived.toLocaleDateString(DateTime.DATE_MED);
+});
+
+IncomeSchema.virtual("date_received_med2").get(function () {
+  return this.dateReceived.toISODate();
+});
+
+>>>>>>> fdf9aa78e865fed9516ad26a4dd8c5270b5b4f0e
 IncomeSchema.virtual("date_created_med").get(function () {
   return this.dateCreated.toLocaleDateString(DateTime.DATE_MED);
 });
