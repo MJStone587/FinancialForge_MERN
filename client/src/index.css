@@ -485,6 +485,12 @@ select.error {
 .balance-container {
   align-self: flex-start;
 }
+.input-group-text {
+  max-width: 48px;
+}
+.eye {
+  font-size: calc(16px + (18 - 16) * ((100vw - 300px) / (1920 - 300)));
+}
 .error-message {
   color: var(--error-color-);
 }

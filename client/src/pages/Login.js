@@ -62,7 +62,7 @@ function Login() {
                   aria-label={eyeToggle}
                   onClick={eyeHandler}
                 >
-                  {isVisible ? "visibility_off" : "visibility"}
+                  Visibility
                 </span>
               </InputGroup.Text>
             </InputGroup>
