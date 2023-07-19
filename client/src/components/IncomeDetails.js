@@ -12,7 +12,7 @@ const IncomeDetails = (income) => {
 
   useEffect(() => {
     const fetchIncome = async () => {
-      const response = await fetch("http://localhost:5000/catalog/income", {
+      const response = await fetch("https://financialforge-mern.onrender.com/catalog/income", {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       const json = await response.json();
@@ -34,7 +34,7 @@ const IncomeDetails = (income) => {
       return;
     }
     const response = await fetch(
-      "http://localhost:5000/catalog/income/" + income.id,
+      "https://financialforge-mern.onrender.com/catalog/income/" + income.id,
       {
         method: "DELETE",
       }
