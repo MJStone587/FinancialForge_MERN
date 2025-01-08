@@ -12,52 +12,38 @@ import Login from "./pages/Login.js";
 import Signup from "./pages/Signup.js";
 
 function App() {
-  const { user } = useAuthContext();
-  const [showNav, setShowNav] = useState(false);
+	const { user } = useAuthContext();
+	const [showNav, setShowNav] = useState(false);
 
-  const toggleNav = () => {
-    setShowNav(!showNav);
-  };
+	const toggleNav = () => {
+		setShowNav(!showNav);
+	};
 
-  return (
-    <main
-      className="App"
-      onClick={(e) =>
-        //make better -self note
-        e.target.tagName !== "NAV" && e.target.tagName !== "SPAN"
-          ? setShowNav(false)
-          : ""
-      }
-    >
-      <BrowserRouter>
-        <Header toggleNav={toggleNav} />
-        <div className="pages"></div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/income"
-            element={user ? <Income /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/summary"
-            element={user ? <Summary /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/expense"
-            element={user ? <Expense /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/login"
-            element={!user ? <Login /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/signup"
-            element={!user ? <Signup /> : <Navigate to="/" />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </main>
-  );
+	return (
+		<main
+			className='App'
+			onClick={(e) =>
+				//make better -self note
+				e.target.tagName !== "NAV" && e.target.tagName !== "SPAN" ? setShowNav(false) : ""
+			}
+		>
+			<BrowserRouter>
+				<Header toggleNav={toggleNav} />
+				<div className='pages'></div>
+				<Routes>
+					<Route path='/' element={<Home />} />
+					<Route path='/income' element={user ? <Income /> : <Navigate to='/login' />} />
+					<Route path='/summary' element={user ? <Summary /> : <Navigate to='/login' />} />
+					<Route
+						path='/expense'
+						element={user ? <Expense /> : <Navigate to='/login' />} /*remove or add !user to user*/
+					/>
+					<Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
+					<Route path='/signup' element={!user ? <Signup /> : <Navigate to='/' />} />
+				</Routes>
+			</BrowserRouter>
+		</main>
+	);
 }
 
 export default App;
