@@ -8,7 +8,7 @@ exports.expense_list = async function (req, res) {
 
 	const startIndex = (page - 1) * limit;
 	const endIndex = page * limit;
-
+	/*
 	const pages = {};
 
 	pages.next = {
@@ -21,12 +21,12 @@ exports.expense_list = async function (req, res) {
 			page: page - 1,
 			limit: limit,
 		};
-	}
+	}*/
 	try {
 		const expenseList = await Expense.find({ user_id }).sort({
 			dateCreated: -1,
 		});
-		pages.results = expenseList.slice(startIndex, endIndex);
+		const results = expenseList.slice(startIndex, endIndex);
 		res.status(200).json(results);
 	} catch (error) {
 		res.status(400).json({ error: error.message });
