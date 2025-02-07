@@ -27,7 +27,7 @@ exports.expense_list = async function (req, res) {
 		const expenseList = await Expense.find({ user_id }).sort({
 			dateCreated: -1,
 		});
-		res.status(200).json(expenseList);
+		res.status(200).json(expenseList.slice(startIndex, endIndex));
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
