@@ -48,8 +48,11 @@ const Home = () => {
 					<div className='home-container-empty'></div>
 					<div className='home-container-intro'>
 						<div className='home-welcome'>
-							<h1>Welcome back, {user.name}!</h1>
-							<p>Access your income, expense, and summary</p>
+							<h1>Welcome to the Forge, {user.name}!</h1>
+							<p>
+								You are one click away to full financial management. Access your income, expenses,
+								and summary
+							</p>
 						</div>
 						<div className='home-nav'>
 							<Nav>

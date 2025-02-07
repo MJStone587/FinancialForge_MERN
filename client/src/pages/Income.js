@@ -177,10 +177,6 @@ function Income() {
 
 	return (
 		<section className='income-container'>
-			<div className='income-header'>
-				<h1>Income</h1>
-				<p>Add, update, delete, and review your income.</p>
-			</div>
 			<div className='income-display'>
 				<div className='income-list'>
 					<h2 className='income-list-title'>Income List</h2>

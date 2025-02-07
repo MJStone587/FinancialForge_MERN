@@ -27,8 +27,21 @@ main {
 }
 .navbar {
 	flex: 1;
+	border-bottom: 1px solid var(--ltBlue-color-);
+}
+.navbar a {
+	color: white;
 }
 .navbar a:hover {
+	color: var(--ltBlue-color-);
+}
+.navbar a:visited:hover {
+	color: var(--ltBlue-color-);
+}
+.navbar a:visited {
+	color: white;
+}
+.navbar a:active {
 	color: var(--ltBlue-color-);
 }
 .navbar span {
@@ -69,8 +82,8 @@ section {
 	justify-content: center;
 	align-items: center;
 	flex: 9;
-	background-color: var(--gray-color-);
-	padding: 0 18rem;
+	background-color: rgb(33, 37, 41);
+	padding: 0 12rem;
 }
 .home-container-empty {
 	flex: 1;
@@ -82,6 +95,7 @@ section {
 	justify-content: space-evenly;
 	align-items: center;
 	flex: 3;
+	width: 80%;
 	background-color: white;
 	border-radius: 10px;
 	padding: 15px 25px;
@@ -129,9 +143,9 @@ section {
 .expense-form-container {
 	display: flex;
 	flex-flow: column nowrap;
-	flex-basis: 30%;
+	flex: 1;
 	align-items: center;
-	margin: 5px;
+	margin: 2px;
 	padding: 10px 0px;
 }
 .income-form-container {
@@ -147,7 +161,6 @@ section {
 	display: flex;
 	flex-flow: column nowrap;
 	row-gap: 10px;
-	width: 15vw;
 	padding: 10px 0px 20px 0px;
 }
 .form-control {
@@ -166,38 +179,36 @@ input.error {
 select.error {
 	border: 1px solid var(--error-color-);
 }
-.income-container,
-.expense-container {
-	display: flex;
-	flex-flow: column nowrap;
-	background-color: var(--gray-color-);
-	width: 100%;
-	overflow: auto;
+.expense-container,
+.income-container {
+	margin: 0;
+	padding: 0rem 0rem;
 }
 .expense-display,
 .income-display {
 	display: flex;
-	flex-flow: row nowrap;
-	align-items: flex-start;
 	justify-content: center;
-	margin: 0px 30px;
+	flex-flow: row nowrap;
+	flex: 2;
+	width: 100%;
 }
 .income-header,
 .expense-header {
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
+	flex: 1;
+	padding: 2px 0px;
 	justify-content: center;
-	margin: 15px 0px;
 	max-width: 100%;
 }
 .income-header h1,
 .expense-header h1 {
-	font-size: calc(30px + (40 - 30) * ((100vw - 300px) / (1920 - 300)));
+	font-size: 30px;
 }
 .income-header p,
 .expense-header p {
-	font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1920 - 300)));
+	font-size: 14px;
 }
 .income-header h1 {
 	color: var(--gold-color);
@@ -220,7 +231,7 @@ select.error {
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
-	flex-basis: 70%;
+	flex: 2;
 	margin: 5px;
 	padding: 10px 0px;
 }
@@ -230,6 +241,9 @@ select.error {
 }
 .income-list-title,
 .expense-list-title {
+	display: flex;
+	color: var(--ltBlue-color-);
+	text-shadow: 1px 1px 1px black;
 	text-decoration: underline;
 }
 #income-create-new {
@@ -237,41 +251,66 @@ select.error {
 	text-decoration: none;
 	border: 3px dotted var(--ltBlue-color-);
 }
-.income-card,
-.expense-card {
-	display: flex;
-	flex-flow: column nowrap;
-	background-color: var(--white-color-);
-	border: 2px solid black;
-	width: 60%;
-	align-items: center;
-	margin: 10px 10px;
-	box-shadow: 2px 2px 5px black;
-	padding: 5px;
-	border-radius: 5px;
+#expense-card-display,
+#income-card-display {
+	display: block;
+	background-color: white;
+	border-color: black;
+	color: black;
+	width: 85%;
+	height: 40rem; /* Ensure a fixed height for testing */
+	overflow-x: auto; /* Ensure overflow is visible */
+	/*border: 2px solid red;*/ /* Debugging border */
 }
-.income-card:hover {
-	border: 2px solid var(--gold-color);
-	box-shadow: 2px 2px 5 px var(--gold-color);
+#expense-card-display table {
+	width: 100%;
+	height: 40rem;
+	overflow-x: auto;
+	border-collapse: collapse; /* Ensure borders are collapsed */
 }
-.expense-card:hover {
-	border: 2px solid var(--ltBlue-color-);
-	box-shadow: 2px 2px 5px var(--ltBlue-color-);
+
+#expense-card-display th,
+#expense-card-display td {
+	border: 1px solid black; /* Apply border to table headers and cells */
+	padding: 8px; /* Add padding for better readability */
+	text-align: left; /* Align text to the left */
+}
+
+#heading-columns th {
+	background-color: rgb(43, 43, 43);
+	color: var(--ltBlue-color-);
+	border: 1.5px solid var(--ltBlue-color-);
+}
+#expense-card-display thead {
+	background-color: #f2f2f2; /* Add background color to table header */
+}
+
+#expense-card-display tbody tr:nth-child(even) {
+	background-color: #d9d9d9; /* Add background color to even rows */
 }
 .income-description,
 .expense-description {
 	font-style: italic;
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 3px;
+}
+.name-td:hover {
+	cursor: pointer;
+	background-color: var(--ltBlue-color-);
 }
 .income-title,
 .expense-title {
 	align-self: center;
-	font-size: calc(18px + (25 - 18) * ((100vw - 300px) / (1920 - 300)));
+	font-size: 20px;
+	margin-bottom: 2px;
 	color: var(--gold-color);
 }
 .expense-title {
 	color: var(--ltBlue-color-);
+	text-decoration: underline;
+}
+.expense-title:hover {
+	text-shadow: 0px 0px 1px black;
 }
 .income-title:hover {
 	cursor: pointer;
@@ -279,25 +318,32 @@ select.error {
 .expense-title:hover {
 	cursor: pointer;
 }
+.expense-total {
+	margin-bottom: 2px;
+}
 .expense-sort-container,
 .income-sort-container {
 	display: flex;
 	flex-flow: row nowrap;
-	max-height: 50px;
-	width: 200px;
-	margin: 10px;
+	align-self: center;
+	justify-content: space-evenly;
+}
+.expense-sort-container td {
+	color: white;
 }
 .expense-sort-container p,
 .income-sort-container p {
-	margin: 5px;
-	font-size: calc(16px + (18 - 16) * ((100vw - 300px) / (1920 - 300)));
+	font-size: 16px;
+}
+.expense-table {
+	width: 100%;
+	flex: 4;
 }
 .sortBtn {
 	background-color: var(--charcoal-bg-);
 	border-radius: 10px;
-	max-width: 75px;
 	margin: 2px;
-	border: 1px transparent;
+	border: 1px solid transparent;
 }
 .income-sort-container .sortBtn {
 	color: var(--gold-color);
@@ -315,25 +361,19 @@ select.error {
 	cursor: pointer;
 	color: white;
 }
-.material-symbols-outlined {
-	align-self: flex-end;
-	padding: 3px;
-	border-radius: 5px;
+.materials-symbols-outlined {
+	text-align: center;
 }
-.material-symbols-outlined:hover {
+.edit-td span:hover {
+	color: rgb(43, 255, 43);
+	cursor: pointer;
+}
+.delete-td span:hover {
 	cursor: pointer;
 	color: red;
 }
-#income-edit,
-#expense-edit {
-	align-self: flex-start;
-	cursor: pointer;
-	padding: 3px;
-	border-radius: 5px;
-}
-#income-edit:hover,
-#expense-edit:hover {
-	color: rgb(11, 247, 255);
+.pagination {
+	color: white;
 }
 .server-loading {
 	font-size: calc(18px + (26 - 18) * ((100vw - 300px) / (1920 - 300)));
@@ -362,14 +402,14 @@ select.error {
 	flex-flow: column nowrap;
 	justify-content: flex-end;
 	align-items: center;
-	width: 75%;
+	width: 80%;
 	flex: 1;
 }
 .login-card {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
-	width: 100%;
+	width: 80%;
 	flex: 3;
 	box-shadow: 2px 2px 15px var(--charcoal-bg-);
 	border-radius: 5px;
@@ -415,7 +455,7 @@ select.error {
 	display: flex;
 	flex-flow: row nowrap;
 	flex: 3;
-	width: 100%;
+	width: 80%;
 	box-shadow: 1px 1px 10px var(--charcoal-bg-);
 	border-radius: 5px;
 	background-color: white;
