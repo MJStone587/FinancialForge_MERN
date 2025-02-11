@@ -3,10 +3,10 @@ const paginatedResults = (model) => {
 		const page = parseInt(req.query.page);
 		const limit = parseInt(req.query.limit);
 		const startIndex = (page - 1) * limit;
-		const endIndex = page * limit;
+		//const endIndex = page * limit;
 		const user_id = req.user._id;
 
-		const results = {};
+		//const results = {};
 		/*
 		if (endIndex > (await model.countDocuments().exec())) {
 			results.next = {
@@ -22,12 +22,7 @@ const paginatedResults = (model) => {
 		}*/
 
 		try {
-			results = await model
-				.find({ user_id })
-				.limit()
-				.sort({ dateCreated: -1 })
-				.skip(startIndex)
-				.exec();
+			results = await model.find({ user_id }).limit(limit).skip(startIndex).exec();
 			res.status(200).json(results);
 			next();
 		} catch (error) {

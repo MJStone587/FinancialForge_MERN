@@ -1,9 +1,7 @@
 const Expense = require("../models/expense");
 const mongoose = require("mongoose");
-const paginatedResults = require("../middleware/paginatedResults");
 
-exports.expense_list = function () {
-	/*
+exports.expense_list = async function (req, res) {
 	const user_id = req.user._id;
 
 	try {
@@ -15,7 +13,6 @@ exports.expense_list = function () {
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
-	*/
 };
 
 // Create new Expense
