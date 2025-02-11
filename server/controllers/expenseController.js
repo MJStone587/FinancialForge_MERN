@@ -15,25 +15,18 @@ exports.expense_list = async function (req, res) {
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	} */
-	const page = parseInt(req.query.page) || 0;
-	const limit = parseInt(req.query.limit) || 3;
+	const page = parseInt(req.query.page);
+	const limit = parseInt(req.query.limit);
 	const startIndex = (page - 1) * limit;
 	const endIndex = page * limit;
 	const user_id = req.user._id;
 
-	const results = {};
-
 	if (endIndex > (await Expense.countDocuments().exec())) {
-		results.next = {
-			page: page + 1,
-			limit: limit,
-		};
+		page += 1;
 	}
+
 	if (startIndex > 0) {
-		results.previous = {
-			page: page - 1,
-			limit: limit,
-		};
+		page -= 1;
 	}
 
 	try {
