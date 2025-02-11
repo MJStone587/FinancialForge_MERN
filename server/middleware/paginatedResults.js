@@ -34,3 +34,5 @@ const paginatedResults = (model) => {
 		}
 	};
 };
+
+module.exports = paginatedResults;
