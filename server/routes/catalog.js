@@ -6,7 +6,7 @@ const user_controller = require("../controllers/userController");
 const Expense = require("../models/expense");
 const Income = require("../models/income");
 const requireAuth = require("../middleware/requireAuth");
-const pagination = require("../middleware/paginatedResults");
+const paginatedResults = require("../middleware/paginatedResults");
 
 const router = express.Router();
 
@@ -51,7 +51,7 @@ router.put(
 );
 
 //Get All Expenses
-router.get("/expense", pagination.paginatedResults(Expense));
+router.get("/expense", paginatedResults(Expense));
 //Create new expense
 router.post(
 	"/expense/create",
