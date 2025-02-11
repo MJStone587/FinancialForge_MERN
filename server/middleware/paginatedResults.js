@@ -1,5 +1,5 @@
-
-exports.paginatedResults(model) =	async (req, res, next) => {
+exports.paginatedResults = function (model) {
+	async (req, res, next) => {
 		const page = parseInt(req.query.page);
 		const limit = parseInt(req.query.limit);
 		const startIndex = (page - 1) * limit;
@@ -8,7 +8,7 @@ exports.paginatedResults(model) =	async (req, res, next) => {
 
 		const results = {};
 
-		if (endIndex > await model.countDocuments().exec()) {
+		if (endIndex > (await model.countDocuments().exec())) {
 			results.next = {
 				page: page + 1,
 				limit: limit,
@@ -27,10 +27,10 @@ exports.paginatedResults(model) =	async (req, res, next) => {
 				.sort({ dateCreated: -1 })
 				.skip(startIndex)
 				.exec();
-				res.status(200).json(paginatedResults.results);
+			res.status(200).json(paginatedResults.results);
 			next();
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
 	};
-
+};
