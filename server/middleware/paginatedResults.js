@@ -27,7 +27,7 @@ const paginatedResults = (model) => {
 				.sort({ dateCreated: -1 })
 				.skip(startIndex)
 				.exec();
-			res.status(200).json(paginatedResults.results);
+			res.paginatedResults = json(results);
 			next();
 		} catch (error) {
 			res.status(500).json({ error: error.message });
