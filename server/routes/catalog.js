@@ -51,11 +51,7 @@ router.put(
 );
 
 //Get All Expenses
-router.get(
-	"/expense",
-	//requireAuth.requireAuth,
-	pagination.paginatedResults(Expense)
-);
+router.get("/expense", pagination.paginatedResults(Expense));
 //Create new expense
 router.post(
 	"/expense/create",
