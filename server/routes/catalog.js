@@ -54,8 +54,7 @@ router.put(
 router.get(
 	"/expense",
 	//requireAuth.requireAuth,
-	expense_controller.expense_list
-	//pagination.paginatedResults(Expense)
+	pagination.paginatedResults(Expense)
 );
 //Create new expense
 router.post(

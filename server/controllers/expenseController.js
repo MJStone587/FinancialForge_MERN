@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const paginatedResults = require("../middleware/paginatedResults");
 
 exports.expense_list = function () {
-	paginatedResults(Expense);
 	/*
 	const user_id = req.user._id;
 
