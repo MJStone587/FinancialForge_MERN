@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const paginatedResults = require("../middleware/paginatedResults");
 
 exports.expense_list = async function (req, res) {
+	paginatedResults(Expense);
 	/*
 	const user_id = req.user._id;
 
