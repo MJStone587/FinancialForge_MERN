@@ -51,7 +51,7 @@ router.put(
 );
 
 //Get All Expenses
-router.get("/expense", paginatedResults(Expense));
+router.get("/expense", expense_controller.expense_list);
 //Create new expense
 router.post(
 	"/expense/create",
