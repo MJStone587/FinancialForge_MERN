@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 exports.expense_list = async function (req, res) {
 	const user_id = req.user._id;
+	console.log(user_id);
 
 	try {
 		const expenseList = await Expense.find({ user_id }).sort({

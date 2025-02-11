@@ -1,10 +1,11 @@
 const paginatedResults = (model) => {
 	return async (req, res, next) => {
-		const page = parseInt(req.query.page);
-		const limit = parseInt(req.query.limit);
+		const page = parseInt(req.query.page) || 0;
+		const limit = parseInt(req.query.limit) || 3;
 		const startIndex = (page - 1) * limit;
 		//const endIndex = page * limit;
 		const user_id = req.user._id;
+		console.log(user_id);
 
 		//const results = {};
 		/*
