@@ -23,7 +23,7 @@ exports.expense_list = async function (req, res) {
 
 	const results = {};
 
-	if (endIndex > (await model.countDocuments().exec())) {
+	if (endIndex > (await Expense.countDocuments().exec())) {
 		results.next = {
 			page: page + 1,
 			limit: limit,
@@ -37,7 +37,7 @@ exports.expense_list = async function (req, res) {
 	}
 
 	try {
-		results.results = await model.find({ user_id }).limit(limit).skip(startIndex).exec();
+		results.results = await Expense.find({ user_id }).limit(limit).skip(startIndex).exec();
 		res.status(200).json(results);
 		next();
 	} catch (error) {
