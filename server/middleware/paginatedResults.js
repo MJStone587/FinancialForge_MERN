@@ -1,5 +1,4 @@
-const paginatedResults = function (model) {
-	async (req, res, next) => {
+exports.paginatedResults(results) =	async (req, res, next) => {
 		const page = parseInt(req.query.page);
 		const limit = parseInt(req.query.limit);
 		const startIndex = (page - 1) * limit;
@@ -8,7 +7,7 @@ const paginatedResults = function (model) {
 
 		const results = {};
 
-		if (endIndex > (await model.countDocuments().exec())) {
+		if (endIndex > await model.countDocuments().exec()) {
 			results.next = {
 				page: page + 1,
 				limit: limit,
@@ -33,6 +32,4 @@ const paginatedResults = function (model) {
 			res.status(500).json({ error: error.message });
 		}
 	};
-};
 
-module.exports = paginatedResults;
