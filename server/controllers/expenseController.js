@@ -30,7 +30,7 @@ exports.expense_list = async function (req, res) {
 	}
 
 	try {
-		const expenseList = await Expense.find({ user_id }).limit(limit).skip(startIndex).exec();
+		const expenseList = await Expense.find({ user_id }).limit(limit).skip(endIndex).exec();
 		res.status(200).json(expenseList);
 		next();
 	} catch (error) {
