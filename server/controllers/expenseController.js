@@ -37,8 +37,8 @@ exports.expense_list = async function (req, res) {
 	}
 
 	try {
-		results.results = await Expense.find({ user_id }).limit(limit).skip(startIndex).exec();
-		res.status(200).json(results);
+		const expenseList = await Expense.find({ user_id }).limit(limit).skip(startIndex).exec();
+		res.status(200).json(expenseList);
 		next();
 	} catch (error) {
 		res.status(500).json({ error: error.message });
