@@ -21,7 +21,7 @@ router.get(
 	"/income",
 	//requireAuth.requireAuth,
 	income_controller.get_all_income,
-	pagination.paginatedResults
+	pagination.paginatedResults(Income)
 );
 //Get Single Income
 router.get(
@@ -53,7 +53,7 @@ router.get(
 	"/expense",
 	//requireAuth.requireAuth,
 	expense_controller.expense_list,
-	pagination.paginatedResults
+	pagination.paginatedResults(Expense)
 );
 //Create new expense
 router.post(
