@@ -7,7 +7,7 @@ const paginatedResults = (model) => {
 		const user_id = req.user._id;
 
 		const results = {};
-
+		/*
 		if (endIndex > (await model.countDocuments().exec())) {
 			results.next = {
 				page: page + 1,
@@ -19,15 +19,16 @@ const paginatedResults = (model) => {
 				page: page - 1,
 				limit: limit,
 			};
-		}
+		}*/
+
 		try {
-			results.results = await model
+			results = await model
 				.find({ user_id })
 				.limit()
 				.sort({ dateCreated: -1 })
 				.skip(startIndex)
 				.exec();
-			res.paginatedResults = json(results);
+			res.status(200).json(results);
 			next();
 		} catch (error) {
 			res.status(500).json({ error: error.message });
