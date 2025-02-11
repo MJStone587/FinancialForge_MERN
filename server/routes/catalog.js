@@ -16,7 +16,7 @@ router.post("/user/create", user_controller.post_new_user);
 router.post("/user/login", user_controller.user_login);
 
 //require auth for all routes below
-//router.use(requireAuth.requireAuth);
+router.use(requireAuth.requireAuth);
 
 //Get all income data
 router.get(
