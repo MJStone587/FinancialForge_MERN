@@ -1,3 +1,6 @@
+const Expense = require("../models/expense");
+const Income = require("../models/income");
+
 const paginatedResults = (model) => {
 	return async (req, res, next) => {
 		const page = parseInt(req.query.page) || 0;
@@ -5,7 +8,6 @@ const paginatedResults = (model) => {
 		const startIndex = (page - 1) * limit;
 		//const endIndex = page * limit;
 		const user_id = req.user._id;
-		console.log(user_id);
 
 		//const results = {};
 		/*

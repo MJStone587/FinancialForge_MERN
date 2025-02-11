@@ -239,9 +239,9 @@ const Receipt = () => {
 									<th>Edit</th>
 									<th>Name</th>
 									<th>Amount</th>
+									<th>Total</th>
 									<th>Date</th>
 									<th>Delete</th>
-									<th>Total insertions</th>
 								</tr>
 							</thead>
 							<tbody>
