@@ -22,7 +22,7 @@ const paginatedResults = (model) => {
 		}*/
 
 		try {
-			results = await model.find({ user_id }).limit(limit).skip(startIndex).exec();
+			const results = await model.find({ user_id }).limit(limit).skip(startIndex).exec();
 			res.status(200).json(results);
 			next();
 		} catch (error) {
