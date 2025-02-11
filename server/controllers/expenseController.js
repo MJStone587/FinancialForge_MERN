@@ -1,38 +1,11 @@
 const Expense = require("../models/expense");
 const mongoose = require("mongoose");
+const paginatedResults = require("../middleware/paginatedResults");
 
-exports.expense_list = async function (req, res) {
-	const user_id = req.user._id;
-	const page = parseInt(req.query.page);
-	const limit = parseInt(req.query.limit);
-
-	const startIndex = (page - 1) * limit;
-	const endIndex = page * limit;
-	/*
-	const pages = {};
-
-	pages.next = {
-		page: page + 1,
-		limit: limit,
-	};
-
-	if (startIndex > 0) {
-		pages.previous = {
-			page: page - 1,
-			limit: limit,
-		};
-	}*/
-	try {
-		const expenseList = await Expense.find({ user_id }).sort({
-			dateCreated: -1,
-		});
-		const results = expenseList.slice(startIndex, endIndex);
-		res.status(200).json(results);
-	} catch (error) {
-		res.status(400).json({ error: error.message });
-	}
+/*exports.expense_list = async function (req, res) {
+	paginatedResults(expenses);
 };
-
+*/
 // Create new Expense
 exports.expense_create = async function (req, res) {
 	const { name, description, dateReceived, total, paymentType, category } = req.body;
