@@ -2,10 +2,22 @@ const Expense = require("../models/expense");
 const mongoose = require("mongoose");
 const paginatedResults = require("../middleware/paginatedResults");
 
-/*exports.expense_list = async function (req, res) {
-	paginatedResults(expenses);
+exports.expense_list = async function (req, res) {
+	/*
+	const user_id = req.user._id;
+
+	try {
+		const expenseList = await Expense.find({ user_id }).sort({
+			dateCreated: -1,
+		});
+
+		res.status(200).json(expenseList);
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
+	*/
 };
-*/
+
 // Create new Expense
 exports.expense_create = async function (req, res) {
 	const { name, description, dateReceived, total, paymentType, category } = req.body;

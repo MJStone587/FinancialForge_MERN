@@ -3,6 +3,8 @@ const express = require("express");
 const expense_controller = require("../controllers/expenseController");
 const income_controller = require("../controllers/incomeController");
 const user_controller = require("../controllers/userController");
+const Expense = require("../models/expense");
+const Income = require("../models/income");
 const requireAuth = require("../middleware/requireAuth");
 const pagination = require("../middleware/paginatedResults");
 
