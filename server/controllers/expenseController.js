@@ -20,7 +20,6 @@ exports.expense_list = async function (req, res) {
 	const startIndex = (page - 1) * limit;
 	const endIndex = page * limit;
 	const user_id = req.user._id;
-	const docTotal = Expense.countDocuments().exec();
 
 	if (endIndex > (await Expense.countDocuments().exec())) {
 		page += 1;
@@ -32,8 +31,11 @@ exports.expense_list = async function (req, res) {
 
 	try {
 		const expenseList = await Expense.find({ user_id }).limit(limit).skip(endIndex).exec();
-		res.status(200).json(expenseList);
-		res.json(docTotal);
+		const docTotal = Expense.countDocuments().exec();
+		res.status(200).json({
+			expenseList: expenseList,
+			docTotal: docTotal,
+		});
 		next();
 	} catch (error) {
 		res.status(500).json({ error: error.message });
