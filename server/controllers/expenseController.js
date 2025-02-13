@@ -16,10 +16,11 @@ exports.expense_list = async function (req, res) {
 		res.status(400).json({ error: error.message });
 	} */
 	const page = parseInt(req.query.page) || 0;
-	const limit = parseInt(req.query.limit) || 10;
+	const limit = parseInt(req.query.limit) || 9;
 	const startIndex = (page - 1) * limit;
 	const endIndex = page * limit;
 	const user_id = req.user._id;
+	const docTotal = Expense.countDocuments().exec();
 
 	if (endIndex > (await Expense.countDocuments().exec())) {
 		page += 1;
@@ -31,7 +32,7 @@ exports.expense_list = async function (req, res) {
 
 	try {
 		const expenseList = await Expense.find({ user_id }).limit(limit).skip(endIndex).exec();
-		res.status(200).json(expenseList);
+		res.status(200).json(expenseList, docTotal);
 		next();
 	} catch (error) {
 		res.status(500).json({ error: error.message });

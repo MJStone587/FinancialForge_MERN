@@ -20,6 +20,7 @@ const Receipt = () => {
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(10);
+	const [docTotal, setDocTotal] = useState();
 	const [modal, setModal] = useState(false);
 	const [description, setDescription] = useState("");
 	const [sortBy, setSortBy] = useState("default");
@@ -49,6 +50,7 @@ const Receipt = () => {
 
 			if (response.ok) {
 				dispatch({ type: "SET_DATA", payload: json });
+				setDocTotal(data.docTotal);
 			} else if (!response.ok) {
 				console.log("Error Fetching Data");
 			}
