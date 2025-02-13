@@ -31,11 +31,7 @@ exports.expense_list = async function (req, res) {
 
 	try {
 		const expenseList = await Expense.find({ user_id }).limit(limit).skip(endIndex).exec();
-		const docTotal = await Expense.countDocuments({ user_id });
-		res.status(200).json({
-			expenseList: expenseList,
-			docTotal: docTotal,
-		});
+		res.status(200).json(expenseList);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
