@@ -21,7 +21,7 @@ exports.expense_list = async function (req, res) {
 	const endIndex = page * limit;
 	const user_id = req.user._id;
 
-	if (endIndex > (await Expense.countDocuments().exec())) {
+	if (endIndex > (await Expense.countDocuments({ user_id }).exec())) {
 		page += 1;
 	}
 
