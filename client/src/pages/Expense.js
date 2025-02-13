@@ -18,7 +18,8 @@ const Receipt = () => {
 	const [_id, set_id] = useState("");
 	const [name, setName] = useState("");
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-	//FOR LOAD MORE LESS BUTTONS
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(10);
 	const [modal, setModal] = useState(false);
 	const [description, setDescription] = useState("");
 	const [sortBy, setSortBy] = useState("default");
@@ -33,15 +34,17 @@ const Receipt = () => {
 
 	//FIX ROUTES TO https://financialforge-mern.onrender.com BEFORE GOING LIVE
 
-	//INITIAL RETRIEVAL OF ALL DATA
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await fetch("https://financialforge-mern.onrender.com/catalog/expense", {
-				headers: {
-					mode: "cors",
-					Authorization: `Bearer ${user.token}`,
-				},
-			});
+			const response = await fetch(
+				`https://financialforge-mern.onrender.com/catalog/expense?${page}&${limit}`,
+				{
+					headers: {
+						mode: "cors",
+						Authorization: `Bearer ${user.token}`,
+					},
+				}
+			);
 			const json = await response.json();
 
 			if (response.ok) {
@@ -55,7 +58,7 @@ const Receipt = () => {
 		} else {
 			fetchData();
 		}
-	}, [dispatch, user, data]);
+	}, [dispatch, user, data, page, limit]);
 
 	const modalOn = () => {
 		setModal(true);

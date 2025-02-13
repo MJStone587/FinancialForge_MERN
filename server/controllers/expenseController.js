@@ -16,7 +16,7 @@ exports.expense_list = async function (req, res) {
 		res.status(400).json({ error: error.message });
 	} */
 	const page = parseInt(req.query.page) || 0;
-	const limit = parseInt(req.query.limit) || 5;
+	const limit = parseInt(req.query.limit) || 10;
 	const startIndex = (page - 1) * limit;
 	const endIndex = page * limit;
 	const user_id = req.user._id;
