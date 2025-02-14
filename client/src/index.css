@@ -373,6 +373,9 @@ select.error {
 	color: red;
 }
 .pagination {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
 	color: white;
 }
 .server-loading {

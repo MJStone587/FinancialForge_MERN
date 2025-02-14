@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { useState } from "react";
 import { useExpDataContext } from "../hooks/useExpDataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -18,9 +18,10 @@ const Receipt = () => {
 	const [_id, set_id] = useState("");
 	const [name, setName] = useState("");
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(10);
-	const [docTotal, setDocTotal] = useState();
+	//const cachedValue = useMemo(pagesDisplay, totalDocs);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState();
 	const [modal, setModal] = useState(false);
 	const [description, setDescription] = useState("");
 	const [sortBy, setSortBy] = useState("default");
@@ -38,7 +39,7 @@ const Receipt = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await fetch(
-				`https://financialforge-mern.onrender.com/catalog/expense?${page}&${limit}`,
+				`https://financialforge-mern.onrender.com/catalog/expense?${currentPage}&${limit}`,
 				{
 					headers: {
 						mode: "cors",
@@ -49,8 +50,8 @@ const Receipt = () => {
 			const json = await response.json();
 
 			if (response.ok) {
-				dispatch({ type: "SET_DATA", payload: json });
-				setDocTotal(data.docTotal);
+				dispatch({ type: "SET_DATA", payload: json.expenseList });
+				setTotalPages(Math.ceil(json.docTotal / limit));
 			} else if (!response.ok) {
 				console.log("Error Fetching Data");
 			}
@@ -60,7 +61,7 @@ const Receipt = () => {
 		} else {
 			fetchData();
 		}
-	}, [dispatch, user, data, page, limit]);
+	}, [dispatch, user, limit, currentPage]);
 
 	const modalOn = () => {
 		setModal(true);
@@ -70,6 +71,7 @@ const Receipt = () => {
 		setModal(false);
 		console.log("Modal Off Clicked, Modal Should Close");
 	};
+
 	//Form Submit Handler
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -120,6 +122,18 @@ const Receipt = () => {
 			dispatch({ type: "CREATE_DATA", payload: json });
 		}
 	};
+
+	const handleNextPage = () => {
+		setCurrentPage((prevPage) => prevPage + 1, totalPages);
+		console.log(currentPage);
+	};
+	const handlePrevPage = () => {
+		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+		console.log(currentPage);
+	};
+	const pagesDisplay = useMemo(() => {
+		return Array.from({ length: totalPages }, (_, index) => index + 1);
+	}, [totalPages]);
 
 	//delete handler
 	const handleDel = async (selectedItem) => {
@@ -314,11 +328,15 @@ const Receipt = () => {
 							</tbody>
 						</table>
 					</div>
-					<div>
-						<div className='pages'>
-							<button>Prev</button>
-							<button>Next</button>
-						</div>
+					<div className='pagination'>
+						<button onClick={handlePrevPage}>Prev</button>
+						{pagesDisplay &&
+							pagesDisplay.map((index) => (
+								<li key={index} onClick={() => setCurrentPage(index)}>
+									{index}
+								</li>
+							))}
+						<button onClick={handleNextPage}>Next</button>
 					</div>
 				</div>
 				<div className='expense-form-container'>
