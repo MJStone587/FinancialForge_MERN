@@ -378,6 +378,9 @@ select.error {
 	justify-content: space-evenly;
 	color: white;
 }
+.pagination li:hover {
+	cursor: pointer;
+}
 .server-loading {
 	font-size: calc(18px + (26 - 18) * ((100vw - 300px) / (1920 - 300)));
 	border: 3px dotted black;

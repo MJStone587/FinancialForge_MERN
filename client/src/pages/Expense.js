@@ -123,6 +123,10 @@ const Receipt = () => {
 		}
 	};
 
+	const clickPage = (selectedPage) => {
+		setCurrentPage(selectedPage);
+		console.log(selectedPage);
+	};
 	const handleNextPage = () => {
 		setCurrentPage((prevPage) => prevPage + 1, totalPages);
 		console.log(currentPage);
@@ -332,7 +336,7 @@ const Receipt = () => {
 						<button onClick={handlePrevPage}>Prev</button>
 						{pagesDisplay &&
 							pagesDisplay.map((index) => (
-								<li key={index} onClick={() => setCurrentPage(index)}>
+								<li key={index} onClick={() => clickPage(index)}>
 									{index}
 								</li>
 							))}
