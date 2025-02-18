@@ -18,7 +18,7 @@ const Receipt = () => {
 	const [_id, set_id] = useState("");
 	const [name, setName] = useState("");
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-	const [limit, setLimit] = useState(10);
+	const [limit, setLimit] = useState(15);
 	//const cachedValue = useMemo(pagesDisplay, totalDocs);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState();
@@ -53,7 +53,7 @@ const Receipt = () => {
 				dispatch({ type: "SET_DATA", payload: json.expenseList });
 				setTotalPages(Math.ceil(json.docTotal / limit));
 			} else if (!response.ok) {
-				console.log("Error Fetching Data");
+				console.log("Error Fetching Data", json.error);
 			}
 		};
 		if (!user) {
@@ -135,6 +135,7 @@ const Receipt = () => {
 		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
 		console.log(currentPage);
 	};
+
 	const pagesDisplay = useMemo(() => {
 		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}, [totalPages]);
