@@ -11,15 +11,12 @@ import Modal from "react-bootstrap/Modal";
 
 const Receipt = () => {
 	const { data, dispatch } = useExpDataContext();
-	// testing
-	//const [userData, setUserData] = useState();
-	//end test line
 	const { user } = useAuthContext();
 	const [_id, set_id] = useState("");
 	const [name, setName] = useState("");
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-	const limit = 15;
-	//const cachedValue = useMemo(pagesDisplay, totalDocs);
+	// docsPerPage to be a useState where I can change display of docs --future update
+	const docsPerPage = 15;
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState();
 	const [modal, setModal] = useState(false);
@@ -34,12 +31,10 @@ const Receipt = () => {
 	const [emptyFields, setEmptyFields] = useState([]);
 	const expenseCardDisplayRef = useRef(null);
 
-	//FIX ROUTES TO https://financialforge-mern.onrender.com BEFORE GOING LIVE
-
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await fetch(
-				`https://financialforge-mern.onrender.com/catalog/expense?${currentPage}&${limit}`,
+				`https://financialforge-mern.onrender.com/catalog/expense?${currentPage}&${docsPerPage}`,
 				{
 					headers: {
 						mode: "cors",
@@ -51,25 +46,23 @@ const Receipt = () => {
 
 			if (response.ok) {
 				dispatch({ type: "SET_DATA", payload: json.expenseList });
-				setTotalPages(Math.ceil(json.docTotal / limit));
+				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
 			} else if (!response.ok) {
 				console.log("Error Fetching Data", json.error);
 			}
 		};
-		if (!user) {
-			console.log("Unauthorized Access! Please login or create an account to continue.");
-		} else {
+		if (user) {
 			fetchData();
+		} else {
+			console.log("Unauthorized Access! Please login or create an account to continue.");
 		}
-	}, [dispatch, user, limit, currentPage]);
+	}, [dispatch, user, currentPage]);
 
 	const modalOn = () => {
 		setModal(true);
-		console.log("Modal On Clicked, Modal Should Open");
 	};
 	const modalOff = () => {
 		setModal(false);
-		console.log("Modal Off Clicked, Modal Should Close");
 	};
 
 	//Form Submit Handler
@@ -125,17 +118,18 @@ const Receipt = () => {
 
 	const clickPage = (selectedPage) => {
 		setCurrentPage(selectedPage);
-		console.log(selectedPage);
 	};
 	const handleNextPage = () => {
-		setCurrentPage((prevPage) => prevPage + 1, totalPages);
-		console.log(currentPage);
+		setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
 	};
 	const handlePrevPage = () => {
 		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-		console.log(currentPage);
 	};
-
+	/*
+	useEffect(() => {
+		console.log(currentPage);
+	}, [currentPage]);
+	*/
 	const pagesDisplay = useMemo(() => {
 		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}, [totalPages]);

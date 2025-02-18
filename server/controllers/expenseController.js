@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 
 exports.expense_list = async function (req, res) {
 	const page = parseInt(req.query.page) || 0;
-	const limit = parseInt(req.query.limit) || 9;
-	const startIndex = (page - 1) * limit;
-	const endIndex = page * limit;
+	const docsPerPage = parseInt(req.query.docsPerPage) || 9;
+	const startIndex = (page - 1) * docsPerPage;
+	const endIndex = page * docsPerPage;
 	const user_id = req.user._id;
 
 	if (endIndex > (await Expense.countDocuments({ user_id }).exec())) {
@@ -18,7 +18,7 @@ exports.expense_list = async function (req, res) {
 
 	try {
 		const expenseList = await Expense.find({ user_id })
-			.limit(limit)
+			.limit(docsPerPage)
 			.skip(endIndex)
 			.sort({
 				dateCreated: "ascending",
