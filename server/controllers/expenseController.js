@@ -21,7 +21,7 @@ exports.expense_list = async function (req, res) {
 			.limit(limit)
 			.skip(endIndex)
 			.sort({
-				dateCreated: -1,
+				dateCreated: "ascending",
 			})
 			.exec();
 		const docTotal = await Expense.countDocuments({ user_id });
