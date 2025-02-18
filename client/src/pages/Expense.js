@@ -18,7 +18,7 @@ const Receipt = () => {
 	const [_id, set_id] = useState("");
 	const [name, setName] = useState("");
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-	const [limit, setLimit] = useState(15);
+	const limit = 15;
 	//const cachedValue = useMemo(pagesDisplay, totalDocs);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState();
