@@ -15,11 +15,11 @@ const Receipt = () => {
 	const [_id, set_id] = useState("");
 	const [name, setName] = useState("");
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-	// docsPerPage to be a useState where I can change display of docs --future update
-	const docsPerPage = 15;
+	const [docsPerPage, setDocsPerPage] = useState(10);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState();
 	const [modal, setModal] = useState(false);
+	const [loading, setLoading] = useState();
 	const [description, setDescription] = useState("");
 	const [sortBy, setSortBy] = useState("default");
 	const [paymentType, setPaymentType] = useState("");
@@ -34,7 +34,7 @@ const Receipt = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await fetch(
-				`https://financialforge-mern.onrender.com/catalog/expense?${currentPage}&${docsPerPage}`,
+				`https://financialforge-mern.onrender.com/catalog/expense?currentPage=${currentPage}&limit=${docsPerPage}`,
 				{
 					headers: {
 						mode: "cors",
@@ -46,17 +46,20 @@ const Receipt = () => {
 
 			if (response.ok) {
 				dispatch({ type: "SET_DATA", payload: json.expenseList });
+				console.log(json.docTotal);
 				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
+				setLoading(false);
 			} else if (!response.ok) {
 				console.log("Error Fetching Data", json.error);
+				setLoading(true);
 			}
 		};
-		if (user) {
-			fetchData();
-		} else {
+		if (!user) {
 			console.log("Unauthorized Access! Please login or create an account to continue.");
+		} else {
+			fetchData();
 		}
-	}, [dispatch, user, currentPage]);
+	}, [dispatch, user, currentPage, docsPerPage]);
 
 	const modalOn = () => {
 		setModal(true);
@@ -125,11 +128,14 @@ const Receipt = () => {
 	const handlePrevPage = () => {
 		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
 	};
-	/*
+
 	useEffect(() => {
-		console.log(currentPage);
-	}, [currentPage]);
-	*/
+		console.log("currentPage: ", currentPage);
+		if (totalPages) {
+			console.log("totalPages: ", totalPages);
+		}
+	}, [currentPage, totalPages]);
+
 	const pagesDisplay = useMemo(() => {
 		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}, [totalPages]);
