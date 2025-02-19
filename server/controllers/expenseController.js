@@ -8,8 +8,6 @@ exports.expense_list = async function (req, res) {
 	const endIndex = page * docsPerPage;
 	const user_id = req.user._id;
 
-	console.log("docsPerPage: ", docsPerPage, "page: ", page);
-
 	if (endIndex > (await Expense.countDocuments({ user_id }).exec())) {
 		page += 1;
 	}

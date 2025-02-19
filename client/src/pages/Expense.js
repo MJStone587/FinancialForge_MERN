@@ -129,13 +129,6 @@ const Receipt = () => {
 		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
 	};
 
-	useEffect(() => {
-		console.log("currentPage: ", currentPage);
-		if (totalPages) {
-			console.log("totalPages: ", totalPages);
-		}
-	}, [currentPage, totalPages]);
-
 	const pagesDisplay = useMemo(() => {
 		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}, [totalPages]);
