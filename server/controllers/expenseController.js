@@ -2,7 +2,7 @@ const Expense = require("../models/expense");
 const mongoose = require("mongoose");
 
 exports.expense_list = async function (req, res) {
-	var page = parseInt(req.query.currentPage + 1) || 0;
+	var page = parseInt(req.query.currentPage - 1) || 0;
 	const docsPerPage = parseInt(req.query.docsPerPage) || 9;
 	const startIndex = (page - 1) * docsPerPage;
 	const endIndex = page * docsPerPage;
