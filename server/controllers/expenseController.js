@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 exports.expense_list = async function (req, res) {
 	const page = parseInt(req.query.currentPage) || 0;
-	const docsPerPage = parseInt(req.query.docsPerPage) || 5;
+	const docsPerPage = req.query.docsPerPage || 9;
 	const startIndex = (page - 1) * docsPerPage;
 	const endIndex = page * docsPerPage;
 	const user_id = req.user._id;
