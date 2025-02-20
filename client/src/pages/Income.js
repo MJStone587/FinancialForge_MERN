@@ -176,18 +176,12 @@ function Income() {
 	};
 
 	return (
-		<section className='income-container'>
-			<div className='income-display'>
-				<div className='income-list'>
-					<h2 className='income-list-title'>Income List</h2>
-					<div className='income-sort-container'>
-						<p>Sort:</p>
-						<Button bsPrefix='sortBtn sortTotal' onClick={() => setSortBy("total")}>
-							Total
-						</Button>
-						<Button bsPrefix='sortBtn sortDate' onClick={() => setSortBy("default")}>
-							Date
-						</Button>
+		<section className='financial-display-container'>
+			<div className='finance-display'>
+				<div className='finance-table-header'>
+					<h2 id='income-table-title'>Income List</h2>
+					<div className='finance-displayPerPage-container'>
+						<p>Per Page:</p>
 					</div>
 					{isLoading ? (
 						<span className='material-symbols-outlined server-loading'>pending</span>

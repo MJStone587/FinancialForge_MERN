@@ -20,10 +20,12 @@ body {
 	width: 100%;
 }
 main {
+	display: grid;
+	grid-template-rows: [row1] 8% [row2] 92%;
 	height: 100%;
 	width: 100%;
-	display: flex;
-	flex-flow: column nowrap;
+	background-color: rgb(33, 37, 41);
+	overflow: hidden;
 }
 .navbar {
 	flex: 1;
@@ -78,16 +80,16 @@ main {
 }
 section {
 	display: flex;
-	flex-flow: column nowrap;
+	flex-flow: row nowrap;
+	height: 100%;
+}
+.home {
+	display: flex;
+	height: 100%;
+	width: 100%;
 	justify-content: center;
 	align-items: center;
-	flex: 9;
-	background-color: rgb(33, 37, 41);
 	padding: 0 12rem;
-}
-.home-container-empty {
-	flex: 1;
-	background-color: var(--gray-color-);
 }
 .home-container-intro {
 	display: flex;
@@ -139,25 +141,31 @@ section {
 	color: var(--dkBlue-color-);
 	border: 1px solid var(--dkBlue-color-);
 }
-.income-form-container,
-.expense-form-container {
+.finance-display-left {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	flex: 4;
+	padding: 15px 10px;
+}
+.finance-display-right {
 	display: flex;
 	flex-flow: column nowrap;
 	flex: 1;
 	align-items: center;
-	margin: 2px;
-	padding: 10px 0px;
+	padding: 0 1rem;
 }
 .income-form-container {
 	border-left: 1px solid var(--gold-color);
 	border-right: 1px solid var(--gold-color);
 }
-.expense-form-container {
+.finance-display-right {
 	border-left: 1px solid var(--ltBlue-color-);
 	border-right: 1px solid var(--ltBlue-color-);
 }
 .income-form,
-.expense-form {
+#expense-form {
 	display: flex;
 	flex-flow: column nowrap;
 	row-gap: 10px;
@@ -179,41 +187,20 @@ input.error {
 select.error {
 	border: 1px solid var(--error-color-);
 }
-.expense-container,
-.income-container {
-	margin: 0;
-	padding: 0rem 0rem;
-}
-.expense-display,
-.income-display {
+.finance-display {
 	display: flex;
-	justify-content: center;
 	flex-flow: row nowrap;
-	flex: 2;
 	width: 100%;
+	height: 100%;
 }
-.income-header,
-.expense-header {
-	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
+.finance-display-heading {
+	font-size: 2rem;
 	flex: 1;
-	padding: 2px 0px;
-	justify-content: center;
-	max-width: 100%;
 }
-.income-header h1,
-.expense-header h1 {
-	font-size: 30px;
-}
-.income-header p,
-.expense-header p {
-	font-size: 14px;
-}
-.income-header h1 {
+#income-table-title h1 {
 	color: var(--gold-color);
 }
-.expense-header h1 {
+#expense-table-title h1 {
 	color: var(--ltBlue-color-);
 }
 #income-create-new {
@@ -226,23 +213,11 @@ select.error {
 .home-nav a {
 	background-color: var(--button-blue-);
 }
-.income-list,
-.expense-list {
-	display: flex;
-	flex-flow: column nowrap;
-	align-items: center;
-	flex: 2;
-	margin: 5px;
-	padding: 10px 0px;
+.finance-list button:hover {
+	background-color: var(--ltBlue-color-);
 }
-.income-list button,
-.expense-list button {
-	width: 50%;
-}
-.income-list-title,
-.expense-list-title {
+.finance-display-heading h2 {
 	display: flex;
-	color: var(--ltBlue-color-);
 	text-shadow: 1px 1px 1px black;
 	text-decoration: underline;
 }
@@ -251,26 +226,23 @@ select.error {
 	text-decoration: none;
 	border: 3px dotted var(--ltBlue-color-);
 }
-#expense-card-display,
-#income-card-display {
+.finance-table-container {
 	display: block;
 	background-color: white;
 	border-color: black;
 	color: black;
 	width: 85%;
-	height: 40rem; /* Ensure a fixed height for testing */
-	overflow-x: auto; /* Ensure overflow is visible */
-	/*border: 2px solid red;*/ /* Debugging border */
+	overflow-x: auto;
 }
-#expense-card-display table {
+.finance-table-container table {
 	width: 100%;
-	height: 40rem;
+	height: 50rem;
 	overflow-x: auto;
 	border-collapse: collapse; /* Ensure borders are collapsed */
 }
 
-#expense-card-display th,
-#expense-card-display td {
+.finance-table-container td,
+th {
 	border: 1px solid black; /* Apply border to table headers and cells */
 	padding: 8px; /* Add padding for better readability */
 	text-align: left; /* Align text to the left */
@@ -281,15 +253,15 @@ select.error {
 	color: var(--ltBlue-color-);
 	border: 1.5px solid var(--ltBlue-color-);
 }
-#expense-card-display thead {
+.finance-table-container thead {
 	background-color: #f2f2f2; /* Add background color to table header */
 }
 
-#expense-card-display tbody tr:nth-child(even) {
+.finance-table-container tbody tr:nth-child(even) {
 	background-color: #d9d9d9; /* Add background color to even rows */
 }
 .income-description,
-.expense-description {
+#expense-description {
 	font-style: italic;
 	text-align: center;
 	margin-bottom: 3px;
@@ -298,69 +270,18 @@ select.error {
 	cursor: pointer;
 	background-color: var(--ltBlue-color-);
 }
-.income-title,
-.expense-title {
-	align-self: center;
-	font-size: 20px;
-	margin-bottom: 2px;
-	color: var(--gold-color);
-}
-.expense-title {
-	color: var(--ltBlue-color-);
-	text-decoration: underline;
-}
-.expense-title:hover {
-	text-shadow: 0px 0px 1px black;
-}
-.income-title:hover {
+#income-table-title:hover {
 	cursor: pointer;
 }
-.expense-title:hover {
-	cursor: pointer;
-}
-.expense-total {
-	margin-bottom: 2px;
-}
-.expense-sort-container,
-.income-sort-container {
+
+.finance-displayPerPage-container {
 	display: flex;
 	flex-flow: row nowrap;
 	align-self: center;
+	flex: 1;
 	justify-content: space-evenly;
 }
-.expense-sort-container td {
-	color: white;
-}
-.expense-sort-container p,
-.income-sort-container p {
-	font-size: 16px;
-}
-.expense-table {
-	width: 100%;
-	flex: 4;
-}
-.sortBtn {
-	background-color: var(--charcoal-bg-);
-	border-radius: 10px;
-	margin: 2px;
-	border: 1px solid transparent;
-}
-.income-sort-container .sortBtn {
-	color: var(--gold-color);
-}
-.expense-sort-container .sortBtn {
-	color: var(--ltBlue-color-);
-}
-.expense-sort-container .sortBtn:hover {
-	border: 1px solid var(--ltBlue-color-);
-	cursor: pointer;
-	color: white;
-}
-.income-sort-container .sortBtn:hover {
-	border: 1px solid var(--gold-color);
-	cursor: pointer;
-	color: white;
-}
+
 .materials-symbols-outlined {
 	text-align: center;
 }
@@ -508,11 +429,11 @@ select.error {
 .signup-empty {
 	flex: 1;
 }
-.summary-container {
+#summary-container {
 	display: flex;
 	flex-flow: column nowrap;
 }
-.summary-title {
+#summary-title {
 	align-self: center;
 }
 .income-table-title {
@@ -527,19 +448,11 @@ select.error {
 .income-table-total-container strong {
 	color: var(--gold-color);
 }
-.expense-table-title {
+#expense-table-title {
 	color: var(--ltBlue-color-);
 }
-.expense-table-total-container {
-	display: flex;
-	justify-content: flex-end;
-	border-top: 2px solid rgb(214, 214, 214);
-	margin-bottom: 50px;
-}
-.expense-table-total-container strong {
-	color: var(--ltBlue-color-);
-}
-.balance-container {
+
+#balance-container {
 	align-self: flex-start;
 }
 .input-group-text {
@@ -561,6 +474,9 @@ select.error {
 	color: rgb(0, 0, 0, 0.4);
 }
 @media screen and (min-width: 300px) and (max-width: 766px) and (orientation: portrait) {
+	main {
+		overflow: auto;
+	}
 	section {
 		padding: 0 0rem;
 	}
@@ -570,7 +486,7 @@ select.error {
 	.home-container-intro p {
 		font-size: 1.2rem;
 	}
-	.header-container {
+	#header-container {
 		padding: 0px 25px;
 		height: 12%;
 	}
@@ -583,23 +499,20 @@ select.error {
 	table {
 		width: 100%;
 	}
-	.income-display,
-	.expense-display {
+	.finance-display {
 		flex-flow: column nowrap;
 	}
-	.income-list,
-	.expense-list {
+	.finance-table-header {
 		order: 2;
 		margin: 0px 0px 5px 0px;
 		width: 100%;
 	}
-	.income-form-container,
-	.expense-form-container {
+	.finance-display-right {
 		order: 1;
 		width: 100%;
 	}
 	.income-form,
-	.expense-form {
+	#expense-form {
 		display: flex;
 		flex-flow: column nowrap;
 		row-gap: 10px;
@@ -624,16 +537,9 @@ select.error {
 	.signup-form input {
 		height: 35px;
 	}
-	.income-card,
-	.expense-card {
-		width: 90%;
-	}
+
 	.income-title,
-	.expense-title {
-		margin-bottom: 0px;
-	}
-	.income-amt,
-	.expense-total {
+	#expense-title {
 		margin-bottom: 0px;
 	}
 	.signup-card {
@@ -656,6 +562,9 @@ select.error {
 	}
 }
 @media screen and (min-width: 767px) and (max-width: 1024px) {
+	main {
+		overflow: auto;
+	}
 	section {
 		padding: 0rem 0rem;
 	}

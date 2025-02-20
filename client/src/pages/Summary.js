@@ -55,12 +55,12 @@ function Summary() {
 	}, [income, expense, balance]);
 
 	return (
-		<section className='summary-container'>
-			<div className='summary-title'>
+		<section id='summary-container'>
+			<div id='summary-title'>
 				<h1>Summary</h1>
 				<p>Review all financial records</p>
 			</div>
-			<div className='income-table-container'>
+			<div id='income-table-container'>
 				<h2 className='income-table-title'>Income</h2>
 				<Table striped='false' bordered hover responsive='md'>
 					<thead>
@@ -82,13 +82,13 @@ function Summary() {
 					</tbody>
 				</Table>
 			</div>
-			<div className='income-table-total-container'>
+			<div id='income-table-total-container'>
 				<h3>
 					<strong>Total: </strong>${incGrandTotal}
 				</h3>
 			</div>
-			<div className='expense-table-container'>
-				<h2 className='expense-table-title'>Expenses</h2>
+			<div id='expense-table-container'>
+				<h2 id='expense-table-title'>Expenses</h2>
 				<Table striped='false' bordered hover responsive='md' size='sm'>
 					<thead>
 						<tr>
@@ -116,8 +116,8 @@ function Summary() {
 					<strong>Total: </strong>${expGrandTotal}
 				</h3>
 			</div>
-			<div className='balance-container'>
-				<h2 className='balance'>Balance: ${balance}</h2>
+			<div id='balance-container'>
+				<h2 id='balance'>Balance: ${balance}</h2>
 			</div>
 		</section>
 	);

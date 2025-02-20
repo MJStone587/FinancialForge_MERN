@@ -29,7 +29,6 @@ function App() {
 		>
 			<BrowserRouter>
 				<Header toggleNav={toggleNav} />
-				<div className='pages'></div>
 				<Routes>
 					<Route path='/' element={<Home />} />
 					<Route path='/income' element={user ? <Income /> : <Navigate to='/login' />} />

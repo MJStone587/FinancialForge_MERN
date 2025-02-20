@@ -6,7 +6,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import { parseISO } from "date-fns";
 import Modal from "react-bootstrap/Modal";
 
 const Receipt = () => {
@@ -21,7 +20,6 @@ const Receipt = () => {
 	const [modal, setModal] = useState(false);
 	const [loading, setLoading] = useState();
 	const [description, setDescription] = useState("");
-	const [sortBy, setSortBy] = useState("default");
 	const [paymentType, setPaymentType] = useState("");
 	const [total, setTotal] = useState("");
 	const [category, setCategory] = useState("");
@@ -29,12 +27,13 @@ const Receipt = () => {
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState("");
 	const [emptyFields, setEmptyFields] = useState([]);
-	const expenseCardDisplayRef = useRef(null);
+	const expenseTableDisplayRef = useRef(null);
+	const selectedPageRef = useRef(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await fetch(
-				`https://financialforge-mern.onrender.com/catalog/expense?currentPage=${currentPage}&limit=${docsPerPage}`,
+				`https://financialforge-mern.onrender.com/catalog/expense?currentPage=${currentPage}&docsPerPage=${docsPerPage}`,
 				{
 					headers: {
 						mode: "cors",
@@ -46,7 +45,6 @@ const Receipt = () => {
 
 			if (response.ok) {
 				dispatch({ type: "SET_DATA", payload: json.expenseList });
-				console.log(json.docTotal);
 				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
 				setLoading(false);
 			} else if (!response.ok) {
@@ -119,8 +117,12 @@ const Receipt = () => {
 		}
 	};
 
+	const handleDocsPerPage = (e) => {
+		setDocsPerPage(e.target.value);
+	};
 	const clickPage = (selectedPage) => {
 		setCurrentPage(selectedPage);
+		// selected page color change to blue previous page back to white
 	};
 	const handleNextPage = () => {
 		setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -234,23 +236,23 @@ const Receipt = () => {
 	};
 
 	return (
-		<section className='expense-container'>
-			<div className='expense-display'>
-				<div className='expense-list'>
-					<div id='expense-title-container'>
-						<h2 className='expense-list-title'>Expense List</h2>
+		<section>
+			<div className='finance-display'>
+				<div className='finance-display-left'>
+					<div className='finance-display-heading'>
+						<h2 id='expense-table-title'>Expense List</h2>
 					</div>
-					<div className='expense-sort-container'>
-						{/*<p>Sort:</p>*/}
-						<button className='sortBtn sortTotal' onClick={() => setSortBy("total")}>
-							Total
-						</button>
-						<button className='sortBtn sortDate' onClick={() => setSortBy("default")}>
-							Date
-						</button>
+					<div className='finance-displayPerPage-container'>
+						<p>Display Per Page:</p>
+						<Form.Select size='sm' onChange={handleDocsPerPage}>
+							<option value='10'>Default(10)</option>
+							<option value='3'>3</option>
+							<option value='5'>5</option>
+							<option value='15'>15</option>
+						</Form.Select>
 					</div>
-					<div id='expense-card-display' ref={expenseCardDisplayRef}>
-						<table>
+					<div className='finance-table-container' ref={expenseTableDisplayRef}>
+						<table className='finance-table'>
 							<thead>
 								<tr id='heading-columns'>
 									<th>Edit</th>
@@ -262,67 +264,61 @@ const Receipt = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{sortBy === "default" &&
-									data &&
-									data
-										.sort((a, b) => parseISO(a.dateCreated) - parseISO(b.dateCreated))
-										.map((item) => (
-											<tr key={item._id}>
-												<td className='edit-td'>
-													<span
-														className='material-symbols-outlined'
-														onClick={() => handleUpdate(item)}
-													>
-														Edit
-													</span>
-												</td>
-												<td className='name-td modalOpen' onClick={modalOn}>
-													{item.name}
-												</td>
-												<td>{item.length}</td>
-												<Modal
-													show={modal}
-													backdrop='true'
-													animation='true'
-													onHide={modalOff}
-													size='lg'
-													centered
-													keyboard='true'
+								{data &&
+									data.map((item) => (
+										<tr key={item._id}>
+											<td className='edit-td'>
+												<span
+													className='material-symbols-outlined'
+													onClick={() => handleUpdate(item)}
 												>
-													<Modal.Header closeButton>
-														<Modal.Title id='modal-content-header'>{item.name}</Modal.Title>
-													</Modal.Header>
-													<Modal.Body>
-														<p>
-															<strong>Date Received: </strong>
-															{item.dateReceived.split("T")[0]}
-														</p>
-														<p>
-															<strong>Category: </strong>
-															{item.category}
-														</p>
-														<p>
-															<strong>Payment Type: </strong>
-															{item.paymentType}
-														</p>
-														<p>
-															<strong>Total: </strong>${item.total}
-														</p>
-													</Modal.Body>
-													<Modal.Footer>{item.description}</Modal.Footer>
-												</Modal>
-												<td>$ {item.total}</td>
-												<td>{item.date_received_med}</td>
-												<td className='delete-td'>
-													<span
-														onClick={() => handleDel(item)}
-														className='material-symbols-outlined'
-													>
-														Delete
-													</span>
-												</td>
-											</tr>
-										))}
+													Edit
+												</span>
+											</td>
+											<td className='name-td modalOpen' onClick={modalOn}>
+												{item.name}
+											</td>
+											<td>{item.length}</td>
+											<Modal
+												show={modal}
+												backdrop='true'
+												animation='true'
+												onHide={modalOff}
+												size='lg'
+												centered
+												keyboard='true'
+											>
+												<Modal.Header closeButton>
+													<Modal.Title id='modal-content-header'>{item.name}</Modal.Title>
+												</Modal.Header>
+												<Modal.Body>
+													<p>
+														<strong>Date Received: </strong>
+														{item.dateReceived.split("T")[0]}
+													</p>
+													<p>
+														<strong>Category: </strong>
+														{item.category}
+													</p>
+													<p>
+														<strong>Payment Type: </strong>
+														{item.paymentType}
+													</p>
+													<p>
+														<strong>Total: </strong>${item.total}
+													</p>
+												</Modal.Body>
+												<Modal.Footer>{item.description}</Modal.Footer>
+											</Modal>
+											<td>$ {item.total}</td>
+											<td>{item.date_received_med}</td>
+											<td className='delete-td'>
+												<span onClick={() => handleDel(item)} className='material-symbols-outlined'>
+													Delete
+												</span>
+											</td>
+										</tr>
+									))}
 							</tbody>
 						</table>
 					</div>
@@ -330,18 +326,23 @@ const Receipt = () => {
 						<button onClick={handlePrevPage}>Prev</button>
 						{pagesDisplay &&
 							pagesDisplay.map((index) => (
-								<li key={index} onClick={() => clickPage(index)}>
+								<li
+									className='pageNumber'
+									ref={selectedPageRef}
+									key={index}
+									onClick={() => clickPage(index)}
+								>
 									{index}
 								</li>
 							))}
 						<button onClick={handleNextPage}>Next</button>
 					</div>
 				</div>
-				<div className='expense-form-container'>
-					<div className='expense-form-header'>
+				<aside className='finance-display-right'>
+					<div className='finance-form-header'>
 						<h2>+ Create New Expense</h2>
 					</div>
-					<Form className='expense-form'>
+					<Form id='expense-form'>
 						<FloatingLabel label='Name'>
 							<Form.Control
 								type='text'
@@ -434,7 +435,7 @@ const Receipt = () => {
 						{error && <p className='error-message'>{error}</p>}
 						{success && <p className='success-message'>{success}</p>}
 					</Form>
-				</div>
+				</aside>
 			</div>
 		</section>
 	);
