@@ -19,7 +19,7 @@ exports.get_all_income = async function (req, res) {
 	try {
 		const incomeList = await Income.find({ user_id })
 			.sort({
-				dateCreated: "descending",
+				dateCreated: "ascending",
 			})
 			.limit(docsPerPage)
 			.skip(endIndex)
