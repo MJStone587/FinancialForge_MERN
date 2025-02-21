@@ -2,13 +2,16 @@ const Income = require("../models/income");
 const mongoose = require("mongoose");
 
 exports.get_all_income_paginated = async function (req, res) {
-	var page = parseInt(req.query.currentPage - 1) || 1;
-	const docsPerPage =
-		parseInt(req.query.docsPerPage) || (await Income.countDocuments({ user_id }).exec());
+	var page = parseInt(req.query.currentPage - 1);
+	var docsPerPage = parseInt(req.query.docsPerPage);
 	const startIndex = (page - 1) * docsPerPage;
-	const endIndex = page * docsPerPage;
+	var endIndex = page * docsPerPage;
 	const user_id = req.user._id;
 
+	if (!page || !docsPerPage) {
+		endIndex = await Income.countDocuments({ user_id }).exec();
+		docsPerPage = await Income.countDocuments({ user_id }).exec();
+	}
 	if (endIndex > (await Income.countDocuments({ user_id }).exec())) {
 		page += 1;
 	}
