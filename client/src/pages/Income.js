@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useIncDataContext } from "../hooks/useIncDataContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import IncomeDetails from "../components/IncomeDetails";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import { parseISO } from "date-fns";
+import Modal from "react-bootstrap/Modal";
 
 function Income() {
 	const { data, dispatch } = useIncDataContext();
 	const { user } = useAuthContext();
-	const [incDisp, setIncDisp] = useState(5);
 	const [incID, setIncID] = useState("");
 	const [name, setName] = useState("");
-	const [updated, setUpdated] = useState(false);
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-	const [sortBy, setSortBy] = useState("default");
+	const [docsPerPage, setDocsPerPage] = useState(10);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState();
+	const [modal, setModal] = useState(false);
 	const [description, setDescription] = useState("");
 	const [category, setCategory] = useState("");
 	const [total, setTotal] = useState("");
@@ -24,27 +24,31 @@ function Income() {
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState("");
 	const [emptyFields, setEmptyFields] = useState([]);
-	const [isMoreCompleted, setIsMoreCompleted] = useState(false);
-	const [isLessCompleted, setIsLessCompleted] = useState(false);
+	const incomeTableDisplayRef = useRef(null);
+	const selectedPageRef = useRef(null);
 
 	//LIVE ROUTE https://financialforge-mern.onrender.com
 	//initial request to server to receive all income data
 	useEffect(() => {
 		const fetchIncome = async () => {
-			const response = await fetch("https://financialforge-mern.onrender.com/catalog/income", {
-				headers: { Authorization: `Bearer ${user.token}` },
-			});
+			const response = await fetch(
+				`https://financialforge-mern.onrender.com/catalog/income?currentPage${currentPage}&docsPerPage${docsPerPage}`,
+				{
+					headers: { Authorization: `Bearer ${user.token}` },
+				}
+			);
 			const json = await response.json();
 
 			if (response.ok) {
-				dispatch({ type: "SET_DATA", payload: json });
+				dispatch({ type: "SET_DATA", payload: json.incomeList });
+				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
 				setIsLoading(false);
 			}
 		};
 		if (user) {
 			fetchIncome();
 		}
-	}, [dispatch, user]);
+	}, [dispatch, user, currentPage, docsPerPage]);
 
 	//form submission handler
 	const submitHandler = async (e) => {
@@ -90,19 +94,33 @@ function Income() {
 		}
 	};
 
-	// update button handler
+	//update handler
+	const handleUpdate = (selectedItem) => {
+		setName(selectedItem.name);
+		setCategory(selectedItem.category);
+		setDate(selectedItem.dateReceived.split("T")[0]);
+		setDescription(selectedItem.description);
+		setTotal(selectedItem.total);
+		setIncID(selectedItem._id);
+		setShowUpdateBtn(true);
+	};
+	//FORM UPDATE HANDLER
 	const updateHandler = async (e) => {
 		e.preventDefault();
-		// create income object from input fields
+		// income object from input data
+		if (!user) {
+			setError("Unauthorized Access! Please login or create an account to continue.");
+			return;
+		}
 		const income = {
 			name,
 			description,
-			category,
-			total,
 			dateReceived,
+			total,
+			category,
 		};
 
-		// create post request to server for specific income id
+		// put request to server to update single income document
 		const response = await fetch(
 			"https://financialforge-mern.onrender.com/catalog/income/" + incID,
 			{
@@ -114,53 +132,54 @@ function Income() {
 				},
 			}
 		);
+
 		const json = await response.json();
-		// handle errors and success
+		// handle error and success
 		if (!response.ok) {
 			setError(json.error);
 			setSuccess("");
-		} else if (response.ok) {
+		} else {
 			setName("");
 			setDescription("");
 			setTotal("");
-			setCategory("");
 			setDate("");
+			setCategory("");
 			setError(null);
-			setSuccess("Success: Income has been updated!");
-			setUpdated(true);
+			setEmptyFields([]);
 			setShowUpdateBtn(false);
+			setSuccess("Success: Income has been updated!");
+		}
+	};
+	//delete handler
+	const handleDel = async (selectedItem) => {
+		// check if user is logged in
+		if (!user) {
+			setError("Unauthorized Access! Please login or create an account to continue.");
+			return;
+		}
+		//fetch request to server
+		const response = await fetch(
+			"https://financialforge-mern.onrender.com/catalog/income/" + selectedItem._id,
+			{
+				mode: "cors",
+				method: "DELETE",
+				headers: { Authorization: `Bearer ${user.token}` },
+			}
+		);
+		const json = await response.json();
+
+		if (response.ok) {
+			dispatch({ type: "DELETE_DATA", payload: json });
+		} else {
+			console.log("The response failed");
 		}
 	};
 
-	// function to display a Show More or Show Less button
-	useEffect(() => {
-		// check for data loaded before proceeding
-		if (data) {
-			if (incDisp <= 5) {
-				setIsLessCompleted(true);
-			} else if (incDisp >= 8) {
-				setIsLessCompleted(false);
-			}
-			if (incDisp >= data.length) {
-				setIsMoreCompleted(true);
-			} else if (incDisp < data.length) {
-				setIsMoreCompleted(false);
-			}
-		}
-	}, [data, incDisp]);
-
-	//load more button function
-	const loadMore = () => {
-		if (incDisp < data.length && incDisp >= 5) {
-			setIncDisp(incDisp + 3);
-		}
+	const modalOn = () => {
+		setModal(true);
 	};
-
-	// load less button function
-	const loadLess = () => {
-		if (incDisp >= 8) {
-			setIncDisp(incDisp - 3);
-		}
+	const modalOff = () => {
+		setModal(false);
 	};
 
 	const clearBtn = (e) => {
@@ -174,106 +193,125 @@ function Income() {
 		setError(null);
 		setSuccess(null);
 	};
+	const handleDocsPerPage = (e) => {
+		setDocsPerPage(e.target.value);
+	};
+	const clickPage = (selectedPage) => {
+		setCurrentPage(selectedPage);
+		// selected page color change to blue previous page back to white
+	};
+	const handleNextPage = () => {
+		setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+	};
+	const handlePrevPage = () => {
+		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+	};
+
+	const pagesDisplay = useMemo(() => {
+		return Array.from({ length: totalPages }, (_, index) => index + 1);
+	}, [totalPages]);
 
 	return (
-		<section className='financial-display-container'>
+		<section>
 			<div className='finance-display'>
-				<div className='finance-table-header'>
-					<h2 id='income-table-title'>Income List</h2>
-					<div className='finance-displayPerPage-container'>
-						<p>Per Page:</p>
+				<div className='finance-display-left'>
+					<div className='finance-display-heading'>
+						<h2 id='income-table-title'>Income List</h2>
+						<div className='finance-displayPerPage-container'>
+							<p>Display Per Page:</p>
+							<Form.Select size='sm' onChange={handleDocsPerPage}>
+								<option value='10'>Default(10)</option>
+								<option value='3'>3</option>
+								<option value='5'>5</option>
+								<option value='15'>15</option>
+							</Form.Select>
+						</div>
 					</div>
-					{isLoading ? (
-						<span className='material-symbols-outlined server-loading'>pending</span>
-					) : (
-						""
-					)}
-					{sortBy === "default" &&
-						data &&
-						data
-							.sort((a, b) => parseISO(b.dateCreated) - parseISO(a.dateCreated))
-							.slice(0, incDisp)
-							.map((income, dex) => (
-								<IncomeDetails
-									key={dex}
-									name={income.name}
-									id={income._id}
-									dateReceived={income.dateReceived}
-									dateReceivedF={income.date_received_med}
-									category={income.category}
-									description={income.description}
-									dateCreated={income.dateCreated}
-									dateCreatedF={income.date_created_med}
-									total={income.total}
-									setIncID={setIncID}
-									updated={updated}
-									setUpdated={setUpdated}
-									setShowUpdateBtn={setShowUpdateBtn}
-									setName={setName}
-									setTotal={setTotal}
-									setError={setError}
-									setDescription={setDescription}
-									setCategory={setCategory}
-									setDate={setDate}
-								/>
+					<div className='finance-table-container' ref={incomeTableDisplayRef}>
+						<table className='finance-table'>
+							<thead>
+								<tr id='heading-columns'>
+									<th>Edit</th>
+									<th>Name</th>
+									<th>Amount</th>
+									<th>Total</th>
+									<th>Date</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								{data &&
+									data.map((item) => (
+										<tr key={item._id}>
+											<td className='edit-td'>
+												<span
+													className='material-symbols-outlined'
+													onClick={() => handleUpdate(item)}
+												>
+													Edit
+												</span>
+											</td>
+											<td className='name-td modalOpen' onClick={modalOn}>
+												{item.name}
+											</td>
+											<td>{item.length}</td>
+											<Modal
+												show={modal}
+												backdrop='true'
+												animation='true'
+												onHide={modalOff}
+												size='lg'
+												centered
+												keyboard='true'
+											>
+												<Modal.Header closeButton>
+													<Modal.Title id='modal-content-header'>{item.name}</Modal.Title>
+												</Modal.Header>
+												<Modal.Body>
+													<p>
+														<strong>Date Received: </strong>
+														{item.dateReceived.split("T")[0]}
+													</p>
+													<p>
+														<strong>Category: </strong>
+														{item.category}
+													</p>
+													<p>
+														<strong>Total: </strong>${item.total}
+													</p>
+												</Modal.Body>
+												<Modal.Footer>{item.description}</Modal.Footer>
+											</Modal>
+											<td>$ {item.total}</td>
+											<td>{item.date_received_med}</td>
+											<td className='delete-td'>
+												<span onClick={() => handleDel(item)} className='material-symbols-outlined'>
+													Delete
+												</span>
+											</td>
+										</tr>
+									))}
+							</tbody>
+						</table>
+					</div>
+					<div className='pagination'>
+						<button onClick={handlePrevPage}>Prev</button>
+						{pagesDisplay &&
+							pagesDisplay.map((index) => (
+								<li
+									className='pageNumber'
+									ref={selectedPageRef}
+									key={index}
+									onClick={() => clickPage(index)}
+								>
+									{index}
+								</li>
 							))}
-					{sortBy === "total" &&
-						data &&
-						data
-							.sort((a, b) => a.total - b.total)
-							.slice(0, incDisp)
-							.map((income) => (
-								<IncomeDetails
-									key={income._id}
-									name={income.name}
-									id={income._id}
-									dateReceived={income.dateReceived}
-									dateReceivedF={income.date_received_med}
-									category={income.category}
-									description={income.description}
-									dateCreated={income.dateCreated}
-									dateCreatedF={income.date_created_med}
-									updated={updated}
-									setUpdated={setUpdated}
-									setShowUpdateBtn={setShowUpdateBtn}
-									total={income.total}
-									setIncID={setIncID}
-									setName={setName}
-									setTotal={setTotal}
-									setDescription={setDescription}
-									setCategory={setCategory}
-									setDate={setDate}
-								/>
-							))}
-					{isMoreCompleted ? (
-						<Button
-							onClick={loadMore}
-							type='button'
-							variant='outline-info'
-							bsPrefix='disabled'
-							disabled
-						></Button>
-					) : (
-						<Button onClick={loadMore} variant='outline-info' type='button'>
-							+ Load More +
-						</Button>
-					)}
-					{isLessCompleted ? (
-						<Button
-							onClick={loadLess}
-							type='button'
-							variant='outline-info'
-							bsPrefix='disabled'
-							disabled
-						></Button>
-					) : (
-						<Button onClick={loadLess} variant='outline-info' type='button'>
-							- Load Less -
-						</Button>
-					)}
+						<button onClick={handleNextPage}>Next</button>
+					</div>
 				</div>
-				<aside className='income-form-container'>
-					<div className='income-form-header'>
+				<aside className='finance-display-right'>
+					<div className='finance-form-header'>
 						<h2>+ Create New Income</h2>
 					</div>
 					<Form className='income-form'>
