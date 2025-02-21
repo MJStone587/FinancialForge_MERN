@@ -18,6 +18,7 @@ const Receipt = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState();
 	const [modal, setModal] = useState(false);
+	const [updated, setUpdated] = useState(false);
 	const [loading, setLoading] = useState();
 	const [description, setDescription] = useState("");
 	const [paymentType, setPaymentType] = useState("");
@@ -36,7 +37,6 @@ const Receipt = () => {
 				`https://financialforge-mern.onrender.com/catalog/expense?currentPage=${currentPage}&docsPerPage=${docsPerPage}`,
 				{
 					headers: {
-						mode: "cors",
 						Authorization: `Bearer ${user.token}`,
 					},
 				}
@@ -47,6 +47,7 @@ const Receipt = () => {
 				dispatch({ type: "SET_DATA", payload: json.expenseList });
 				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
 				setLoading(false);
+				setUpdated(false);
 			} else if (!response.ok) {
 				console.log("Error Fetching Data", json.error);
 				setLoading(true);
@@ -57,7 +58,7 @@ const Receipt = () => {
 		} else {
 			fetchData();
 		}
-	}, [dispatch, user, currentPage, docsPerPage]);
+	}, [dispatch, user, currentPage, docsPerPage, updated]);
 
 	const modalOn = () => {
 		setModal(true);
@@ -217,6 +218,7 @@ const Receipt = () => {
 			setError(null);
 			setEmptyFields([]);
 			setShowUpdateBtn(false);
+			setUpdated(true);
 			setSuccess("Success: Expense has been updated!");
 		}
 	};

@@ -12,6 +12,8 @@ function Income() {
 	const [incID, setIncID] = useState("");
 	const [name, setName] = useState("");
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
+	const [newInc, setNewInc] = useState();
+	const [updated, setUpdated] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [docsPerPage, setDocsPerPage] = useState(10);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -41,12 +43,19 @@ function Income() {
 				dispatch({ type: "SET_DATA", payload: json.incomeList });
 				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
 				setIsLoading(false);
+				setUpdated(false);
+				setNewInc(false);
+			} else if (!response.ok) {
+				console.log("Error Fetching Data", json.error);
+				setIsLoading(true);
 			}
 		};
-		if (user) {
+		if (!user) {
+			console.log("Unauthorized Access! Please login or create an account to continue.");
+		} else {
 			fetchIncome();
 		}
-	}, [dispatch, user, currentPage, docsPerPage]);
+	}, [dispatch, user, currentPage, docsPerPage, updated, newInc]);
 
 	//form submission handler
 	const submitHandler = async (e) => {
@@ -87,6 +96,7 @@ function Income() {
 			setDate("");
 			setError(null);
 			setEmptyFields([]);
+			setNewInc(true);
 			setSuccess("Success: New income has been added!");
 			dispatch({ type: "CREATE_DATA", payload: json });
 		}
@@ -145,6 +155,7 @@ function Income() {
 			setError(null);
 			setEmptyFields([]);
 			setShowUpdateBtn(false);
+			setUpdated(true);
 			setSuccess("Success: Income has been updated!");
 		}
 	};

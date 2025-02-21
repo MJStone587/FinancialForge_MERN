@@ -2,6 +2,15 @@ const Income = require("../models/income");
 const mongoose = require("mongoose");
 
 exports.get_all_income = async function (req, res) {
+	const user_id = req.user._id;
+	try {
+		const incomeList = Income.find({ user_id }).sort({ dateCreated: "ascending" });
+		res.status(200).json(incomeList);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
+exports.get_all_income_paginated = async function (req, res) {
 	var page = parseInt(req.query.currentPage - 1) || 0;
 	const docsPerPage = parseInt(req.query.docsPerPage) || 9;
 	const startIndex = (page - 1) * docsPerPage;

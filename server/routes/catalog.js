@@ -3,10 +3,8 @@ const express = require("express");
 const expense_controller = require("../controllers/expenseController");
 const income_controller = require("../controllers/incomeController");
 const user_controller = require("../controllers/userController");
-const Expense = require("../models/expense");
-const Income = require("../models/income");
 const requireAuth = require("../middleware/requireAuth");
-const paginatedResults = require("../middleware/paginatedResults");
+//const paginatedResults = require("../middleware/paginatedResults");
 
 const router = express.Router();
 
@@ -23,7 +21,12 @@ router.get(
 	"/income",
 	//requireAuth.requireAuth,
 	income_controller.get_all_income
-	//pagination.paginatedResults(Income)
+);
+//get income paginated
+router.get(
+	"/income",
+	//requireAuth.requireAuth,
+	income_controller.get_all_income_paginated
 );
 //Get Single Income
 router.get(
@@ -52,6 +55,8 @@ router.put(
 
 //Get All Expenses
 router.get("/expense", expense_controller.expense_list);
+//Get Paginated Expense
+router.get("/expense", expense_controller.expense_list_paginated);
 //Create new expense
 router.post(
 	"/expense/create",

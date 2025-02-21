@@ -2,8 +2,18 @@ const Expense = require("../models/expense");
 const mongoose = require("mongoose");
 
 exports.expense_list = async function (req, res) {
+	const user_id = req.user._id;
+	try {
+		const expenseList = Expense.find({ user_id }).sort({ dateCreated: "ascending" });
+		res.status(200).json(expenseList);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
+
+exports.expense_list_paginated = async function (req, res) {
 	var page = parseInt(req.query.currentPage - 1) || 0;
-	const docsPerPage = parseInt(req.query.docsPerPage) || 9;
+	const docsPerPage = parseInt(req.query.docsPerPage);
 	const startIndex = (page - 1) * docsPerPage;
 	const endIndex = page * docsPerPage;
 	const user_id = req.user._id;
