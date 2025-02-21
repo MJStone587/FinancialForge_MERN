@@ -16,7 +16,7 @@ exports.get_all_income_paginated = async function (req, res) {
 		page -= 1;
 	}
 
-	if (!page || !docsPerPage) {
+	if (!page && !docsPerPage) {
 		try {
 			const incomeList = await Income.find({ user_id }).sort({
 				dateCreated: "ascending",

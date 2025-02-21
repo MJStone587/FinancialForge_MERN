@@ -17,7 +17,7 @@ exports.expense_list_paginated = async function (req, res) {
 		page -= 1;
 	}
 
-	if (!page || !docsPerPage) {
+	if (!page && !docsPerPage) {
 		try {
 			const expenseList = await Expense.find({ user_id }).sort({
 				dateCreated: "ascending",
