@@ -24,7 +24,7 @@ router.get(
 );
 //get income paginated
 router.get(
-	"/income",
+	"/income?",
 	//requireAuth.requireAuth,
 	income_controller.get_all_income_paginated
 );
@@ -56,7 +56,7 @@ router.put(
 //Get All Expenses
 router.get("/expense", expense_controller.expense_list);
 //Get Paginated Expense
-router.get("/expense", expense_controller.expense_list_paginated);
+router.get("/expense?", expense_controller.expense_list_paginated);
 //Create new expense
 router.post(
 	"/expense/create",
