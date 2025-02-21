@@ -8,10 +8,6 @@ exports.get_all_income_paginated = async function (req, res) {
 	var endIndex = page * docsPerPage;
 	const user_id = req.user._id;
 
-	if (!page || !docsPerPage) {
-		endIndex = await Income.countDocuments({ user_id }).exec();
-		docsPerPage = await Income.countDocuments({ user_id }).exec();
-	}
 	if (endIndex > (await Income.countDocuments({ user_id }).exec())) {
 		page += 1;
 	}
@@ -20,18 +16,29 @@ exports.get_all_income_paginated = async function (req, res) {
 		page -= 1;
 	}
 
-	try {
-		const incomeList = await Income.find({ user_id })
-			.sort({
+	if (!page || !docsPerPage) {
+		try {
+			const incomeList = await Income.find({ user_id }).sort({
 				dateCreated: "ascending",
-			})
-			.limit(docsPerPage)
-			.skip(endIndex)
-			.exec();
-		const docTotal = await Income.countDocuments({ user_id }).exec();
-		res.status(200).json({ incomeList: incomeList, docTotal: docTotal });
-	} catch (error) {
-		res.status(500).json({ error: error.message });
+			});
+			res.status(200).json(incomeList);
+		} catch (error) {
+			res.statu(500).json({ error: error.message });
+		}
+	} else {
+		try {
+			const incomeList = await Income.find({ user_id })
+				.sort({
+					dateCreated: "ascending",
+				})
+				.limit(docsPerPage)
+				.skip(endIndex)
+				.exec();
+			const docTotal = await Income.countDocuments({ user_id }).exec();
+			res.status(200).json({ incomeList: incomeList, docTotal: docTotal });
+		} catch (error) {
+			res.status(500).json({ error: error.message });
+		}
 	}
 };
 

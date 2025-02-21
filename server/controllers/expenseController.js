@@ -17,18 +17,29 @@ exports.expense_list_paginated = async function (req, res) {
 		page -= 1;
 	}
 
-	try {
-		const expenseList = await Expense.find({ user_id })
-			.sort({
+	if (!page || !docsPerPage) {
+		try {
+			const expenseList = await Expense.find({ user_id }).sort({
 				dateCreated: "ascending",
-			})
-			.limit(docsPerPage)
-			.skip(endIndex)
-			.exec();
-		const docTotal = await Expense.countDocuments({ user_id }).exec();
-		res.status(200).json({ expenseList: expenseList, docTotal: docTotal });
-	} catch (error) {
-		res.status(500).json({ error: error.message });
+			});
+			res.status(200).json(expenseList);
+		} catch (error) {
+			res.statu(500).json({ error: error.message });
+		}
+	} else {
+		try {
+			const expenseList = await Expense.find({ user_id })
+				.sort({
+					dateCreated: "ascending",
+				})
+				.limit(docsPerPage)
+				.skip(endIndex)
+				.exec();
+			const docTotal = await Expense.countDocuments({ user_id }).exec();
+			res.status(200).json({ expenseList: expenseList, docTotal: docTotal });
+		} catch (error) {
+			res.status(500).json({ error: error.message });
+		}
 	}
 };
 
