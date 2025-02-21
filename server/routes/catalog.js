@@ -16,15 +16,9 @@ router.post("/user/login", user_controller.user_login);
 //require auth for all routes below
 router.use(requireAuth.requireAuth);
 
-//Get all income data
-router.get(
-	"/income",
-	//requireAuth.requireAuth,
-	income_controller.get_all_income
-);
 //get income paginated
 router.get(
-	"/income?",
+	"/income",
 	//requireAuth.requireAuth,
 	income_controller.get_all_income_paginated
 );
@@ -53,10 +47,8 @@ router.put(
 	income_controller.income_update
 );
 
-//Get All Expenses
-router.get("/expense", expense_controller.expense_list);
 //Get Paginated Expense
-router.get("/expense?", expense_controller.expense_list_paginated);
+router.get("/expense", expense_controller.expense_list_paginated);
 //Create new expense
 router.post(
 	"/expense/create",
