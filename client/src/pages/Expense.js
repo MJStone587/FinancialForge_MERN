@@ -254,7 +254,7 @@ const Receipt = () => {
 					<div className='finance-table-container' ref={expenseTableDisplayRef}>
 						<table className='finance-table'>
 							<thead>
-								<tr id='heading-columns'>
+								<tr id='heading-columns-expense'>
 									<th>Edit</th>
 									<th>Name</th>
 									<th>Amount</th>

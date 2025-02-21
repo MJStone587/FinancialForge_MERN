@@ -248,20 +248,24 @@ th {
 	text-align: left; /* Align text to the left */
 }
 
-#heading-columns th {
+#heading-columns-expense th {
 	background-color: rgb(43, 43, 43);
 	color: var(--ltBlue-color-);
 	border: 1.5px solid var(--ltBlue-color-);
 }
-.finance-table-container thead {
-	background-color: #f2f2f2; /* Add background color to table header */
+#heading-columns-income th {
+	background-color: rgb(43, 43, 43);
+	color: var(--gold-color);
+	border: 1.5px solid var(--gold-color);
 }
-
+.finance-table-container thead {
+	background-color: #f2f2f2;
+}
 .finance-table-container tbody tr:nth-child(even) {
-	background-color: #d9d9d9; /* Add background color to even rows */
+	background-color: #d9d9d9;
 }
 .income-description,
-#expense-description {
+.expense-description {
 	font-style: italic;
 	text-align: center;
 	margin-bottom: 3px;
@@ -269,9 +273,6 @@ th {
 .name-td:hover {
 	cursor: pointer;
 	background-color: var(--ltBlue-color-);
-}
-#income-table-title:hover {
-	cursor: pointer;
 }
 
 .finance-displayPerPage-container {
@@ -436,7 +437,7 @@ th {
 #summary-title {
 	align-self: center;
 }
-.income-table-title {
+#income-table-title {
 	color: var(--gold-color);
 }
 .income-table-total-container {

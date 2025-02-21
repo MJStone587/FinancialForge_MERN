@@ -27,8 +27,6 @@ function Income() {
 	const incomeTableDisplayRef = useRef(null);
 	const selectedPageRef = useRef(null);
 
-	//LIVE ROUTE https://financialforge-mern.onrender.com
-	//initial request to server to receive all income data
 	useEffect(() => {
 		const fetchIncome = async () => {
 			const response = await fetch(
@@ -94,7 +92,7 @@ function Income() {
 		}
 	};
 
-	//update handler
+	//form update handler
 	const handleUpdate = (selectedItem) => {
 		setName(selectedItem.name);
 		setCategory(selectedItem.category);
@@ -104,7 +102,7 @@ function Income() {
 		setIncID(selectedItem._id);
 		setShowUpdateBtn(true);
 	};
-	//FORM UPDATE HANDLER
+	//api update handler
 	const updateHandler = async (e) => {
 		e.preventDefault();
 		// income object from input data
@@ -174,7 +172,6 @@ function Income() {
 			console.log("The response failed");
 		}
 	};
-
 	const modalOn = () => {
 		setModal(true);
 	};
@@ -206,7 +203,6 @@ function Income() {
 	const handlePrevPage = () => {
 		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
 	};
-
 	const pagesDisplay = useMemo(() => {
 		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}, [totalPages]);
@@ -217,23 +213,22 @@ function Income() {
 				<div className='finance-display-left'>
 					<div className='finance-display-heading'>
 						<h2 id='income-table-title'>Income List</h2>
-						<div className='finance-displayPerPage-container'>
-							<p>Display Per Page:</p>
-							<Form.Select size='sm' onChange={handleDocsPerPage}>
-								<option value='10'>Default(10)</option>
-								<option value='3'>3</option>
-								<option value='5'>5</option>
-								<option value='15'>15</option>
-							</Form.Select>
-						</div>
+					</div>
+					<div className='finance-displayPerPage-container'>
+						<p>Display Per Page:</p>
+						<Form.Select size='sm' onChange={handleDocsPerPage}>
+							<option value='10'>Default(10)</option>
+							<option value='3'>3</option>
+							<option value='5'>5</option>
+							<option value='15'>15</option>
+						</Form.Select>
 					</div>
 					<div className='finance-table-container' ref={incomeTableDisplayRef}>
 						<table className='finance-table'>
 							<thead>
-								<tr id='heading-columns'>
+								<tr id='heading-columns-income'>
 									<th>Edit</th>
 									<th>Name</th>
-									<th>Amount</th>
 									<th>Total</th>
 									<th>Date</th>
 									<th>Delete</th>
@@ -252,9 +247,8 @@ function Income() {
 												</span>
 											</td>
 											<td className='name-td modalOpen' onClick={modalOn}>
-												{item.name}
+												<p>{item.name}</p>
 											</td>
-											<td>{item.length}</td>
 											<Modal
 												show={modal}
 												backdrop='true'
@@ -282,8 +276,12 @@ function Income() {
 												</Modal.Body>
 												<Modal.Footer>{item.description}</Modal.Footer>
 											</Modal>
-											<td>$ {item.total}</td>
-											<td>{item.date_received_med}</td>
+											<td>
+												<p>$ {item.total}</p>
+											</td>
+											<td>
+												<p>{item.date_received_med}</p>
+											</td>
 											<td className='delete-td'>
 												<span onClick={() => handleDel(item)} className='material-symbols-outlined'>
 													Delete
