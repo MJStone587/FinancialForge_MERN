@@ -7,7 +7,7 @@ exports.expense_list_paginated = async function (req, res) {
 	//const startIndex = (page - 1) * docsPerPage;
 	const endIndex = page * docsPerPage;
 	const user_id = req.user._id;
-	/*
+
 	if (endIndex > (await Expense.countDocuments({ user_id }).exec())) {
 		page += 1;
 	}
@@ -15,7 +15,7 @@ exports.expense_list_paginated = async function (req, res) {
 	if (startIndex > 0) {
 		page -= 1;
 	}
-*/
+
 	if (!page && !docsPerPage) {
 		try {
 			const expenseList = await Expense.find({ user_id }).sort({
