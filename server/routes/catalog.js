@@ -17,55 +17,24 @@ router.post("/user/login", user_controller.user_login);
 router.use(requireAuth.requireAuth);
 
 //get income paginated
-router.get(
-	"/income",
-	//requireAuth.requireAuth,
-	income_controller.get_all_income_paginated
-);
+router.get("/income", income_controller.income_list_paginated);
 //Get Single Income
-router.get(
-	"/income/:id",
-	//requireAuth.requireAuth,
-	income_controller.get_single_income
-);
+router.get("/income/:id", income_controller.get_single_income);
 //Post new income
-router.post(
-	"/income/create",
-	//requireAuth.requireAuth,
-	income_controller.income_create_post
-);
+router.post("/income/create", income_controller.income_create_post);
 //Delete Income
-router.delete(
-	"/income/:id",
-	//requireAuth.requireAuth,
-	income_controller.income_delete
-);
+router.delete("/income/:id", income_controller.income_delete);
 //Update Income
-router.put(
-	"/income/:id",
-	//requireAuth.requireAuth,
-	income_controller.income_update
-);
+router.put("/income/:id", income_controller.income_update);
 
 //Get Paginated Expense
 router.get("/expense", expense_controller.expense_list_paginated);
+
 //Create new expense
-router.post(
-	"/expense/create",
-	//requireAuth.requireAuth,
-	expense_controller.expense_create
-);
+router.post("/expense/create", expense_controller.expense_create);
 //Update expense
-router.put(
-	"/expense/:id",
-	//requireAuth.requireAuth,
-	expense_controller.expense_update
-);
+router.put("/expense/:id", expense_controller.expense_update);
 //Delete Expense
-router.delete(
-	"/expense/:id",
-	//requireAuth.requireAuth,
-	expense_controller.expense_delete
-);
+router.delete("/expense/:id", expense_controller.expense_delete);
 
 module.exports = router;

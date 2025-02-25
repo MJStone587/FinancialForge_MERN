@@ -32,7 +32,7 @@ function Income() {
 	useEffect(() => {
 		const fetchIncome = async () => {
 			const response = await fetch(
-				`https://financialforge-mern.onrender.com/catalog/income?currentPage${currentPage}&docsPerPage${docsPerPage}`,
+				`https://financialforge-mern.onrender.com/catalog/income?currentPage=${currentPage}&docsPerPage=${docsPerPage}`,
 				{
 					headers: { Authorization: `Bearer ${user.token}` },
 				}
