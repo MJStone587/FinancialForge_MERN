@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 exports.income_list_paginated = async function (req, res) {
 	var page = parseInt(req.query.currentPage - 1);
 	var docsPerPage = parseInt(req.query.docsPerPage);
-	//const startIndex = (page - 1) * docsPerPage;
+	const startIndex = (page - 1) * docsPerPage;
 	var endIndex = page * docsPerPage;
 	const user_id = req.user._id;
 
