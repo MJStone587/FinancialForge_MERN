@@ -7,7 +7,7 @@ exports.get_all_income_paginated = async function (req, res) {
 	const startIndex = (page - 1) * docsPerPage;
 	var endIndex = page * docsPerPage;
 	const user_id = req.user._id;
-
+	/*
 	if (endIndex > (await Income.countDocuments({ user_id }).exec())) {
 		page += 1;
 	}
@@ -15,7 +15,7 @@ exports.get_all_income_paginated = async function (req, res) {
 	if (startIndex > 0) {
 		page -= 1;
 	}
-
+*/
 	if (!page && !docsPerPage) {
 		try {
 			const incomeList = await Income.find({ user_id }).sort({
