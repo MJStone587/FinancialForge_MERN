@@ -14,7 +14,7 @@ function Income() {
 	const [showUpdateBtn, setShowUpdateBtn] = useState(false);
 	const [newInc, setNewInc] = useState();
 	const [updated, setUpdated] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
+	//const [isLoading, setIsLoading] = useState(true);
 	const [docsPerPage, setDocsPerPage] = useState(10);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState();
@@ -42,12 +42,12 @@ function Income() {
 			if (response.ok) {
 				dispatch({ type: "SET_DATA", payload: json.incomeList });
 				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
-				setIsLoading(false);
+				//setIsLoading(false);
 				setUpdated(false);
 				setNewInc(false);
 			} else if (!response.ok) {
 				console.log("Error Fetching Data", json.error);
-				setIsLoading(true);
+				//setIsLoading(true);
 			}
 		};
 		if (!user) {

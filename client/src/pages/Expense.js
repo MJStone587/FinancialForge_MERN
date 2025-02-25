@@ -19,7 +19,7 @@ const Receipt = () => {
 	const [totalPages, setTotalPages] = useState();
 	const [modal, setModal] = useState(false);
 	const [updated, setUpdated] = useState(false);
-	const [loading, setLoading] = useState();
+	//const [loading, setLoading] = useState();
 	const [description, setDescription] = useState("");
 	const [paymentType, setPaymentType] = useState("");
 	const [total, setTotal] = useState("");
@@ -46,11 +46,11 @@ const Receipt = () => {
 			if (response.ok) {
 				dispatch({ type: "SET_DATA", payload: json.expenseList });
 				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
-				setLoading(false);
+				//setLoading(false);
 				setUpdated(false);
 			} else if (!response.ok) {
 				console.log("Error Fetching Data", json.error);
-				setLoading(true);
+				//setLoading(true);
 			}
 		};
 		if (!user) {
