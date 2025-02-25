@@ -430,9 +430,11 @@ th {
 .signup-empty {
 	flex: 1;
 }
-#summary-container {
+#summary-wrapper {
 	display: flex;
 	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
 }
 #summary-title {
 	align-self: center;
@@ -440,13 +442,13 @@ th {
 #income-table-title {
 	color: var(--gold-color);
 }
-.income-table-total-container {
+#income-table-total-container {
 	border-top: 2px solid rgb(214, 214, 214);
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 50px;
 }
-.income-table-total-container strong {
+#income-table-total-container strong {
 	color: var(--gold-color);
 }
 #expense-table-title {
