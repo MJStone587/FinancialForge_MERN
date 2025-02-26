@@ -20,6 +20,8 @@ const Receipt = () => {
 	const [modal, setModal] = useState(false);
 	const [updated, setUpdated] = useState(false);
 	//const [loading, setLoading] = useState();
+	const [newDoc, setNewDoc] = useState(false);
+	const [deletion, setDeletion] = useState(true);
 	const [description, setDescription] = useState("");
 	const [paymentType, setPaymentType] = useState("");
 	const [total, setTotal] = useState("");
@@ -37,6 +39,8 @@ const Receipt = () => {
 				`https://financialforge-mern.onrender.com/catalog/expense?currentPage=${currentPage}&docsPerPage=${docsPerPage}`,
 				{
 					headers: {
+						mode: "cors",
+						"Content-Type": "application/json",
 						Authorization: `Bearer ${user.token}`,
 					},
 				}
@@ -48,6 +52,8 @@ const Receipt = () => {
 				setTotalPages(Math.ceil(json.docTotal / docsPerPage));
 				//setLoading(false);
 				setUpdated(false);
+				setDeletion(false);
+				setNewDoc(false);
 			} else if (!response.ok) {
 				console.log("Error Fetching Data", json.error);
 				//setLoading(true);
@@ -58,7 +64,7 @@ const Receipt = () => {
 		} else {
 			fetchData();
 		}
-	}, [dispatch, user, currentPage, docsPerPage, updated]);
+	}, [dispatch, user, currentPage, docsPerPage, updated, deletion, newDoc]);
 
 	const modalOn = () => {
 		setModal(true);
@@ -104,6 +110,7 @@ const Receipt = () => {
 			setError(json.error);
 			setSuccess("");
 			setEmptyFields(json.emptyFields);
+			setNewDoc(true);
 		} else if (response.ok) {
 			setName("");
 			setDescription("");
@@ -156,6 +163,7 @@ const Receipt = () => {
 
 		if (response.ok) {
 			dispatch({ type: "DELETE_DATA", payload: json });
+			setDeletion(true);
 		} else {
 			console.log("The response failed");
 		}
@@ -222,7 +230,6 @@ const Receipt = () => {
 			setSuccess("Success: Expense has been updated!");
 		}
 	};
-
 	//clear btn handler
 	const clearBtn = (e) => {
 		e.preventDefault();

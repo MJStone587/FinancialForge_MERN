@@ -15,6 +15,7 @@ function Income() {
 	const [newInc, setNewInc] = useState();
 	const [updated, setUpdated] = useState(false);
 	//const [isLoading, setIsLoading] = useState(true);
+	const [deletion, setDeletion] = useState(true);
 	const [docsPerPage, setDocsPerPage] = useState(10);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState();
@@ -34,7 +35,11 @@ function Income() {
 			const response = await fetch(
 				`https://financialforge-mern.onrender.com/catalog/income?currentPage=${currentPage}&docsPerPage=${docsPerPage}`,
 				{
-					headers: { Authorization: `Bearer ${user.token}` },
+					headers: {
+						mode: "cors",
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${user.token}`,
+					},
 				}
 			);
 			const json = await response.json();
@@ -45,6 +50,7 @@ function Income() {
 				//setIsLoading(false);
 				setUpdated(false);
 				setNewInc(false);
+				setDeletion(false);
 			} else if (!response.ok) {
 				console.log("Error Fetching Data", json.error);
 				//setIsLoading(true);
@@ -55,7 +61,7 @@ function Income() {
 		} else {
 			fetchIncome();
 		}
-	}, [dispatch, user, currentPage, docsPerPage, updated, newInc]);
+	}, [dispatch, user, currentPage, docsPerPage, updated, newInc, deletion]);
 
 	//form submission handler
 	const submitHandler = async (e) => {
@@ -179,6 +185,7 @@ function Income() {
 
 		if (response.ok) {
 			dispatch({ type: "DELETE_DATA", payload: json });
+			setDeletion(true);
 		} else {
 			console.log("The response failed");
 		}
