@@ -22,12 +22,11 @@ body {
 }
 main {
 	display: grid;
-	grid-template-rows: [row1] 8% [row2] 92%;
+	grid-template-rows: [row1] 9% [row2] 91%;
 	height: 100%;
 	width: 100%;
 }
 .navbar {
-	flex: 1;
 	border-bottom: 1px solid var(--ltBlue-color-);
 }
 .navbar a {
@@ -310,6 +309,7 @@ th {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-evenly;
+	width: 15%;
 	color: white;
 }
 .pagination li:hover {
