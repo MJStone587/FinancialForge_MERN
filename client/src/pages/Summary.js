@@ -34,7 +34,7 @@ function Summary() {
 			});
 			const json = await response.json();
 			if (response.ok) {
-				setExpense(json.expenseList);
+				setExpense(json);
 			}
 		};
 		if (user) {
@@ -56,68 +56,65 @@ function Summary() {
 
 	return (
 		<section>
-			<div id='summary-wrapper'>
-				<div id='summary-title'>
+			<div id='summary-container'>
+				<div id='summary-heading-wrapper'>
 					<h1>Summary</h1>
-					<p>Review all financial records</p>
 				</div>
-				<div id='income-table-container'>
-					<h2 className='income-table-title'>Income</h2>
-					<Table striped='false' bordered hover responsive='md'>
-						<thead>
-							<tr>
-								<th>Name:</th>
-								<th>Category:</th>
-								<th>Total:</th>
-							</tr>
-						</thead>
-						<tbody>
-							{income &&
-								income.map((inc) => (
-									<tr key={inc._id}>
-										<td>{inc.name}</td>
-										<td>{inc.category}</td>
-										<td>${inc.total}</td>
-									</tr>
-								))}
-						</tbody>
-					</Table>
+				<div id='table-container'>
+					<h2 id='summary-income-table-title'>Income</h2>
+					<div id='summary-income-table-container'>
+						<Table striped='false' bordered hover responsive='md'>
+							<thead>
+								<tr>
+									<th>Name:</th>
+									<th>Category:</th>
+									<th>Total:</th>
+								</tr>
+							</thead>
+							<tbody>
+								{income &&
+									income.map((inc) => (
+										<tr key={inc._id}>
+											<td>{inc.name}</td>
+											<td>{inc.category}</td>
+											<td>${inc.total}</td>
+										</tr>
+									))}
+							</tbody>
+						</Table>
+						<h3>
+							<strong>Total: </strong>${incGrandTotal}
+						</h3>
+					</div>
+					<h2 id='summary-expense-table-title'>Expenses</h2>
+					<div id='summary-expense-table-container'>
+						<Table striped='false' bordered hover responsive='md' size='sm'>
+							<thead>
+								<tr>
+									<th>Name:</th>
+									<th>Payment Type:</th>
+									<th>Category:</th>
+									<th>Total:</th>
+								</tr>
+							</thead>
+							<tbody>
+								{expense &&
+									expense.map((exp) => (
+										<tr key={exp._id}>
+											<td>{exp.name}</td>
+											<td>{exp.paymentType}</td>
+											<td>{exp.category}</td>
+											<td>${exp.total}</td>
+										</tr>
+									))}
+							</tbody>
+						</Table>
+						<h3>
+							<strong>Total: </strong>${expGrandTotal}
+						</h3>
+					</div>
 				</div>
-				<div id='income-table-total-container'>
-					<h3>
-						<strong>Total: </strong>${incGrandTotal}
-					</h3>
-				</div>
-				<div id='expense-table-container'>
-					<h2 id='expense-table-title'>Expenses</h2>
-					<Table striped='false' bordered hover responsive='md' size='sm'>
-						<thead>
-							<tr>
-								<th>Name:</th>
-								<th>Payment Type:</th>
-								<th>Category:</th>
-								<th>Total:</th>
-							</tr>
-						</thead>
-						<tbody>
-							{expense &&
-								expense.map((exp) => (
-									<tr key={exp._id}>
-										<td>{exp.name}</td>
-										<td>{exp.paymentType}</td>
-										<td>{exp.category}</td>
-										<td>${exp.total}</td>
-									</tr>
-								))}
-						</tbody>
-					</Table>
-				</div>
-				<div id='expense-table-total-container'>
-					<h3>
-						<strong>Total: </strong>${expGrandTotal}
-					</h3>
-				</div>
-				<div id='balance-container'>
+				<div id='balance-wrapper'>
 					<h2 id='balance'>Balance: ${balance}</h2>
 				</div>
 			</div>

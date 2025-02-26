@@ -25,58 +25,54 @@ function Login() {
 		setIsVisible(!isVisible);
 	};
 	return (
-		<section className='login-container'>
-			<div className='login-header'>
-				<div id='header-title'>
-					<h1>Login</h1>
-				</div>
-			</div>
-			<div className='login-card'>
-				<div className='login-card-left'>
-					<h2>Not a member?</h2>
-					<Link to='/signup'>Signup</Link>
-				</div>
-				<div className='login-card-right'>
-					<Form className='login-card-form' onSubmit={submitHandler}>
-						<Form.Control
-							type='email'
-							aria-label={labelEmail}
-							placeholder='Email'
-							aria-required='true'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							className={emptyFields.includes("email") ? "error" : ""}
-						/>
-						<InputGroup bsPrefix='login-password-input' size='sm'>
+		<section>
+			<div id='login-container'>
+				<div id='login-card'>
+					<div id='login-card-left'>
+						<h2>Not a member?</h2>
+						<Link to='/signup'>Signup</Link>
+					</div>
+					<div id='login-card-right'>
+						<Form id='login-card-form' onSubmit={submitHandler}>
 							<Form.Control
-								type={visiblePass ? "text" : "password"}
-								placeholder='Password'
-								aria-label={labelPassword}
+								type='email'
+								aria-label={labelEmail}
+								placeholder='Email'
 								aria-required='true'
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								className={emptyFields.includes("password") ? "error" : " "}
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								className={emptyFields.includes("email") ? "error" : ""}
 							/>
+							<InputGroup bsPrefix='login-password-input' size='sm'>
+								<Form.Control
+									type={visiblePass ? "text" : "password"}
+									placeholder='Password'
+									aria-label={labelPassword}
+									aria-required='true'
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									className={emptyFields.includes("password") ? "error" : " "}
+								/>
 
-							<InputGroup.Text id='basic-addon1'>
-								<span
-									className='material-symbols-outlined eye faded'
-									aria-label={eyeToggle}
-									onClick={eyeHandler}
-								>
-									Visibility
-								</span>
-							</InputGroup.Text>
-						</InputGroup>
-						<Button type='submit' className='submitBtn loginBtn'>
-							Login
-						</Button>
-						{error && <p className='error-message'>{error}</p>}
-						{success && <p className='success-message'>{success}</p>}
-					</Form>
+								<InputGroup.Text id='basic-addon1'>
+									<span
+										className='material-symbols-outlined eye faded'
+										aria-label={eyeToggle}
+										onClick={eyeHandler}
+									>
+										Visibility
+									</span>
+								</InputGroup.Text>
+							</InputGroup>
+							<Button type='submit' className='submitBtn loginBtn'>
+								Login
+							</Button>
+							{error && <p className='error-message'>{error}</p>}
+							{success && <p className='success-message'>{success}</p>}
+						</Form>
+					</div>
 				</div>
 			</div>
-			<div className='login-empty'></div>
 		</section>
 	);
 }

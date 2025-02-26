@@ -18,14 +18,13 @@ html,
 body {
 	height: 100%;
 	width: 100%;
+	background-color: rgb(33, 37, 41);
 }
 main {
 	display: grid;
 	grid-template-rows: [row1] 8% [row2] 92%;
 	height: 100%;
 	width: 100%;
-	background-color: rgb(33, 37, 41);
-	overflow: hidden;
 }
 .navbar {
 	flex: 1;
@@ -79,8 +78,6 @@ main {
 	cursor: pointer;
 }
 section {
-	display: flex;
-	flex-flow: row nowrap;
 	height: 100%;
 }
 .home {
@@ -196,6 +193,12 @@ select.error {
 .finance-display-heading {
 	font-size: 2rem;
 	flex: 1;
+}
+#income-table-wrapper {
+	overflow: auto;
+}
+#expense-table-wrapper {
+	overflow: auto;
 }
 #income-table-title h1 {
 	color: var(--gold-color);
@@ -325,28 +328,24 @@ th {
 	border: 1px transparent;
 	padding: 0px 0px 0px 10px;
 }
-.login-header {
+#login-container {
 	display: flex;
 	flex-flow: column nowrap;
-	justify-content: flex-end;
+	justify-content: center;
 	align-items: center;
-	width: 80%;
-	flex: 1;
+	height: 100%;
 }
-.login-card {
+#login-card {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
-	width: 80%;
-	flex: 3;
+	width: 70%;
+	height: 60%;
 	box-shadow: 2px 2px 15px var(--charcoal-bg-);
 	border-radius: 5px;
 	background-color: #ffffff;
 }
-.login-empty {
-	flex: 1;
-}
-.login-card-left {
+#login-card-left {
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
@@ -354,14 +353,14 @@ th {
 	flex: 1;
 	background-color: var(--ltBlue-color-);
 }
-.login-card-right {
+#login-card-right {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
 	flex: 2;
 }
-.login-card-form {
+#login-card-form {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
@@ -373,22 +372,23 @@ th {
 	display: flex;
 	flex-flow: row nowrap;
 }
-.signup-header {
+#signup-container {
 	display: flex;
 	flex-flow: column nowrap;
-	justify-content: flex-end;
-	flex: 1;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 }
-.signup-card {
+#signup-card {
 	display: flex;
 	flex-flow: row nowrap;
-	flex: 3;
-	width: 80%;
+	width: 70%;
+	height: 60%;
 	box-shadow: 1px 1px 10px var(--charcoal-bg-);
 	border-radius: 5px;
 	background-color: white;
 }
-.signup-card-left {
+#signup-card-left {
 	display: flex;
 	flex-flow: column nowrap;
 	background-color: var(--ltBlue-color-);
@@ -397,17 +397,17 @@ th {
 	flex: 1;
 	padding: 0px 5px;
 }
-.signup-card-left h2 {
+#signup-card-left h2 {
 	font-size: 1.5rem;
 }
-.signup-card-right {
+#signup-card-right {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
 	flex: 2;
 }
-.signup-form {
+#signup-form {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
@@ -419,28 +419,40 @@ th {
 	width: 100%;
 }
 
-.signup-form input:focus,
-.login-form input:focus {
+#signup-form input:focus,
+#login-form input:focus {
 	outline-color: var(--gold-color);
 }
-.signup-password-field {
+#signup-password-field {
 	display: flex;
 	flex-flow: row nowrap;
 }
-.signup-empty {
-	flex: 1;
+#summary-container {
+	display: grid;
+	grid-template-rows: [row1] 10% [row2] 70% [row3] 20%;
 }
-#summary-wrapper {
+#summary-heading-wrapper {
+	align-self: center;
+	color: white;
+	text-decoration: underline;
+}
+#table-container {
 	display: flex;
 	flex-flow: column nowrap;
-	align-items: center;
-	justify-content: center;
+	justify-content: space-evenly;
 }
-#summary-title {
-	align-self: center;
+#summary-income-table-container {
+	overflow: auto;
+	padding: 10px;
 }
-#income-table-title {
+
+#summary-expense-table-container {
+	overflow: auto;
+	padding: 10px;
+}
+#summary-income-table-title {
 	color: var(--gold-color);
+	margin: 20px;
 }
 #income-table-total-container {
 	border-top: 2px solid rgb(214, 214, 214);
@@ -451,8 +463,9 @@ th {
 #income-table-total-container strong {
 	color: var(--gold-color);
 }
-#expense-table-title {
+#summary-expense-table-title {
 	color: var(--ltBlue-color-);
+	margin: 20px;
 }
 
 #balance-container {
@@ -521,20 +534,20 @@ th {
 		row-gap: 10px;
 		width: 80%;
 	}
-	.login-card {
+	#login-card {
 		flex-flow: column-reverse nowrap;
 	}
-	.signup-card-right {
+	#signup-card-right {
 		flex: 3;
 	}
-	.login-card-right {
+	#login-card-right {
 		flex: 3;
 	}
-	.login-card-form {
+	#login-card-form {
 		row-gap: 2px;
 		width: 90%;
 	}
-	.login-card-form input {
+	#login-card-form input {
 		height: 35px;
 	}
 	.signup-form input {
@@ -574,7 +587,7 @@ th {
 	.header-container {
 		height: 10vh;
 	}
-	.login-card {
+	#login-card {
 		max-height: 700px;
 		max-width: 600px;
 	}
@@ -586,7 +599,7 @@ th {
 		max-height: 700px;
 		max-width: 600px;
 	}
-	.login-card-form input {
+	#login-card-form input {
 		padding: 3px;
 	}
 	.signup-form input {

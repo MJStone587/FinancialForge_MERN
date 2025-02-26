@@ -347,6 +347,7 @@ const Receipt = () => {
 					<Form id='expense-form'>
 						<FloatingLabel label='Name'>
 							<Form.Control
+								id='expense-form-name'
 								type='text'
 								onChange={(e) => setName(e.target.value)}
 								value={name}

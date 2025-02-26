@@ -60,73 +60,71 @@ function Signup() {
 	};
 
 	return (
-		<section className='signup-container'>
-			<div className='signup-header'>
-				<h1>Signup</h1>
-			</div>
-			<div className='signup-card'>
-				<div className='signup-card-left'>
-					<h2>Already A Member?</h2>
-					<Link to='/login'>Login</Link>
-				</div>
-				<div className='signup-card-right'>
-					<Form className='signup-form' onSubmit={submitHandler}>
-						<Form.Control
-							type='text'
-							placeholder='First Name'
-							aria-label={labelFirstName}
-							aria-required='true'
-							value={firstName}
-							id='firstName'
-							onChange={(e) => setFirstName(e.target.value)}
-							className={emptyFields.includes("firstName") ? "error" : ""}
-						/>
-						<Form.Control
-							type='text'
-							placeholder='Last Name'
-							aria-label={labelLastName}
-							aria-required='true'
-							value={lastName}
-							id='lastName'
-							onChange={(e) => setLastName(e.target.value)}
-							className={emptyFields.includes("lastName") ? "error" : ""}
-						/>
-						<Form.Control
-							type='email'
-							placeholder='Email'
-							aria-label={labelEmail}
-							aria-required='true'
-							id='email'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							className={emptyFields.includes("email") ? "error" : ""}
-						/>
-						<InputGroup bsPrefix='signup-password-field '>
+		<section>
+			<div id='signup-container'>
+				<div id='signup-card'>
+					<div id='signup-card-left'>
+						<h2>Already A Member?</h2>
+						<Link to='/login'>Login</Link>
+					</div>
+					<div id='signup-card-right'>
+						<Form id='signup-form' onSubmit={submitHandler}>
 							<Form.Control
-								type={visiblePass ? "password" : "text"}
-								placeholder='Password'
-								aria-label={labelPassword}
+								type='text'
+								placeholder='First Name'
+								aria-label={labelFirstName}
 								aria-required='true'
-								id='password'
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								className={emptyFields.includes("password") ? "error" : ""}
+								value={firstName}
+								id='firstName'
+								onChange={(e) => setFirstName(e.target.value)}
+								className={emptyFields.includes("firstName") ? "error" : ""}
 							/>
-							<InputGroup.Text>
-								<span className='material-symbols-outlined eye faded' onClick={eyeClickHandler}>
-									{isVisible ? "visibility_off" : "visibility"}
-								</span>
-							</InputGroup.Text>
-						</InputGroup>
-						<Button type='submit' className='submitBtn'>
-							Sign Up
-						</Button>
-					</Form>
-					{error && <p className='error-message'>{error}</p>}
-					{success && <p className='success-message'>{success}</p>}
+							<Form.Control
+								type='text'
+								placeholder='Last Name'
+								aria-label={labelLastName}
+								aria-required='true'
+								value={lastName}
+								id='lastName'
+								onChange={(e) => setLastName(e.target.value)}
+								className={emptyFields.includes("lastName") ? "error" : ""}
+							/>
+							<Form.Control
+								type='email'
+								placeholder='Email'
+								aria-label={labelEmail}
+								aria-required='true'
+								id='email'
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								className={emptyFields.includes("email") ? "error" : ""}
+							/>
+							<InputGroup bsPrefix='signup-password-field '>
+								<Form.Control
+									type={visiblePass ? "password" : "text"}
+									placeholder='Password'
+									aria-label={labelPassword}
+									aria-required='true'
+									id='password'
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									className={emptyFields.includes("password") ? "error" : ""}
+								/>
+								<InputGroup.Text>
+									<span className='material-symbols-outlined eye faded' onClick={eyeClickHandler}>
+										{isVisible ? "visibility_off" : "visibility"}
+									</span>
+								</InputGroup.Text>
+							</InputGroup>
+							<Button type='submit' className='submitBtn'>
+								Sign Up
+							</Button>
+						</Form>
+						{error && <p className='error-message'>{error}</p>}
+						{success && <p className='success-message'>{success}</p>}
+					</div>
 				</div>
 			</div>
-			<div className='signup-empty'></div>
 		</section>
 	);
 }
