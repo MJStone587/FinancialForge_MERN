@@ -4,7 +4,6 @@ const expense_controller = require("../controllers/expenseController");
 const income_controller = require("../controllers/incomeController");
 const user_controller = require("../controllers/userController");
 const requireAuth = require("../middleware/requireAuth");
-//const paginatedResults = require("../middleware/paginatedResults");
 
 const router = express.Router();
 
