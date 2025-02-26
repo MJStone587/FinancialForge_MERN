@@ -190,7 +190,13 @@ select.error {
 	width: 100%;
 	height: 100%;
 }
-.finance-display-heading {
+.finance-display-heading #expense-table-title {
+	color: var(--ltBlue-color-);
+	font-size: 2rem;
+	flex: 1;
+}
+.finance-display-heading #income-table-title {
+	color: var(--gold-color);
 	font-size: 2rem;
 	flex: 1;
 }
@@ -199,12 +205,6 @@ select.error {
 }
 #expense-table-wrapper {
 	overflow: auto;
-}
-#income-table-title h1 {
-	color: var(--gold-color);
-}
-#expense-table-title h1 {
-	color: var(--ltBlue-color-);
 }
 #income-create-new {
 	color: var(--ltBlue-color-);
@@ -250,7 +250,12 @@ th {
 	padding: 8px; /* Add padding for better readability */
 	text-align: left; /* Align text to the left */
 }
-
+.finance-table thead {
+	max-height: 100px;
+}
+#expense-table-body tr {
+	max-height: 100px;
+}
 #heading-columns-expense th {
 	background-color: rgb(43, 43, 43);
 	color: var(--ltBlue-color-);
@@ -284,8 +289,12 @@ th {
 	align-self: center;
 	flex: 1;
 	justify-content: space-evenly;
+	max-height: 40px;
+	margin: 10px;
 }
-
+.finance-displayPerPage-container p {
+	color: white;
+}
 .materials-symbols-outlined {
 	text-align: center;
 }
@@ -406,6 +415,9 @@ th {
 	justify-content: center;
 	align-items: center;
 	flex: 2;
+}
+#basic-addon1:hover {
+	cursor: pointer;
 }
 #signup-form {
 	display: flex;

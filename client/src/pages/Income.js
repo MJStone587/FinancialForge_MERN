@@ -245,7 +245,7 @@ function Income() {
 									<th>Delete</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id='expense-table-body'>
 								{data &&
 									data.map((item) => (
 										<tr key={item._id}>

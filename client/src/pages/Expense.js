@@ -259,7 +259,6 @@ const Receipt = () => {
 								<tr id='heading-columns-expense'>
 									<th>Edit</th>
 									<th>Name</th>
-									<th>Amount</th>
 									<th>Total</th>
 									<th>Date</th>
 									<th>Delete</th>
@@ -280,7 +279,6 @@ const Receipt = () => {
 											<td className='name-td modalOpen' onClick={modalOn}>
 												{item.name}
 											</td>
-											<td>{item.length}</td>
 											<Modal
 												show={modal}
 												backdrop='true'
