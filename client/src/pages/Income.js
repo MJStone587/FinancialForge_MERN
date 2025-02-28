@@ -295,7 +295,7 @@ function Income() {
 												<Modal.Footer>{item.description}</Modal.Footer>
 											</Modal>
 											<td>
-												<p>$ {item.total}</p>
+												<p>${item.total}</p>
 											</td>
 											<td>
 												<p>{item.date_received_med}</p>
@@ -315,7 +315,7 @@ function Income() {
 						{pagesDisplay &&
 							pagesDisplay.map((index) => (
 								<li
-									className='pageNumber'
+									className={currentPage === index ? "isIncClicked" : "notClicked"}
 									ref={selectedPageRef}
 									key={index}
 									onClick={() => clickPage(index)}
@@ -330,7 +330,7 @@ function Income() {
 					<div className='finance-form-header'>
 						<h2>+ Create New Income</h2>
 					</div>
-					<Form className='income-form'>
+					<Form id='income-form'>
 						<FloatingLabel controlId='income-title' label='Title'>
 							<Form.Control
 								type='text'

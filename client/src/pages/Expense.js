@@ -138,7 +138,7 @@ const Receipt = () => {
 	const handlePrevPage = () => {
 		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
 	};
-
+	// adjust pages according to data and docsPerPage
 	const pagesDisplay = useMemo(() => {
 		return Array.from({ length: totalPages }, (_, index) => index + 1);
 	}, [totalPages]);
@@ -169,7 +169,7 @@ const Receipt = () => {
 		}
 	};
 
-	//update handler
+	//form update handler
 	const handleUpdate = (selectedItem) => {
 		setName(selectedItem.name);
 		setCategory(selectedItem.category);
@@ -181,7 +181,7 @@ const Receipt = () => {
 		setShowUpdateBtn(true);
 	};
 
-	//FORM UPDATE HANDLER
+	//API UPDATE HANDLER
 	const updateHandler = async (e) => {
 		e.preventDefault();
 		// expense object from input data
@@ -317,7 +317,7 @@ const Receipt = () => {
 												</Modal.Body>
 												<Modal.Footer>{item.description}</Modal.Footer>
 											</Modal>
-											<td>$ {item.total}</td>
+											<td>${item.total}</td>
 											<td>{item.date_received_med}</td>
 											<td className='delete-td'>
 												<span onClick={() => handleDel(item)} className='material-symbols-outlined'>
@@ -334,7 +334,7 @@ const Receipt = () => {
 						{pagesDisplay &&
 							pagesDisplay.map((index) => (
 								<li
-									className='pageNumber'
+									className={currentPage === index ? "isExpClicked" : "notClicked"}
 									ref={selectedPageRef}
 									key={index}
 									onClick={() => clickPage(index)}

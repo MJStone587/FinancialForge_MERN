@@ -79,6 +79,15 @@ main {
 section {
 	height: 100%;
 }
+.isExpClicked {
+	color: var(--ltBlue-color-);
+}
+.isIncClicked {
+	color: var(--gold-color);
+}
+.notClicked {
+	color: white;
+}
 .home {
 	display: flex;
 	height: 100%;
@@ -416,6 +425,11 @@ th {
 	align-items: center;
 	flex: 2;
 }
+.signup-password-field {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+}
 #basic-addon1:hover {
 	cursor: pointer;
 }
@@ -424,20 +438,11 @@ th {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
-	max-width: 90%;
+	width: 70%;
 	row-gap: 5px;
 }
 .submitBtn {
 	width: 100%;
-}
-
-#signup-form input:focus,
-#login-form input:focus {
-	outline-color: var(--gold-color);
-}
-#signup-password-field {
-	display: flex;
-	flex-flow: row nowrap;
 }
 #summary-container {
 	display: grid;
@@ -480,8 +485,12 @@ th {
 	margin: 20px;
 }
 
-#balance-container {
+#balance-wrapper {
 	align-self: flex-start;
+	color: white;
+}
+#balance {
+	padding: 0px 10px;
 }
 .input-group-text {
 	max-width: 48px;
@@ -539,7 +548,7 @@ th {
 		order: 1;
 		width: 100%;
 	}
-	.income-form,
+	#income-form,
 	#expense-form {
 		display: flex;
 		flex-flow: column nowrap;
@@ -562,7 +571,7 @@ th {
 	#login-card-form input {
 		height: 35px;
 	}
-	.signup-form input {
+	#signup-form input {
 		height: 35px;
 	}
 
@@ -614,7 +623,7 @@ th {
 	#login-card-form input {
 		padding: 3px;
 	}
-	.signup-form input {
+	#signup-form input {
 		padding: 3px;
 	}
 	.date {
