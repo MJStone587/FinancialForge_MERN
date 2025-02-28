@@ -169,7 +169,7 @@ section {
 	border-left: 1px solid var(--ltBlue-color-);
 	border-right: 1px solid var(--ltBlue-color-);
 }
-.income-form,
+#income-form,
 #expense-form {
 	display: flex;
 	flex-flow: column nowrap;

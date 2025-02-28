@@ -205,6 +205,7 @@ const Receipt = () => {
 				method: "PUT",
 				body: JSON.stringify(expense),
 				headers: {
+					mode: "cors",
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${user.token}`,
 				},

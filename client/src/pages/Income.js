@@ -141,6 +141,7 @@ function Income() {
 				method: "PUT",
 				body: JSON.stringify(income),
 				headers: {
+					mode: "cors",
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${user.token}`,
 				},
