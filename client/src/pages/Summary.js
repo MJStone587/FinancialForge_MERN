@@ -57,9 +57,6 @@ function Summary() {
 	return (
 		<section>
 			<div id='summary-container'>
-				<div id='summary-heading-wrapper'>
-					<h1>Summary</h1>
-				</div>
 				<div id='table-container'>
 					<h2 id='summary-income-table-title'>Income</h2>
 					<div id='summary-income-table-container'>

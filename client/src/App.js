@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+//import { useState } from "react";
 import { useAuthContext } from "./hooks/useAuthContext";
 //import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -13,22 +13,19 @@ import Signup from "./pages/Signup.js";
 
 function App() {
 	const { user } = useAuthContext();
-	const [showNav, setShowNav] = useState(false);
-
-	const toggleNav = () => {
-		setShowNav(!showNav);
-	};
 
 	return (
 		<main
 			className='App'
+			/*
 			onClick={(e) =>
 				//make better -self note
 				e.target.tagName !== "NAV" && e.target.tagName !== "SPAN" ? setShowNav(false) : ""
-			}
+			}*/
 		>
 			<BrowserRouter>
-				<Header toggleNav={toggleNav} />
+				<Header />
+				{/*<Header toggleNav={toggleNav} />*/}
 				<Routes>
 					<Route path='/' element={<Home />} />
 					<Route path='/income' element={user ? <Income /> : <Navigate to='/login' />} />
