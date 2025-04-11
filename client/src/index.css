@@ -154,6 +154,14 @@ section {
 	flex: 4;
 	padding: 15px 10px;
 }
+#sample-login {
+	display: flex;
+	flex-flow: column nowrap;
+	margin-top: 5px;
+}
+#sample-login h4 {
+	text-decoration: underline;
+}
 .finance-display-right {
 	display: flex;
 	flex-flow: column nowrap;

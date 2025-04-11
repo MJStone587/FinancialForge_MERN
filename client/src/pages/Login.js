@@ -67,6 +67,13 @@ function Login() {
 							<Button type='submit' className='submitBtn loginBtn'>
 								Login
 							</Button>
+							<div id='sample-login'>
+								<h4>Sample Login</h4>
+								<p>
+									<strong>Email:</strong> samplelogin@fakemail.com <br /> <strong>Password:</strong>{" "}
+									Sample@password1{" "}
+								</p>
+							</div>
 							{error && <p className='error-message'>{error}</p>}
 							{success && <p className='success-message'>{success}</p>}
 						</Form>
