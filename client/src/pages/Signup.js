@@ -64,7 +64,7 @@ function Signup() {
 			<div id='signup-container'>
 				<div id='signup-card'>
 					<div id='signup-card-left'>
-						<h2>Already A Member?</h2>
+						<h2>Already A Member or</h2>
 						<p>
 							Don't want to create a login? Use our sample login to test the apps functionality.
 						</p>
