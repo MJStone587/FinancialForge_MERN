@@ -29,21 +29,36 @@ function Login() {
 			<div id='login-container'>
 				<div id='login-card'>
 					<div id='login-card-left'>
-						<h2>Not a member?</h2>
-						<Link to='/signup'>Signup</Link>
+						<div id='redirect-signup'>
+							<h2>Not a member?</h2>
+							<Link to='/signup'>Signup</Link>
+						</div>
+						<div id='sample-login'>
+							<p>
+								Don't want to make a login? Use our sample login to test the apps functionality.
+							</p>
+							<h4>Sample Login</h4>
+							<p>
+								<strong>Email:</strong> samplelogin@fakemail.com <br /> <strong>Password:</strong>
+								Sample@password1
+							</p>
+						</div>
 					</div>
 					<div id='login-card-right'>
 						<Form id='login-card-form' onSubmit={submitHandler}>
+							<Form.Label visuallyHidden='true'>Email:</Form.Label>
 							<Form.Control
 								type='email'
 								aria-label={labelEmail}
 								placeholder='Email'
 								aria-required='true'
+								id='login-email-input'
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 								className={emptyFields.includes("email") ? "error" : ""}
 							/>
 							<InputGroup bsPrefix='login-password-input' size='sm'>
+								<Form.Label visuallyHidden='true'>Password:</Form.Label>
 								<Form.Control
 									type={visiblePass ? "text" : "password"}
 									placeholder='Password'
@@ -67,13 +82,6 @@ function Login() {
 							<Button type='submit' className='submitBtn loginBtn'>
 								Login
 							</Button>
-							<div id='sample-login'>
-								<h4>Sample Login</h4>
-								<p>
-									<strong>Email:</strong> samplelogin@fakemail.com <br /> <strong>Password:</strong>{" "}
-									Sample@password1{" "}
-								</p>
-							</div>
 							{error && <p className='error-message'>{error}</p>}
 							{success && <p className='success-message'>{success}</p>}
 						</Form>

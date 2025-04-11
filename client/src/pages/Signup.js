@@ -65,10 +65,14 @@ function Signup() {
 				<div id='signup-card'>
 					<div id='signup-card-left'>
 						<h2>Already A Member?</h2>
+						<p>
+							Don't want to create a login? Use our sample login to test the apps functionality.
+						</p>
 						<Link to='/login'>Login</Link>
 					</div>
 					<div id='signup-card-right'>
 						<Form id='signup-form' onSubmit={submitHandler}>
+							<Form.Label visuallyHidden='true'>First Name</Form.Label>
 							<Form.Control
 								type='text'
 								placeholder='First Name'
@@ -79,6 +83,7 @@ function Signup() {
 								onChange={(e) => setFirstName(e.target.value)}
 								className={emptyFields.includes("firstName") ? "error" : ""}
 							/>
+							<Form.Label visuallyHidden='true'>Last Name</Form.Label>
 							<Form.Control
 								type='text'
 								placeholder='Last Name'
@@ -89,6 +94,7 @@ function Signup() {
 								onChange={(e) => setLastName(e.target.value)}
 								className={emptyFields.includes("lastName") ? "error" : ""}
 							/>
+							<Form.Label visuallyHidden='true'>Email</Form.Label>
 							<Form.Control
 								type='email'
 								placeholder='Email'
@@ -100,6 +106,7 @@ function Signup() {
 								className={emptyFields.includes("email") ? "error" : ""}
 							/>
 							<InputGroup bsPrefix='signup-password-field '>
+								<Form.Label visuallyHidden='true'>Password</Form.Label>
 								<Form.Control
 									type={visiblePass ? "password" : "text"}
 									placeholder='Password'

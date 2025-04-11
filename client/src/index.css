@@ -154,10 +154,21 @@ section {
 	flex: 4;
 	padding: 15px 10px;
 }
+#redirect-signup {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
+	flex: 2;
+	border-bottom: 1px solid black;
+}
 #sample-login {
 	display: flex;
 	flex-flow: column nowrap;
-	margin-top: 5px;
+	align-items: center;
+	padding: 15px;
+	margin-top: 20px;
+	flex: 2;
 }
 #sample-login h4 {
 	text-decoration: underline;
